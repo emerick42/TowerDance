@@ -1,0 +1,3 @@
+Content\akuma.xnb
+Content\ken.xnb
+Content\ryu.xnb

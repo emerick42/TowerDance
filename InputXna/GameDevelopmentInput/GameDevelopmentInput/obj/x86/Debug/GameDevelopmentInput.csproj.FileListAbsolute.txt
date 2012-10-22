@@ -1,0 +1,11 @@
+C:\Users\Miraboule\Desktop\InputXna\GameDevelopmentInput\GameDevelopmentInput\bin\x86\Debug\Content\akuma.xnb
+C:\Users\Miraboule\Desktop\InputXna\GameDevelopmentInput\GameDevelopmentInput\bin\x86\Debug\Content\ken.xnb
+C:\Users\Miraboule\Desktop\InputXna\GameDevelopmentInput\GameDevelopmentInput\bin\x86\Debug\Content\ryu.xnb
+C:\Users\Miraboule\Desktop\InputXna\GameDevelopmentInput\GameDevelopmentInput\bin\x86\Debug\GameDevelopmentInput.exe
+C:\Users\Miraboule\Desktop\InputXna\GameDevelopmentInput\GameDevelopmentInput\bin\x86\Debug\GameDevelopmentInput.pdb
+C:\Users\Miraboule\Desktop\InputXna\GameDevelopmentInput\GameDevelopmentInput\bin\x86\Debug\ControlInput.dll
+C:\Users\Miraboule\Desktop\InputXna\GameDevelopmentInput\GameDevelopmentInput\bin\x86\Debug\ControlInput.pdb
+C:\Users\Miraboule\Desktop\InputXna\GameDevelopmentInput\GameDevelopmentInput\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Miraboule\Desktop\InputXna\GameDevelopmentInput\GameDevelopmentInput\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Miraboule\Desktop\InputXna\GameDevelopmentInput\GameDevelopmentInput\obj\x86\Debug\GameDevelopmentInput.exe
+C:\Users\Miraboule\Desktop\InputXna\GameDevelopmentInput\GameDevelopmentInput\obj\x86\Debug\GameDevelopmentInput.pdb
