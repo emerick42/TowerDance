@@ -32,12 +32,14 @@ namespace Data
 
             // If File doesn't exist
             if (!container.FileExists(ConfigurationFileName))
+            {
                 return res;
+            }
 
             // If File exist
             Stream stream = container.OpenFile(ConfigurationFileName, FileMode.Open);
 
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            XmlSerializer serializer = XmlSerializer.FromTypes(new[] { typeof(T) })[0];
 
             res = (T)serializer.Deserialize(stream);
 
@@ -58,7 +60,8 @@ namespace Data
 
             Stream stream = container.CreateFile(ConfigurationFileName);
 
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            XmlSerializer serializer = XmlSerializer.FromTypes(new[] { typeof(T) })[0];
+
             serializer.Serialize(stream, gameConfig);
             stream.Close();
 

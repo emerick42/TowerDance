@@ -24,7 +24,7 @@ namespace Input
         {
             configInput = new ConfigInputXbox();
             configKeys = new Dictionary<ListKey, Buttons>();
-            serializeData = new SerializeData<ConfigInputXbox>("inputXbox.cfg");
+            serializeData = new SerializeData<ConfigInputXbox>("inputXbox.xml");
         }
 
         public Buttons getValue(ListKey key_)

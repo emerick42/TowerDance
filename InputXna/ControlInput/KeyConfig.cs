@@ -24,7 +24,7 @@ namespace Input
         {
             configInput = new ConfigInput();
             configKeys = new Dictionary<ListKey, Keys>();
-            serializeData = new SerializeData<ConfigInput>("input.cfg");
+            serializeData = new SerializeData<ConfigInput>("input.xml");
         }
 
         public Keys getValue(ListKey key_)
