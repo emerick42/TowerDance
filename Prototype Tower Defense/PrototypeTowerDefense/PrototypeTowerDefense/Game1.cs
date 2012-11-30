@@ -53,10 +53,10 @@ namespace PrototypeTowerDefense
             this.Window.AllowUserResizing = true;
 
             // LEFT = 1; RIGHT = 2; UP = 3; DOWN = 4;
-            warrior = new Warrior(new Vector2(0, HeightXbox / 2), 2, Content);
-            warrior2 = new Warrior(new Vector2(WidthXbox / 2, 0), 4, Content);
-            archer = new Archer(new Vector2(WidthXbox, HeightXbox / 2), 1, Content);
-            archer2 = new Archer(new Vector2(WidthXbox / 2, HeightXbox), 3, Content);
+            warrior = new Warrior(new Vector2(0, HeightXbox / 2), 2, Content, true);
+            warrior2 = new Warrior(new Vector2(WidthXbox / 2, 0), 4, Content, false);
+            archer = new Archer(new Vector2(WidthXbox, HeightXbox / 2), 1, Content, true);
+            archer2 = new Archer(new Vector2(WidthXbox / 2, HeightXbox), 3, Content, false);
             
             base.Initialize();
         }

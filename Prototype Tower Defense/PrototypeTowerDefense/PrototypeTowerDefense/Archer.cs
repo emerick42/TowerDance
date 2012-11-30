@@ -25,8 +25,9 @@ namespace PrototypeTowerDefense
         float timer;
         float interval = 100f;
         int frame = 0;
+        bool ally;
 
-        public Archer(Vector2 pos, int directionW, ContentManager contentW)
+        public Archer(Vector2 pos, int directionW, ContentManager contentW, bool all)
         {
             position = pos;
             currentSprite = 0;
@@ -34,12 +35,21 @@ namespace PrototypeTowerDefense
             direction = directionW;
             confSprite = new ConfSprite[2];
             content = contentW;
+            ally = all;
         }
 
         public void load()
         {
-            confSprite[0] = new ConfSprite(content.Load<Texture2D>("ArcherWalk"), 78, 71, 5, 120f, 5);
-            confSprite[1] = new ConfSprite(content.Load<Texture2D>("ArcherHit"), 320, 110, 29, 100f, 6);
+            if (ally == true)
+            {
+                confSprite[0] = new ConfSprite(content.Load<Texture2D>("ArcherWalkAllies"), 78, 88, 5, 120f, 5);
+                confSprite[1] = new ConfSprite(content.Load<Texture2D>("ArcherHitAllies"), 112, 88, 29, 100f, 29);
+            }
+            else
+            {
+                confSprite[0] = new ConfSprite(content.Load<Texture2D>("ArcherWalkEnnemy"), 78, 88, 5, 120f, 5);
+                confSprite[1] = new ConfSprite(content.Load<Texture2D>("ArcherHitEnnemy"), 112, 88, 29, 100f, 29);
+            }
         }
 
         public void unload()
@@ -103,7 +113,7 @@ namespace PrototypeTowerDefense
             if (direction == 1 || direction == 4)
                 spriteBatch.Draw(confSprite[currentSprite].Texture, position, confSprite[currentSprite].SourceRect, Color.White, 0f, confSprite[currentSprite].Origin, 1f, SpriteEffects.None, 0);
             else if (direction == 2 || direction == 3)
-                spriteBatch.Draw(confSprite[currentSprite].Texture, position, confSprite[currentSprite].SourceRect, Color.White, 0f, new Vector2(), 1f, SpriteEffects.FlipHorizontally, 0);
+                spriteBatch.Draw(confSprite[currentSprite].Texture, position, confSprite[currentSprite].SourceRect, Color.White, 0f, confSprite[currentSprite].Origin, 1f, SpriteEffects.FlipHorizontally, 0);
         }
 
         public Vector2 Position

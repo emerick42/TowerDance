@@ -25,8 +25,9 @@ namespace PrototypeTowerDefense
         float timer;
         float interval = 100f;
         int frame = 0;
+        bool ally;
 
-        public Warrior(Vector2 pos, int directionW, ContentManager contentW)
+        public Warrior(Vector2 pos, int directionW, ContentManager contentW, bool all)
         {
             position = pos;
             currentSprite = 0;
@@ -34,12 +35,21 @@ namespace PrototypeTowerDefense
             direction = directionW;
             confSprite = new ConfSprite[2];
             content = contentW;
+            ally = all;
         }
 
         public void load()
         {
-            confSprite[0] = new ConfSprite(content.Load<Texture2D>("WarriorWalk"), 70, 71, 5, 120f, 5);
-            confSprite[1] = new ConfSprite(content.Load<Texture2D>("WarriorHit"), 103, 95, 20, 100f, 20);
+            if (ally == true)
+            {
+                confSprite[0] = new ConfSprite(content.Load<Texture2D>("WarriorWalkAllies"), 70, 95, 5, 120f, 5);
+                confSprite[1] = new ConfSprite(content.Load<Texture2D>("WarriorHitAllies"), 102, 95, 20, 100f, 20);
+            }
+            else
+            {
+                confSprite[0] = new ConfSprite(content.Load<Texture2D>("WarriorWalkEnnemy"), 70, 95, 5, 120f, 5);
+                confSprite[1] = new ConfSprite(content.Load<Texture2D>("WarriorHitEnnemy"), 102, 95, 20, 100f, 20);
+            }
         }
 
         public void unload()
