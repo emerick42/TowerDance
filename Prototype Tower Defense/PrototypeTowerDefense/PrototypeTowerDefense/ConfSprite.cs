@@ -53,6 +53,8 @@ namespace PrototypeTowerDefense
 
         public void updateSprite(GameTime gameTime)
         {
+            /* Si plusieurs etage de sprites
+            
             int currentVerticalFrame = 0;
             int tmpCalc = currentFrame;
 
@@ -61,14 +63,12 @@ namespace PrototypeTowerDefense
                 tmpCalc -= nbSpriteWidth;
                 currentVerticalFrame += 1;
             }
+             */
 
-            sourceRect = new Rectangle(tmpCalc * spriteWidth, currentVerticalFrame * spriteHeight, spriteWidth, spriteHeight);
+            sourceRect = new Rectangle(currentFrame * spriteWidth, 0, spriteWidth, spriteHeight);
 
             
-            // A regarder
-            origin = new Vector2();
-            origin = new Vector2(sourceRect.Width, sourceRect.Height);
-            //            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
+            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
 
             timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             if (timer > interval)
