@@ -60,6 +60,8 @@ namespace DDR
                     }
                 }
             }
+            if (_song.music != "" && _song.musicSheets.Count >= 1)
+                return true;
             return false;
         }
 

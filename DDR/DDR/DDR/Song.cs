@@ -24,11 +24,13 @@ namespace DDR
         public List<TimeValue> bpms = new List<TimeValue>();
         public List<TimeValue> stops = new List<TimeValue>();
         public List<MusicSheet> musicSheets = new List<MusicSheet>();
+        public string directory;
 
-        public Song(string url, string format)
+        public Song(string url, string format, string directory)
         {
             _url = url;
             _format = format;
+            this.directory = directory;
             try
             {
                 System.IO.Stream stream = TitleContainer.OpenStream(_url);
@@ -56,6 +58,11 @@ namespace DDR
         public bool isValid()
         {
             return _valid;
+        }
+
+        public override string ToString()
+        {
+            return title;
         }
     }
 }
