@@ -14,127 +14,122 @@ using System.Diagnostics;
 
 namespace PrototypeTowerDefense
 {
-    class Warrior
+    class Warrior : Unit
     {
-        public ConfSprite[] confSprite;
+        SpriteObject[] spriteObject;
         int currentSprite;
-        bool action;
-        Vector2 position;
-        int direction;
-        ContentManager content;
-        float timer;
-        float interval = 100f;
-        int frame = 0;
-        bool ally;
+        DIRECTION direction;
 
-        public Warrior(Vector2 pos, int directionW, ContentManager contentW, bool all)
+        public Warrior() : base(10, 2, 15, 1, false)
         {
-            position = pos;
+            spriteObject = new SpriteObject[2];
             currentSprite = 0;
-            action = false;
-            direction = directionW;
-            confSprite = new ConfSprite[2];
-            content = contentW;
-            ally = all;
         }
 
-        public void load()
+        public Warrior(bool newEnnemy) : base(5, 2, 10, 3, newEnnemy)
         {
-            if (ally == true)
+            spriteObject = new SpriteObject[2];
+            currentSprite = 0;
+        }
+
+        public Warrior(int newLife, int newDamage, int newCoolDown, int newRange, bool newEnnemy)
+            : base(newLife, newDamage, newCoolDown, newRange, newEnnemy)
+        {
+            spriteObject = new SpriteObject[2];
+            currentSprite = 0;
+        }
+
+        public void load(ContentManager content)
+        {
+            if (ennemy)
             {
-                confSprite[0] = new ConfSprite(content.Load<Texture2D>("WarriorWalkAllies"), 70, 95, 5, 120f, 5);
-                confSprite[1] = new ConfSprite(content.Load<Texture2D>("WarriorHitAllies"), 102, 95, 20, 100f, 20);
+                spriteObject[0] = new SpriteObject(content.Load<Texture2D>("WarriorWalkAllies"), 70, 95, 5, 120f);
+                spriteObject[1] = new SpriteObject(content.Load<Texture2D>("WarriorHitAllies"), 102, 95, 20, 100f);
             }
             else
             {
-                confSprite[0] = new ConfSprite(content.Load<Texture2D>("WarriorWalkEnnemy"), 70, 95, 5, 120f, 5);
-                confSprite[1] = new ConfSprite(content.Load<Texture2D>("WarriorHitEnnemy"), 102, 95, 20, 100f, 20);
+                spriteObject[0] = new SpriteObject(content.Load<Texture2D>("WarriorWalkEnnemy"), 70, 95, 5, 120f);
+                spriteObject[1] = new SpriteObject(content.Load<Texture2D>("WarriorHitEnnemy"), 102, 95, 20, 100f);
             }
         }
 
         public void unload()
         {
-            confSprite[0].unload();
-            confSprite[1].unload();
+            spriteObject[0].unload();
+            spriteObject[1].unload();
         }
 
-        public void update(GameTime gameTime, KeyboardState key, GamePadState pad)
+        public void setPosition(Vector2 newPosition, DIRECTION newDirection)
         {
-            if (action || key.IsKeyDown(Keys.Space))
-            {
-                action = true;
-                currentSprite = 1;
+            position = newPosition;
+            direction = newDirection;
+        }
 
-                timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                if (timer > interval)
-                {
-                    //If is incrememnt current frame
-                    frame += 1;
+        public void update(GameTime gameTime)
+        {
+            moveSprite();
 
+            spriteObject[currentSprite].Update(gameTime);
+        }
 
-                    //Check frame is within direction frames, if not set back to standing
-                    if (frame >= 20)
-                    {
-                        frame = 0;
-                        action = false;
-                        confSprite[currentSprite].resetVar();
-                        currentSprite = 0;
-                        confSprite[currentSprite].resetVar();
-                    }
-                    //Reset timer
-                    timer = 0f;
-                }
-                confSprite[currentSprite].updateSprite(gameTime);
-            }
+        public void draw(SpriteBatch sb)
+        {
+            SpriteEffects effect;
+
+            if (direction == DIRECTION.LEFT || direction == DIRECTION.DOWN)
+                effect = SpriteEffects.None;
             else
+                effect = SpriteEffects.FlipHorizontally;
+
+            spriteObject[currentSprite].draw(sb, effect, position);
+        }
+
+        private void moveSprite()
+        {
+            switch (direction)
             {
-                if (direction == 2 && position.X >= 1280 / 2)
-                    direction = 1;
-                else if (direction == 1 && position.X <= 0)
-                    direction = 2;
-
-                if (direction == 4 && position.Y >= 720 / 2)
-                    direction = 3;
-                else if (direction == 3 && position.Y <= 0)
-                    direction = 4;
-
-                if (direction == 2)
-                    position.X += 5;
-                else if (direction == 1) position.X -= 5;
-                else if (direction == 3) position.Y -= 5;
-                else position.Y += 5;
-                
-                confSprite[currentSprite].updateSprite(gameTime);
+                case DIRECTION.DOWN:
+                    {
+                        if (position.Y <= Game1.sizeHeight / 2)
+                            position.Y += 1;
+                    }
+                    break;
+                case DIRECTION.UP:
+                    {
+                        if (position.Y >= Game1.sizeHeight / 2)
+                            position.Y -= 1;
+                    }
+                    break;
+                case DIRECTION.RIGHT:
+                    {
+                        if (position.X <= Game1.sizeWidth / 2)
+                            position.X += 1;
+                    }
+                    break;
+                case DIRECTION.LEFT:
+                    {
+                        if (position.X >= Game1.sizeWidth / 2)
+                            position.X -= 1;
+                    }
+                    break;
             }
         }
 
-        public void draw(SpriteBatch spriteBatch)
+        public SpriteObject[] SpriteObject
         {
-            if (direction == 1 || direction == 4)
-                spriteBatch.Draw(confSprite[currentSprite].Texture, position, confSprite[currentSprite].SourceRect, Color.White, 0f, confSprite[currentSprite].Origin, 1f, SpriteEffects.None, 0);
-            else if (direction == 2 || direction == 3)
-                spriteBatch.Draw(confSprite[currentSprite].Texture, position, confSprite[currentSprite].SourceRect, Color.White, 0f, confSprite[currentSprite].Origin, 1f, SpriteEffects.FlipHorizontally, 0);
+            get { return spriteObject; }
         }
 
-        public Vector2 Position
+        public int CurrentSprite
         {
-            get { return position; }
-            set { position = value; }
+            get { return currentSprite; }
+            set { currentSprite = value; }
         }
 
-        public Texture2D getTtexture()
+        public DIRECTION Direction
         {
-            return confSprite[currentSprite].Texture;
-        }
-
-        public Rectangle getSource()
-        {
-            return confSprite[currentSprite].SourceRect;
-        }
-
-        public Vector2 getOrigin()
-        {
-            return confSprite[currentSprite].Origin;
+            get { return direction; }
+            set { direction = value; }
         }
     }
 }

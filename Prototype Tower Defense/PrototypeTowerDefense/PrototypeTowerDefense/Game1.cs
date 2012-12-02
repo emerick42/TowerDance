@@ -17,10 +17,13 @@ namespace PrototypeTowerDefense
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        public static int sizeWidth = 1280;
+        public static int sizeHeight = 720;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        int WidthXbox = 1280;
-        int HeightXbox = 720;
+        //int WidthXbox = 1280;
+        //int HeightXbox = 720;
         Warrior warrior;
         Warrior warrior2;
         Archer archer;
@@ -42,8 +45,8 @@ namespace PrototypeTowerDefense
         /// </summary>
         protected override void Initialize()
         {
-            this.graphics.PreferredBackBufferWidth = WidthXbox;
-            this.graphics.PreferredBackBufferHeight = HeightXbox;
+            this.graphics.PreferredBackBufferWidth = sizeWidth;
+            this.graphics.PreferredBackBufferHeight = sizeHeight;
             this.graphics.IsFullScreen = false;
             this.graphics.ApplyChanges();
 
@@ -53,10 +56,10 @@ namespace PrototypeTowerDefense
             this.Window.AllowUserResizing = true;
 
             // LEFT = 1; RIGHT = 2; UP = 3; DOWN = 4;
-            warrior = new Warrior(new Vector2(0, HeightXbox / 2), 2, Content, true);
-            warrior2 = new Warrior(new Vector2(WidthXbox / 2, 0), 4, Content, false);
-            archer = new Archer(new Vector2(WidthXbox, HeightXbox / 2), 1, Content, true);
-            archer2 = new Archer(new Vector2(WidthXbox / 2, HeightXbox), 3, Content, false);
+            warrior = new Warrior();
+            warrior2 = new Warrior(true);
+            archer = new Archer();
+            archer2 = new Archer(true);
             
             base.Initialize();
         }
@@ -71,10 +74,15 @@ namespace PrototypeTowerDefense
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             background = Content.Load<Texture2D>("background");
-            warrior.load();
-            warrior2.load();
-            archer.load();
-            archer2.load();
+            warrior.load(Content);
+            warrior2.load(Content);
+            archer.load(Content);
+            archer2.load(Content);
+
+            warrior.setPosition(new Vector2(0, sizeHeight / 2), DIRECTION.RIGHT);
+            warrior2.setPosition(new Vector2(sizeWidth / 2, 0), DIRECTION.DOWN);
+            archer.setPosition(new Vector2(sizeWidth, sizeHeight / 2), DIRECTION.LEFT);
+            archer2.setPosition(new Vector2(sizeWidth / 2, sizeHeight), DIRECTION.UP);
         }
 
         /// <summary>
@@ -103,10 +111,10 @@ namespace PrototypeTowerDefense
             if (keyboard.IsKeyDown(Keys.Escape) || gamepad.Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            warrior.update(gameTime, keyboard, gamepad);
-            warrior2.update(gameTime, keyboard, gamepad);
-            archer.update(gameTime, keyboard, gamepad);
-            archer2.update(gameTime, keyboard, gamepad);
+            warrior.update(gameTime);
+            warrior2.update(gameTime);
+            archer.update(gameTime);
+            archer2.update(gameTime);
 
             base.Update(gameTime);
         }
@@ -122,6 +130,7 @@ namespace PrototypeTowerDefense
             spriteBatch.Begin();
 
             spriteBatch.Draw(background, new Vector2(), Color.White);
+
             warrior.draw(spriteBatch);
             warrior2.draw(spriteBatch);
             archer.draw(spriteBatch);

@@ -17,82 +17,27 @@ namespace PrototypeTowerDefense
     class ConfSprite
     {
         Texture2D texture;
-        float timer = 0f;
-        float interval;
-        int currentFrame;
+        ContentManager content;
+        DIRECTION direction;
+
+        int sizeWidth;
+        int sizeHeight;
         int nbFrames;
-        int spriteWidth;
-        int spriteHeight;
-        int nbSpriteWidth;
-        Rectangle sourceRect;
 
-        Vector2 origin;
+        float interval;
 
-
-        public ConfSprite(Texture2D textureW, float spriteWidthW, float spriteHeightW, int nbFramesW, float intervalW, int nbSpriteWidthW)
+        public ConfSprite(Texture2D newTexture, ContentManager newContent, DIRECTION newDirection,
+                          int spriteWidthW, int spriteHeightW, int nbFramesW, float intervalW, int nbSpriteWidthW)
         {
-            texture = textureW;
-            spriteWidth = Convert.ToInt32(spriteWidthW);
-            spriteHeight = Convert.ToInt32(spriteHeightW);
-            currentFrame = 0;
+            texture = newTexture;
+            content = newContent;
+            direction = newDirection;
+
+            sizeWidth = spriteWidthW;
+            sizeHeight = spriteHeightW;
             nbFrames = nbFramesW;
+
             interval = intervalW;
-            nbSpriteWidth = nbSpriteWidthW;
-        }
-
-        public void unload()
-        {
-            texture.Dispose();
-        }
-
-        public void resetVar()
-        {
-            currentFrame = 0;
-            timer = 0;
-        }
-
-        public void updateSprite(GameTime gameTime)
-        {
-            /* Si plusieurs etage de sprites
-            
-            int currentVerticalFrame = 0;
-            int tmpCalc = currentFrame;
-
-            while (tmpCalc >= nbSpriteWidth)
-            {
-                tmpCalc -= nbSpriteWidth;
-                currentVerticalFrame += 1;
-            }
-             */
-
-            sourceRect = new Rectangle(currentFrame * spriteWidth, 0, spriteWidth, spriteHeight);
-
-            
-            origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
-
-            timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (timer > interval)
-            {
-                currentFrame++;
-
-                if (currentFrame >= nbFrames)
-                    currentFrame = 0;
-
-                timer = 0f;
-            }
-        }
-
-
-        public Rectangle SourceRect
-        {
-            get { return sourceRect; }
-            set { sourceRect = value; }
-        }
-
-        public Vector2 Origin
-        {
-            get { return origin; }
-            set { origin = value; }
         }
 
         public Texture2D Texture
@@ -101,5 +46,40 @@ namespace PrototypeTowerDefense
             set { texture = value; }
         }
 
+        public ContentManager Content
+        {
+            get { return content; }
+            set { content = value; }
+        }
+
+        public DIRECTION Direction
+        {
+            get { return direction; }
+            set { direction = value; }
+        }
+
+        public int SizeWidth
+        {
+            get { return sizeWidth; }
+            set { sizeWidth = value; }
+        }
+
+        public int SizeHeight
+        {
+            get { return sizeHeight; }
+            set { sizeWidth = value; }
+        }
+
+        public int NbFrames
+        {
+            get { return nbFrames; }
+            set { nbFrames = value; }
+        }
+
+        public float Interval
+        {
+            get { return interval; }
+            set { interval = value; }
+        }
     }
 }
