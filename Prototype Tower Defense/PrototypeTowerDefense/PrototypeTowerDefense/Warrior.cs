@@ -20,23 +20,30 @@ namespace PrototypeTowerDefense
         int currentSprite;
         DIRECTION direction;
 
-        public Warrior() : base(10, 2, 15, 1, false)
+        public Warrior() : base(10, 2, 15, 10, 1, false)
         {
             spriteObject = new SpriteObject[2];
             currentSprite = 0;
+            if (ennemy == false)
+                position = new Vector2(Game1.sizeWidth / 2, Game1.sizeHeight / 2);
         }
 
-        public Warrior(bool newEnnemy) : base(5, 2, 10, 3, newEnnemy)
+        public Warrior(bool newEnnemy) : base(10, 2, 15, 10, 1, newEnnemy)
         {
             spriteObject = new SpriteObject[2];
             currentSprite = 0;
+            if (ennemy == false)
+                position = new Vector2(Game1.sizeWidth / 2, Game1.sizeHeight / 2);
         }
 
-        public Warrior(int newLife, int newDamage, int newCoolDown, int newRange, bool newEnnemy)
-            : base(newLife, newDamage, newCoolDown, newRange, newEnnemy)
+        public Warrior(int newLife, int newDamage, int coolDownShoot, 
+                       int coolDownWalk, int newRange, bool newEnnemy)
+            : base(newLife, newDamage, coolDownShoot, coolDownWalk, newRange, newEnnemy)
         {
             spriteObject = new SpriteObject[2];
             currentSprite = 0;
+            if (ennemy == false)
+                position = new Vector2(Game1.sizeWidth / 2, Game1.sizeHeight / 2);
         }
 
         public void load(ContentManager content)
@@ -59,7 +66,7 @@ namespace PrototypeTowerDefense
             spriteObject[1].unload();
         }
 
-        public void setPosition(Vector2 newPosition, DIRECTION newDirection)
+        public void setPositionDirection(Vector2 newPosition, DIRECTION newDirection)
         {
             position = newPosition;
             direction = newDirection;
@@ -67,7 +74,7 @@ namespace PrototypeTowerDefense
 
         public void update(GameTime gameTime)
         {
-            moveSprite();
+            move(direction);
 
             spriteObject[currentSprite].Update(gameTime);
         }
@@ -82,37 +89,6 @@ namespace PrototypeTowerDefense
                 effect = SpriteEffects.FlipHorizontally;
 
             spriteObject[currentSprite].draw(sb, effect, position);
-        }
-
-        private void moveSprite()
-        {
-            switch (direction)
-            {
-                case DIRECTION.DOWN:
-                    {
-                        if (position.Y <= Game1.sizeHeight / 2)
-                            position.Y += 1;
-                    }
-                    break;
-                case DIRECTION.UP:
-                    {
-                        if (position.Y >= Game1.sizeHeight / 2)
-                            position.Y -= 1;
-                    }
-                    break;
-                case DIRECTION.RIGHT:
-                    {
-                        if (position.X <= Game1.sizeWidth / 2)
-                            position.X += 1;
-                    }
-                    break;
-                case DIRECTION.LEFT:
-                    {
-                        if (position.X >= Game1.sizeWidth / 2)
-                            position.X -= 1;
-                    }
-                    break;
-            }
         }
 
         public SpriteObject[] SpriteObject

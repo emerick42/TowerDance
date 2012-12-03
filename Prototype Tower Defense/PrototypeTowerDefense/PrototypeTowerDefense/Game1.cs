@@ -79,10 +79,11 @@ namespace PrototypeTowerDefense
             archer.load(Content);
             archer2.load(Content);
 
-            warrior.setPosition(new Vector2(0, sizeHeight / 2), DIRECTION.RIGHT);
-            warrior2.setPosition(new Vector2(sizeWidth / 2, 0), DIRECTION.DOWN);
-            archer.setPosition(new Vector2(sizeWidth, sizeHeight / 2), DIRECTION.LEFT);
-            archer2.setPosition(new Vector2(sizeWidth / 2, sizeHeight), DIRECTION.UP);
+            warrior.Direction = DIRECTION.LEFT;
+//            warrior.setPositionDirection(new Vector2(0, sizeHeight / 2), DIRECTION.RIGHT);
+            warrior2.setPositionDirection(new Vector2(sizeWidth / 2, 0), DIRECTION.DOWN);
+            archer.Direction = DIRECTION.RIGHT;
+            archer2.setPositionDirection(new Vector2(sizeWidth / 2, sizeHeight), DIRECTION.UP);
         }
 
         /// <summary>

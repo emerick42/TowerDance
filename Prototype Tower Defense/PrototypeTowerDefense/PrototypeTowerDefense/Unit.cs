@@ -5,27 +5,71 @@ using System.Text;
 
 namespace PrototypeTowerDefense
 {
-    class Unit : IObject
+    class Unit : Entity
     {
-        protected int lifePoint;
         protected int damage;
-        protected int coolDown;
+        protected int coolDownShoot;
+        protected int coolDownWalk;
         protected int range;
-        protected bool ennemy;
 
-        public Unit(int life, int newDamage, int coolD, int newRange, bool newEnnemy)
+        public Unit(int life, int newDamage, int coolD, int coolW, int newRange, bool ennemy)
+            : base(life, ennemy)
         {
-            lifePoint = life;
             damage = newDamage;
-            coolDown = coolD;
+            coolDownShoot = coolD;
+            coolDownWalk = coolW;
             range = newRange;
-            ennemy = newEnnemy;
         }
 
-        public int LifePoint
+        public void move(DIRECTION direction)
         {
-            get { return lifePoint; }
-            set { lifePoint = value; }
+            int limitX = 0;
+            int limitY = 0;
+
+            if (ennemy)
+            {
+                limitX = Game1.sizeWidth / 2;
+                limitY = Game1.sizeHeight / 2;
+            }
+            else
+            {
+                if (direction == DIRECTION.UP)
+                    limitY = Game1.sizeHeight / 4;
+                else if (direction == DIRECTION.DOWN)
+                    limitY = Game1.sizeHeight - (Game1.sizeHeight / 4);
+                else if (direction == DIRECTION.LEFT)
+                    limitX = Game1.sizeWidth / 4;
+                else
+                    limitX = Game1.sizeWidth - (Game1.sizeWidth / 4);
+            }
+
+            switch (direction)
+            {
+                case DIRECTION.DOWN:
+                    {
+                        if (position.Y <= limitY)
+                            position.Y += 1;
+                    }
+                    break;
+                case DIRECTION.UP:
+                    {
+                        if (position.Y >= limitY)
+                            position.Y -= 1;
+                    }
+                    break;
+                case DIRECTION.RIGHT:
+                    {
+                        if (position.X <= limitX)
+                            position.X += 1;
+                    }
+                    break;
+                case DIRECTION.LEFT:
+                    {
+                        if (position.X >= limitX)
+                            position.X -= 1;
+                    }
+                    break;
+            }
         }
 
         public int Damage
@@ -34,10 +78,16 @@ namespace PrototypeTowerDefense
             set { damage = value; }
         }
 
-        public int CoolDown
+        public int CoolDownShoot
         {
-            get { return coolDown; }
-            set { coolDown = value; }
+            get { return coolDownShoot; }
+            set { coolDownShoot = value; }
+        }
+
+        public int CoolDownWalk
+        {
+            get { return coolDownWalk; }
+            set { coolDownWalk = value; }
         }
 
         public int Range
@@ -46,10 +96,5 @@ namespace PrototypeTowerDefense
             set { range = value; }
         }
 
-        public bool Ennemy
-        {
-            get { return ennemy; }
-            set { ennemy = value; }
-        }
     }
 }
