@@ -21,8 +21,8 @@ namespace DDR
         public float offset;
         public float sampleStart;
         public float sampleLength;
-        public List<TimeValue> bpms = new List<TimeValue>();
-        public List<TimeValue> stops = new List<TimeValue>();
+        public List<BeatValue> bpms = new List<BeatValue>();
+        public List<BeatValue> stops = new List<BeatValue>();
         public List<MusicSheet> musicSheets = new List<MusicSheet>();
         public string directory;
 

@@ -114,12 +114,13 @@
     <Compile Include="IParser.cs" />
     <Compile Include="IWindowConfiguration.cs" />
     <Compile Include="MusicSheet.cs" />
+    <Compile Include="Note.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="SMParser.cs" />
     <Compile Include="Song.cs" />
-    <Compile Include="TimeValue.cs" />
+    <Compile Include="BeatValue.cs" />
     <Compile Include="WindowConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
