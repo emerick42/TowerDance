@@ -76,7 +76,7 @@ namespace DDR
                 Group bpm = match.Groups["bpm"];
                 if (begin != null && bpm != null)
                 {
-                    _song.bpms.Add(new TimeValue(float.Parse(begin.ToString()), float.Parse(bpm.ToString())));
+                    _song.bpms.Add(new BeatValue((int)float.Parse(begin.ToString()), float.Parse(bpm.ToString())));
                 }
             }
         }
@@ -92,7 +92,7 @@ namespace DDR
                 Group bpm = match.Groups["bpm"];
                 if (begin != null && bpm != null)
                 {
-                    _song.stops.Add(new TimeValue(float.Parse(begin.ToString()), float.Parse(bpm.ToString())));
+                    _song.stops.Add(new BeatValue((int)float.Parse(begin.ToString()), float.Parse(bpm.ToString())));
                 }
             }
         }
@@ -120,7 +120,8 @@ namespace DDR
                             ms.measures.Add(measure.ToString());
                         }
                     }
-                    _song.musicSheets.Add(ms);
+                    if (ms.notesType == "dance-single")
+                        _song.musicSheets.Add(ms);
                 }
             }
         }
