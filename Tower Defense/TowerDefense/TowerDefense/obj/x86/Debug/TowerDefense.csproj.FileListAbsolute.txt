@@ -1,0 +1,17 @@
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Debug\Content\ArcherHitAllies.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Debug\Content\ArcherHitEnnemy.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Debug\Content\ArcherWalkAllies.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Debug\Content\ArcherWalkEnnemy.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Debug\Content\Arrow.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Debug\Content\BackGround.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Debug\Content\WarriorHitAllies.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Debug\Content\WarriorHitEnnemy.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Debug\Content\WarriorWalkAllies.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Debug\Content\WarriorWalkEnnemy.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Debug\Content\castle.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Debug\TowerDefense.exe
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Debug\TowerDefense.pdb
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\obj\x86\Debug\TowerDefense.exe
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\obj\x86\Debug\TowerDefense.pdb

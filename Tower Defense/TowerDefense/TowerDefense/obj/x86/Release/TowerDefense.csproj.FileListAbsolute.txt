@@ -1,0 +1,17 @@
+C:\Users\Miraboule\Desktop\TowerDance\Prototype Tower Defense\PrototypeTowerDefense\PrototypeTowerDefense\bin\x86\Release\Content\BackGround.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Prototype Tower Defense\PrototypeTowerDefense\PrototypeTowerDefense\bin\x86\Release\Content\WarriorHitAllies.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Prototype Tower Defense\PrototypeTowerDefense\PrototypeTowerDefense\bin\x86\Release\Content\WarriorHitEnnemy.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Prototype Tower Defense\PrototypeTowerDefense\PrototypeTowerDefense\bin\x86\Release\Content\WarriorWalkAllies.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Prototype Tower Defense\PrototypeTowerDefense\PrototypeTowerDefense\bin\x86\Release\Content\WarriorWalkEnnemy.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Prototype Tower Defense\PrototypeTowerDefense\PrototypeTowerDefense\bin\x86\Release\Content\ArcherWalkAllies.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Prototype Tower Defense\PrototypeTowerDefense\PrototypeTowerDefense\bin\x86\Release\Content\ArcherWalkEnnemy.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Prototype Tower Defense\PrototypeTowerDefense\PrototypeTowerDefense\bin\x86\Release\Content\ArcherHitAllies.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Prototype Tower Defense\PrototypeTowerDefense\PrototypeTowerDefense\bin\x86\Release\Content\ArcherHitEnnemy.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Prototype Tower Defense\PrototypeTowerDefense\PrototypeTowerDefense\bin\x86\Release\Content\Arrow.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Prototype Tower Defense\PrototypeTowerDefense\PrototypeTowerDefense\bin\x86\Release\Content\castle.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Prototype Tower Defense\PrototypeTowerDefense\PrototypeTowerDefense\bin\x86\Release\PrototypeTowerDefense.exe
+C:\Users\Miraboule\Desktop\TowerDance\Prototype Tower Defense\PrototypeTowerDefense\PrototypeTowerDefense\bin\x86\Release\PrototypeTowerDefense.pdb
+C:\Users\Miraboule\Desktop\TowerDance\Prototype Tower Defense\PrototypeTowerDefense\PrototypeTowerDefense\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\Miraboule\Desktop\TowerDance\Prototype Tower Defense\PrototypeTowerDefense\PrototypeTowerDefense\obj\x86\Release\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Miraboule\Desktop\TowerDance\Prototype Tower Defense\PrototypeTowerDefense\PrototypeTowerDefense\obj\x86\Release\PrototypeTowerDefense.exe
+C:\Users\Miraboule\Desktop\TowerDance\Prototype Tower Defense\PrototypeTowerDefense\PrototypeTowerDefense\obj\x86\Release\PrototypeTowerDefense.pdb
