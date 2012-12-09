@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Input;
 
 namespace TowerDefense
 {
@@ -22,16 +23,16 @@ namespace TowerDefense
         GraphicsDeviceManager graphics;
 
         List<Entity> listEntity;
-        CollisionAction collisionAction;
         View view;
+        Player player;
 
         Warrior warrior;
         Warrior warrior2;
-        Warrior warrior3;
         Archer archer;
-        Archer archer2;
 
         Castle castle;
+
+        ControlInput controlInput;
 
         World world;
 
@@ -39,11 +40,6 @@ namespace TowerDefense
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
-            collisionAction = new CollisionAction();
-            world = new World();
-            listEntity = new List<Entity>();
-            view = new View();
         }
 
         /// <summary>
@@ -63,20 +59,26 @@ namespace TowerDefense
 
             this.Window.AllowUserResizing = false;
 
+            world = new World();
+            world.CollisionAction = new CollisionAction();
+            listEntity = new List<Entity>();
+            view = new View();
+            player = new Player();
+
+            player.setChoiceUnit();
+
+            controlInput = new ControlInput();
 
             // CONFIGURE BEFORE ADD IN DA LIST
-            warrior = new Warrior();
+ 
+            warrior = new Warrior(true);
             warrior2 = new Warrior(true);
-            warrior3 = new Warrior(true);
-            archer = new Archer();
-            archer2 = new Archer(true);
+            archer = new Archer(true);
             castle = new Castle();
 
-            warrior.Direction = DIRECTION.UP; // DIRECTION.LEFT
-            warrior2.setPositionDirection(new Vector2(sizeWidth / 2, 0), DIRECTION.DOWN);
-            warrior3.setPositionDirection(new Vector2(sizeWidth / 2, 40), DIRECTION.DOWN);
-            archer.Direction = DIRECTION.RIGHT;
-            archer2.setPositionDirection(new Vector2(sizeWidth, sizeHeight / 2), DIRECTION.LEFT);
+            warrior.setPositionDirection(new Vector2(sizeWidth / 2, 0), DIRECTION.DOWN);
+            warrior2.setPositionDirection(new Vector2(0, sizeHeight / 2), DIRECTION.RIGHT);
+            archer.setPositionDirection(new Vector2(sizeWidth, sizeHeight / 2), DIRECTION.LEFT);
 
             base.Initialize();
         }
@@ -92,13 +94,12 @@ namespace TowerDefense
 
             world.setTexture(Content.Load<Texture2D>("background"));
 
+            controlInput.SaveInput();
             listEntity.Add(castle); // FIRST
 
             listEntity.Add(warrior);
             listEntity.Add(warrior2);
-            listEntity.Add(warrior3);
             listEntity.Add(archer);
-            listEntity.Add(archer2);
 
             foreach (Entity entity in listEntity)
                 entity.load(Content);
@@ -124,15 +125,22 @@ namespace TowerDefense
             KeyboardState keyboard = Keyboard.GetState();
             GamePadState gamepad = GamePad.GetState(PlayerIndex.One);
 
-            if (keyboard.IsKeyDown(Keys.Escape) || gamepad.Buttons.Back == ButtonState.Pressed)
+            if (controlInput.isPressed(ListKey.PAUSE))
                 this.Exit();
+
+            controlInput.update();
+
+            player.updateInput(controlInput);
+
+            if (player.newUnit())
+                listEntity.Add(player.createUnit(Content));
 
             listEntity = refreshListEntity();
 
-            collisionAction.start(listEntity);
-
             foreach (EntityUnit entity in listEntity)
                 entity.update(gameTime);
+
+            world.CollisionAction.start(listEntity);
 
             base.Update(gameTime);
         }

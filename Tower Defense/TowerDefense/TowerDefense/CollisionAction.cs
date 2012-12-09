@@ -22,9 +22,10 @@ namespace TowerDefense
             {
                 foreach (EntityUnit checkEntity in listEntity)
                 {
-                    if (entity != checkEntity)
+                    if (entity != checkEntity && entity.Ennemy != checkEntity.Ennemy
+                        && (entity.LifePoint > 0 || checkEntity.LifePoint > 0))
                     {
-                        if (checkCollision(entity, checkEntity) == true)
+                        if (entity.Sphere.Intersect(checkEntity.Sphere))
                         {
                             entity.setAction(checkEntity, true);
                             break;
@@ -32,26 +33,11 @@ namespace TowerDefense
                         else
                             entity.setAction(checkEntity, false);
                     }
+                    else
+                        entity.setAction(checkEntity, false);
                 }
             }
         }
-
-        private bool checkCollision(EntityUnit unit1, EntityUnit unit2)
-        {
-        	Point d;
-
-            d.X = (int)(unit1.Sphere.Center.X - unit2.Sphere.Center.X);
-            d.Y = (int)(unit1.Sphere.Center.Y - unit2.Sphere.Center.Y); 
-            int dist2 = d.X * d.X + d.Y * d.Y;
-
-            float radiusSum = unit1.Sphere.Radius;
-
-
-            if (dist2 <= radiusSum * radiusSum)
-                return true;
-            else
-                return false; 
-         } 
 
     }
 }

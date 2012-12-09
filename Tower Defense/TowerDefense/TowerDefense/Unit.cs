@@ -38,7 +38,7 @@ namespace TowerDefense
 
         public override void load(ContentManager content) {}
         public override void unload() { }
-        public override void update(GameTime gameTime) { }
+        public override void update(GameTime gameTime) {  }
         public override void draw(SpriteBatch sb) {}
         public override void setAction(EntityUnit entityUnit, bool attack) { }
 
@@ -52,16 +52,17 @@ namespace TowerDefense
                 limitX = ControllerGame.sizeWidth / 2;
                 limitY = ControllerGame.sizeHeight / 2;
             }
+                
             else
             {
                 if (direction == DIRECTION.UP)
-                    limitY = ControllerGame.sizeHeight / 4;
+                    limitY = 0;
                 else if (direction == DIRECTION.DOWN)
-                    limitY = ControllerGame.sizeHeight - (ControllerGame.sizeHeight / 4);
+                    limitY = ControllerGame.sizeHeight ;
                 else if (direction == DIRECTION.LEFT)
-                    limitX = ControllerGame.sizeWidth / 4;
+                    limitX = 0;
                 else
-                    limitX = ControllerGame.sizeWidth - (ControllerGame.sizeWidth / 4);
+                    limitX = ControllerGame.sizeWidth;
             }
 
             switch (direction)

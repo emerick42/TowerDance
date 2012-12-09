@@ -30,8 +30,14 @@ C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bi
 C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Release\Content\ArcherStandEnnemy.xnb
 C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Release\Content\WarriorStandAllies.xnb
 C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Release\Content\WarriorStandEnnemy.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Release\Content\ArcherDieAllies.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Release\Content\ArcherDieEnnemy.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Release\Content\WarriorDieAllies.xnb
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Release\Content\WarriorDieEnnemy.xnb
 C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Release\TowerDefense.exe
 C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Release\TowerDefense.pdb
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Release\ControlInput.dll
+C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\bin\x86\Release\ControlInput.pdb
 C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\obj\x86\Release\ResolveAssemblyReference.cache
 C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\obj\x86\Release\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefense\obj\x86\Release\TowerDefense.exe

@@ -30,7 +30,8 @@ namespace TowerDefense
                 position = new Vector2(ControllerGame.sizeWidth / 2, ControllerGame.sizeHeight / 2);
         }
 
-        public Archer(bool newEnnemy) : base(5, 4, 900, 400, 200, newEnnemy)
+        public Archer(bool newEnnemy)
+            : base(5, 4, 900, 400, 200, newEnnemy)
         {
             spriteObject = new SpriteObject[3];
             currentSprite = ACTION.MOVE;
@@ -52,15 +53,15 @@ namespace TowerDefense
         {
             if (ennemy)
             {
-                spriteObject[(int)(ACTION.DIE)] = new SpriteObject(content.Load<Texture2D>("ArcherStandEnnemy"), 56, 88, 1, 10f);
+                spriteObject[(int)(ACTION.DIE)] = new SpriteObject(content.Load<Texture2D>("ArcherDieEnnemy"), 74, 88, 3, 180f);
                 spriteObject[(int)(ACTION.MOVE)] = new SpriteObject(content.Load<Texture2D>("ArcherWalkEnnemy"), 78, 88, 5, 120f);
-                spriteObject[(int)(ACTION.ATTACK)] = new SpriteObject(content.Load<Texture2D>("ArcherHitEnnemy"), 112, 88, 29, 100f);
+                spriteObject[(int)(ACTION.ATTACK)] = new SpriteObject(content.Load<Texture2D>("ArcherHitEnnemy"), 112, 88, 29, 60f);
             }
             else
             {
-                spriteObject[(int)(ACTION.DIE)] = new SpriteObject(content.Load<Texture2D>("ArcherStandAllies"), 56, 88, 1, 10f);
+                spriteObject[(int)(ACTION.DIE)] = new SpriteObject(content.Load<Texture2D>("ArcherDieAllies"), 74, 88, 3, 180f);
                 spriteObject[(int)(ACTION.MOVE)] = new SpriteObject(content.Load<Texture2D>("ArcherWalkAllies"), 78, 88, 5, 120f);
-                spriteObject[(int)(ACTION.ATTACK)] = new SpriteObject(content.Load<Texture2D>("ArcherHitAllies"), 112, 88, 29, 100f);
+                spriteObject[(int)(ACTION.ATTACK)] = new SpriteObject(content.Load<Texture2D>("ArcherHitAllies"), 112, 88, 29, 60f);
             }
         }
 
@@ -81,6 +82,13 @@ namespace TowerDefense
         {
             currentCoolDownShoot -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             currentCoolDownWalk -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            if (currentSprite == ACTION.DIE)
+            {
+                spriteObject[(int)(currentSprite)].Update(gameTime);
+                if (spriteObject[(int)(currentSprite)].Finish == true)
+                    outWorld = true;
+            }
 
             if (currentSprite == ACTION.ATTACK)
             {
@@ -111,9 +119,12 @@ namespace TowerDefense
                 spriteObject[(int)(currentSprite)].Update(gameTime);
             }
 
-            boundingSphere.Radius = range;
-            boundingSphere.Center.X = position.X;
-            boundingSphere.Center.Y = position.Y;
+            if (lifePoint <= 0)
+                currentSprite = ACTION.DIE;
+
+            previousSprite = currentSprite;
+
+            boundingSphere = new CollideSphere(position.X, position.Y, range);
         }
 
         public override void draw(SpriteBatch sb)
@@ -130,9 +141,9 @@ namespace TowerDefense
 
         public override void setAction(EntityUnit entityUnit, bool attack)
         {
-            if (attack)
+            if (currentSprite != ACTION.DIE)
             {
-                if (ennemy != entityUnit.Ennemy)
+                if (attack)
                 {
                     currentSprite = ACTION.ATTACK;
                     recipientUnit = entityUnit;
@@ -140,8 +151,6 @@ namespace TowerDefense
                 else
                     currentSprite = ACTION.MOVE;
             }
-            else
-                currentSprite = ACTION.MOVE;
         }
 
         public SpriteObject[] SpriteObject
@@ -165,5 +174,6 @@ namespace TowerDefense
             get { return direction; }
             set { direction = value; }
         }
+
     }
 }

@@ -40,9 +40,7 @@ namespace TowerDefense
 
         public override void update(GameTime gameTime)
         {
-            boundingSphere.Radius = 1;
-            boundingSphere.Center.X = position.X;
-            boundingSphere.Center.Y = position.Y;
+            boundingSphere = new CollideSphere(position.X, position.Y, 1);
 
             spriteObject.Update(gameTime);
         }

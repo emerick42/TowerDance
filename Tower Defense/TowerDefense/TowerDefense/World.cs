@@ -17,6 +17,7 @@ namespace TowerDefense
     class World : Entity
     {
         Texture2D textureBack;
+        CollisionAction collisionAction;
 
         public World()
         {
@@ -47,6 +48,12 @@ namespace TowerDefense
         public override bool isAvailable()
         {
             throw new NotImplementedException();
+        }
+
+        public CollisionAction CollisionAction
+        {
+            get { return collisionAction; }
+            set { collisionAction = value; }
         }
     }
 }

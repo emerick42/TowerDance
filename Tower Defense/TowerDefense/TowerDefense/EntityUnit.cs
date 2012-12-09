@@ -12,12 +12,14 @@ namespace TowerDefense
     {
         protected int lifePoint;
         protected bool ennemy;
-        protected BoundingSphere boundingSphere;
+        protected CollideSphere boundingSphere;
+        protected bool outWorld;
 
         public EntityUnit(int newLife, bool newEnnemy)
         {
             lifePoint = newLife;
             ennemy = newEnnemy;
+            outWorld = false;
         }
 
         public override void load(ContentManager content) {}
@@ -26,7 +28,7 @@ namespace TowerDefense
         public override void draw(SpriteBatch sb) { }
         public override bool isAvailable()
         {
-            if (lifePoint <= 0)
+            if (outWorld)
                 return false;
             return true;
         }
@@ -45,9 +47,15 @@ namespace TowerDefense
             set { ennemy = value; }
         }
 
-        public BoundingSphere Sphere
+        public CollideSphere Sphere
         {
             get { return boundingSphere; }
+        }
+
+        public bool OutWorld
+        {
+            get { return outWorld; }
+            set { outWorld = value; }
         }
     }
 }

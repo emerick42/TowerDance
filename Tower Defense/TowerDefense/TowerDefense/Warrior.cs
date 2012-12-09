@@ -22,7 +22,7 @@ namespace TowerDefense
         DIRECTION direction;
         EntityUnit recipientUnit;
 
-        public Warrior() : base(10, 2, 1000, 500, 12, false)
+        public Warrior() : base(10, 3, 1000, 500, 40, false)
         {
             spriteObject = new SpriteObject[3];
             currentSprite = ACTION.MOVE;
@@ -30,7 +30,7 @@ namespace TowerDefense
                 position = new Vector2(ControllerGame.sizeWidth / 2, ControllerGame.sizeHeight / 2);
         }
 
-        public Warrior(bool newEnnemy) : base(10, 2, 1000, 500, 12, newEnnemy)
+        public Warrior(bool newEnnemy) : base(10, 3, 1000, 500, 40, newEnnemy)
         {
             spriteObject = new SpriteObject[3];
             currentSprite = ACTION.MOVE;
@@ -52,15 +52,15 @@ namespace TowerDefense
         {
             if (ennemy)
             {
-                spriteObject[(int)(ACTION.DIE)] = new SpriteObject(content.Load<Texture2D>("WarriorWalkEnnemy"), 40, 95, 1, 10f);
+                spriteObject[(int)(ACTION.DIE)] = new SpriteObject(content.Load<Texture2D>("WarriorDieEnnemy"), 64, 95, 3, 180f);
                 spriteObject[(int)(ACTION.MOVE)] = new SpriteObject(content.Load<Texture2D>("WarriorWalkEnnemy"), 70, 95, 5, 120f);
-                spriteObject[(int)(ACTION.ATTACK)] = new SpriteObject(content.Load<Texture2D>("WarriorHitEnnemy"), 102, 95, 20, 100f);
+                spriteObject[(int)(ACTION.ATTACK)] = new SpriteObject(content.Load<Texture2D>("WarriorHitEnnemy"), 102, 95, 20, 70f);
             }
             else
             {
-                spriteObject[(int)(ACTION.DIE)] = new SpriteObject(content.Load<Texture2D>("WarriorStandAllies"), 40, 95, 1, 10f);
+                spriteObject[(int)(ACTION.DIE)] = new SpriteObject(content.Load<Texture2D>("WarriorDieAllies"), 64, 95, 1, 180f);
                 spriteObject[(int)(ACTION.MOVE)] = new SpriteObject(content.Load<Texture2D>("WarriorWalkAllies"), 70, 95, 5, 120f);
-                spriteObject[(int)(ACTION.ATTACK)] = new SpriteObject(content.Load<Texture2D>("WarriorHitAllies"), 102, 95, 20, 100f);
+                spriteObject[(int)(ACTION.ATTACK)] = new SpriteObject(content.Load<Texture2D>("WarriorHitAllies"), 102, 95, 20, 70f);
             }
         }
 
@@ -79,8 +79,16 @@ namespace TowerDefense
 
         public override void update(GameTime gameTime)
         {
+            
             currentCoolDownShoot -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             currentCoolDownWalk -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            if (currentSprite == ACTION.DIE)
+            {
+                spriteObject[(int)(currentSprite)].Update(gameTime);
+                if (spriteObject[(int)(currentSprite)].Finish == true)
+                    outWorld = true;
+            }
 
             if (currentSprite == ACTION.ATTACK)
             {
@@ -111,10 +119,12 @@ namespace TowerDefense
                     spriteObject[(int)(currentSprite)].Update(gameTime);
             }
 
+            if (lifePoint <= 0)
+                currentSprite = ACTION.DIE;
+
             previousSprite = currentSprite;
-            boundingSphere.Radius = range;
-            boundingSphere.Center.X = position.X;
-            boundingSphere.Center.Y = position.Y;
+
+            boundingSphere = new CollideSphere(position.X, position.Y, range);
         }
 
         public override void draw(SpriteBatch sb)
@@ -131,9 +141,9 @@ namespace TowerDefense
 
         public override void setAction(EntityUnit entityUnit, bool attack)
         {
-            if (attack)
+            if (currentSprite != ACTION.DIE)
             {
-                if (ennemy != entityUnit.Ennemy)
+                if (attack)
                 {
                     currentSprite = ACTION.ATTACK;
                     recipientUnit = entityUnit;
@@ -141,8 +151,6 @@ namespace TowerDefense
                 else
                     currentSprite = ACTION.MOVE;
             }
-            else
-                currentSprite = ACTION.MOVE;
         }
 
         public SpriteObject[] SpriteObject
