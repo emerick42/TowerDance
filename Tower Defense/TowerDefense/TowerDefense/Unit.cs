@@ -8,11 +8,21 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace TowerDefense
 {
+    public enum ACTION
+    {
+        DIE = 0,
+        MOVE,
+        ATTACK
+    }
+
     class Unit : EntityUnit
     {
         protected int damage;
         protected int coolDownShoot;
         protected int coolDownWalk;
+        protected float currentCoolDownShoot;
+        protected float currentCoolDownWalk;
+        protected float timer;
         protected int range;
 
         public Unit(int life, int newDamage, int coolD, int coolW, int newRange, bool ennemy)
@@ -21,6 +31,8 @@ namespace TowerDefense
             damage = newDamage;
             coolDownShoot = coolD;
             coolDownWalk = coolW;
+            currentCoolDownShoot = 0;
+            currentCoolDownWalk = 0;
             range = newRange;
         }
 
@@ -28,6 +40,7 @@ namespace TowerDefense
         public override void unload() { }
         public override void update(GameTime gameTime) { }
         public override void draw(SpriteBatch sb) {}
+        public override void setAction(EntityUnit entityUnit, bool attack) { }
 
         public void move(DIRECTION direction)
         {
@@ -96,6 +109,12 @@ namespace TowerDefense
         {
             get { return coolDownWalk; }
             set { coolDownWalk = value; }
+        }
+
+        public float Timer
+        {
+            get { return timer; }
+            set { timer = value; }
         }
 
         public int Range

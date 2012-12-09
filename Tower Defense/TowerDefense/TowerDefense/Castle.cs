@@ -18,7 +18,7 @@ namespace TowerDefense
     {
         SpriteObject spriteObject;
 
-        public Castle() : base(100, false)
+        public Castle() : base(30, false)
         {
             position = new Vector2(ControllerGame.sizeWidth / 2, ControllerGame.sizeHeight / 2);
         }
@@ -40,6 +40,10 @@ namespace TowerDefense
 
         public override void update(GameTime gameTime)
         {
+            boundingSphere.Radius = 1;
+            boundingSphere.Center.X = position.X;
+            boundingSphere.Center.Y = position.Y;
+
             spriteObject.Update(gameTime);
         }
 
@@ -47,6 +51,8 @@ namespace TowerDefense
         {
             spriteObject.draw(sb, SpriteEffects.None, position);
         }
+
+        public override void setAction(EntityUnit entityUnit, bool action) { }
 
         public SpriteObject SpriteObject
         {

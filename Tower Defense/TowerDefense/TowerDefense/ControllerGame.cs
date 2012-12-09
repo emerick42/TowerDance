@@ -22,10 +22,12 @@ namespace TowerDefense
         GraphicsDeviceManager graphics;
 
         List<Entity> listEntity;
+        CollisionAction collisionAction;
         View view;
 
         Warrior warrior;
         Warrior warrior2;
+        Warrior warrior3;
         Archer archer;
         Archer archer2;
 
@@ -38,6 +40,7 @@ namespace TowerDefense
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
+            collisionAction = new CollisionAction();
             world = new World();
             listEntity = new List<Entity>();
             view = new View();
@@ -64,14 +67,16 @@ namespace TowerDefense
             // CONFIGURE BEFORE ADD IN DA LIST
             warrior = new Warrior();
             warrior2 = new Warrior(true);
+            warrior3 = new Warrior(true);
             archer = new Archer();
             archer2 = new Archer(true);
             castle = new Castle();
 
-            warrior.Direction = DIRECTION.LEFT;
+            warrior.Direction = DIRECTION.UP; // DIRECTION.LEFT
             warrior2.setPositionDirection(new Vector2(sizeWidth / 2, 0), DIRECTION.DOWN);
+            warrior3.setPositionDirection(new Vector2(sizeWidth / 2, 40), DIRECTION.DOWN);
             archer.Direction = DIRECTION.RIGHT;
-            archer2.setPositionDirection(new Vector2(sizeWidth / 2, sizeHeight), DIRECTION.UP);
+            archer2.setPositionDirection(new Vector2(sizeWidth, sizeHeight / 2), DIRECTION.LEFT);
 
             base.Initialize();
         }
@@ -87,12 +92,11 @@ namespace TowerDefense
 
             world.setTexture(Content.Load<Texture2D>("background"));
 
-            listEntity.Add(world); // FIRST
-
-            listEntity.Add(castle); // SECOND
+            listEntity.Add(castle); // FIRST
 
             listEntity.Add(warrior);
             listEntity.Add(warrior2);
+            listEntity.Add(warrior3);
             listEntity.Add(archer);
             listEntity.Add(archer2);
 
@@ -123,7 +127,11 @@ namespace TowerDefense
             if (keyboard.IsKeyDown(Keys.Escape) || gamepad.Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            foreach (Entity entity in listEntity)
+            listEntity = refreshListEntity();
+
+            collisionAction.start(listEntity);
+
+            foreach (EntityUnit entity in listEntity)
                 entity.update(gameTime);
 
             base.Update(gameTime);
@@ -137,9 +145,21 @@ namespace TowerDefense
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            view.draw(listEntity);
+            view.draw(listEntity, world);
 
             base.Draw(gameTime);
+        }
+
+        private List<Entity> refreshListEntity()
+        {
+            List<Entity> res = new List<Entity>();
+
+            foreach (Entity unit in listEntity)
+            {
+                if (unit.isAvailable())
+                    res.Add(unit);
+            }
+            return res;
         }
     }
 }

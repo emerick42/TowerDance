@@ -17,21 +17,23 @@ namespace TowerDefense
     class Archer : Unit
     {
         SpriteObject [] spriteObject;
-        int currentSprite;
+        ACTION currentSprite;
+        ACTION previousSprite;
         DIRECTION direction;
+        EntityUnit recipientUnit;
 
-        public Archer() : base(5, 2, 10, 8, 3, false)
+        public Archer() : base(5, 4, 900, 400, 200, false)
         {
-            spriteObject = new SpriteObject[2];
-            currentSprite = 0;
+            spriteObject = new SpriteObject[3];
+            currentSprite = ACTION.MOVE;
             if (ennemy == false)
                 position = new Vector2(ControllerGame.sizeWidth / 2, ControllerGame.sizeHeight / 2);
         }
 
-        public Archer(bool newEnnemy) : base(5, 2, 10, 8, 3, newEnnemy)
+        public Archer(bool newEnnemy) : base(5, 4, 900, 400, 200, newEnnemy)
         {
-            spriteObject = new SpriteObject[2];
-            currentSprite = 0;
+            spriteObject = new SpriteObject[3];
+            currentSprite = ACTION.MOVE;
             if (ennemy == false)
                 position = new Vector2(ControllerGame.sizeWidth / 2, ControllerGame.sizeHeight / 2);
         }
@@ -40,8 +42,8 @@ namespace TowerDefense
                       int coolDownWalk, int newRange, bool newEnnemy)
             : base(newLife, newDamage, coolDownShoot, coolDownWalk, newRange, newEnnemy)
         {
-            spriteObject = new SpriteObject[2];
-            currentSprite = 0;
+            spriteObject = new SpriteObject[3];
+            currentSprite = ACTION.MOVE;
             if (ennemy == false)
                 position = new Vector2(ControllerGame.sizeWidth / 2, ControllerGame.sizeHeight / 2);
         }
@@ -50,20 +52,23 @@ namespace TowerDefense
         {
             if (ennemy)
             {
-                spriteObject[0] = new SpriteObject(content.Load<Texture2D>("ArcherWalkEnnemy"), 78, 88, 5, 120f);
-                spriteObject[1] = new SpriteObject(content.Load<Texture2D>("ArcherWalkEnnemy"), 104, 88, 29, 100f);
+                spriteObject[(int)(ACTION.DIE)] = new SpriteObject(content.Load<Texture2D>("ArcherStandEnnemy"), 56, 88, 1, 10f);
+                spriteObject[(int)(ACTION.MOVE)] = new SpriteObject(content.Load<Texture2D>("ArcherWalkEnnemy"), 78, 88, 5, 120f);
+                spriteObject[(int)(ACTION.ATTACK)] = new SpriteObject(content.Load<Texture2D>("ArcherHitEnnemy"), 112, 88, 29, 100f);
             }
             else
             {
-                spriteObject[0] = new SpriteObject(content.Load<Texture2D>("ArcherWalkAllies"), 78, 88, 5, 120f);
-                spriteObject[1] = new SpriteObject(content.Load<Texture2D>("ArcherWalkAllies"), 104, 88, 29, 100f);
+                spriteObject[(int)(ACTION.DIE)] = new SpriteObject(content.Load<Texture2D>("ArcherStandAllies"), 56, 88, 1, 10f);
+                spriteObject[(int)(ACTION.MOVE)] = new SpriteObject(content.Load<Texture2D>("ArcherWalkAllies"), 78, 88, 5, 120f);
+                spriteObject[(int)(ACTION.ATTACK)] = new SpriteObject(content.Load<Texture2D>("ArcherHitAllies"), 112, 88, 29, 100f);
             }
         }
 
         public override void unload()
         {
-            spriteObject[0].unload();
-            spriteObject[1].unload();
+            spriteObject[(int)(ACTION.DIE)].unload();
+            spriteObject[(int)(ACTION.MOVE)].unload();
+            spriteObject[(int)(ACTION.ATTACK)].unload();
         }
 
         public void setPositionDirection(Vector2 newPosition, DIRECTION newDirection)
@@ -74,9 +79,41 @@ namespace TowerDefense
 
         public override void update(GameTime gameTime)
         {
-            move(direction);
+            currentCoolDownShoot -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            currentCoolDownWalk -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            spriteObject[currentSprite].Update(gameTime);
+            if (currentSprite == ACTION.ATTACK)
+            {
+                if (previousSprite == ACTION.MOVE)
+                    spriteObject[(int)(previousSprite)].reset();
+
+                if (currentCoolDownShoot <= 0)
+                {
+                    spriteObject[(int)(currentSprite)].Update(gameTime);
+
+                    if (spriteObject[(int)(currentSprite)].Finish == true)
+                    {
+                        currentCoolDownShoot = coolDownShoot;
+                        currentCoolDownWalk = coolDownWalk;
+
+                        recipientUnit.LifePoint -= damage;
+                        spriteObject[(int)(currentSprite)].Finish = false;
+                    }
+                }
+            }
+
+            if (currentSprite == ACTION.MOVE && currentCoolDownWalk <= 0)
+            {
+                if (previousSprite == ACTION.ATTACK)
+                    spriteObject[(int)(previousSprite)].reset();
+
+                move(direction);
+                spriteObject[(int)(currentSprite)].Update(gameTime);
+            }
+
+            boundingSphere.Radius = range;
+            boundingSphere.Center.X = position.X;
+            boundingSphere.Center.Y = position.Y;
         }
 
         public override void draw(SpriteBatch sb)
@@ -88,16 +125,36 @@ namespace TowerDefense
             else
                 effect = SpriteEffects.FlipHorizontally;
 
-            spriteObject[currentSprite].draw(sb, effect, position);
+            spriteObject[(int)(currentSprite)].draw(sb, effect, position);
         }
 
-        
+        public override void setAction(EntityUnit entityUnit, bool attack)
+        {
+            if (attack)
+            {
+                if (ennemy != entityUnit.Ennemy)
+                {
+                    currentSprite = ACTION.ATTACK;
+                    recipientUnit = entityUnit;
+                }
+                else
+                    currentSprite = ACTION.MOVE;
+            }
+            else
+                currentSprite = ACTION.MOVE;
+        }
+
         public SpriteObject[] SpriteObject
         {
             get { return spriteObject; }
         }
 
-        public int CurrentSprite
+        public SpriteObject this[int index]
+        {
+            get { return spriteObject[index]; }
+        }
+
+        public ACTION CurrentSprite
         {
             get { return currentSprite; }
             set { currentSprite = value; }

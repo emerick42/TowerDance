@@ -14,5 +14,6 @@ namespace TowerDefense
         public abstract void unload();
         public abstract void update(GameTime gameTime);
         public abstract void draw(SpriteBatch sb);
+        public abstract bool isAvailable();
     }
 }

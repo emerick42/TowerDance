@@ -21,11 +21,13 @@ namespace TowerDefense
             spriteBatch = new SpriteBatch(graphicsDevice);
         }
 
-        public void draw(List<Entity> listEntity)
+        public void draw(List<Entity> listEntity, World world)
         {
             spriteBatch.Begin();
 
-            foreach (Entity entity in listEntity)
+            world.draw(spriteBatch);
+
+            foreach (EntityUnit entity in listEntity)
                 entity.draw(spriteBatch);
 
             spriteBatch.End();

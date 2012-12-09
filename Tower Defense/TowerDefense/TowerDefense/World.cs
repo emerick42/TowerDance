@@ -44,5 +44,9 @@ namespace TowerDefense
             sb.Draw(textureBack, position, Color.White);
         }
 
+        public override bool isAvailable()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

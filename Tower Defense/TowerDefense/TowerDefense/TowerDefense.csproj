@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Archer.cs" />
+    <Compile Include="CollisionAction.cs" />
     <Compile Include="World.cs" />
     <Compile Include="Castle.cs" />
     <Compile Include="ConfSprite.cs" />

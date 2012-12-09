@@ -35,6 +35,8 @@ namespace TowerDefense
         float timer;
         float interval;
 
+        bool finish;
+
         public SpriteObject() { }
 
         public SpriteObject(ConfSprite confSprite)
@@ -49,6 +51,8 @@ namespace TowerDefense
 
             currentFrame = 0;
             timer = 0;
+
+            finish = false;
         }
 
         public SpriteObject(Texture2D newTexture,
@@ -65,17 +69,13 @@ namespace TowerDefense
 
             currentFrame = 0;
             timer = 0;
+
+            finish = false;
         }
 
         public void unload()
         {
             texture.Dispose();
-        }
-
-        public void resetSprite()
-        {
-            currentFrame = 0;
-            timer = 0;
         }
 
         public void Update(GameTime gameTime)
@@ -89,17 +89,25 @@ namespace TowerDefense
                 currentFrame += 1;
 
                 if (currentFrame >= nbFrames)
+                {
+                    finish = true;
                     currentFrame = 0;
+                }
 
                 timer = 0f;
             }
 
         }
 
-
         public void draw(SpriteBatch sb, SpriteEffects effect, Vector2 position)
         {
             sb.Draw(texture, position, sourceRect, Color.White, 0f, origin, 1f, effect, 0);
+        }
+
+        public void reset()
+        {
+            currentFrame = 0;
+            finish = false;
         }
 
         public Rectangle SourceRect
@@ -112,6 +120,12 @@ namespace TowerDefense
         {
             get { return origin; }
             set { origin = value; }
+        }
+
+        public bool Finish
+        {
+            get { return finish; }
+            set { finish = value; }
         }
     }
 }
