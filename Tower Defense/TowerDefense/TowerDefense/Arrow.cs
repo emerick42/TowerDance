@@ -60,7 +60,7 @@ namespace TowerDefense
             spriteObject.reset();
         }
 
-        public override void update(GameTime gameTime)
+        public override void update(GameRessource gameRessource)
         {
             if (currentSprite == ACTION.ATTACK)
             {
@@ -73,7 +73,7 @@ namespace TowerDefense
                 move(direction);
 
             boundingSphere = new CollideSphere(position.X, position.Y, range);
-            spriteObject.Update(gameTime);
+            spriteObject.Update(gameRessource);
         }
 
         public override void setAction(EntityUnit entityUnit, bool attack)

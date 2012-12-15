@@ -77,17 +77,25 @@ namespace TowerDefense
             direction = newDirection;
         }
 
-        public override void update(GameTime gameTime)
+        public override void update(GameRessource gameRessource)
         {
-            
-            currentCoolDownShoot -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            currentCoolDownWalk -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            currentCoolDownShoot -= (float)gameRessource.GameTime.ElapsedGameTime.TotalMilliseconds;
+            currentCoolDownWalk -= (float)gameRessource.GameTime.ElapsedGameTime.TotalMilliseconds;
 
             if (currentSprite == ACTION.DIE)
             {
-                spriteObject[(int)(currentSprite)].Update(gameTime);
+                spriteObject[(int)(currentSprite)].Update(gameRessource);
                 if (spriteObject[(int)(currentSprite)].Finish == true)
+                {
+                    if (ennemy)
+                    {
+                        gameRessource.Gold += 15;
+                        Console.Out.WriteLine("Argent --> " + gameRessource.Gold);
+                    }
+
                     outWorld = true;
+                }
             }
 
             if (currentSprite == ACTION.ATTACK)
@@ -97,7 +105,7 @@ namespace TowerDefense
 
                 if (currentCoolDownShoot <= 0)
                 {
-                    spriteObject[(int)(currentSprite)].Update(gameTime);
+                    spriteObject[(int)(currentSprite)].Update(gameRessource);
 
                     if (spriteObject[(int)(currentSprite)].Finish == true)
                     {
@@ -105,6 +113,8 @@ namespace TowerDefense
                         currentCoolDownWalk = coolDownWalk;
 
                         recipientUnit.LifePoint -= damage;
+                        if (recipientUnit.LifePoint <= 0)
+                            recipientUnit.LifePoint = 0;
                         spriteObject[(int)(currentSprite)].Finish = false;
                     }
                 }
@@ -116,7 +126,7 @@ namespace TowerDefense
                     spriteObject[(int)(previousSprite)].reset();
 
                     move(direction);
-                    spriteObject[(int)(currentSprite)].Update(gameTime);
+                    spriteObject[(int)(currentSprite)].Update(gameRessource);
             }
 
             if (lifePoint <= 0)
@@ -137,6 +147,11 @@ namespace TowerDefense
                 effect = SpriteEffects.FlipHorizontally;
 
             spriteObject[(int)(currentSprite)].draw(sb, effect, position);
+        }
+
+        public override void drawLife(SpriteBatch sb, DrawPrimitive dp)
+        {
+            dp.drawLine(sb, 3.5f, Color.Green, new Vector2(position.X - 30, position.Y - 20), new Vector2(position.X + pourcentLife(30), position.Y - 20));
         }
 
         public override void setAction(EntityUnit entityUnit, bool attack)

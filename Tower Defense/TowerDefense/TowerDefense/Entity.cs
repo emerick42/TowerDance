@@ -12,7 +12,7 @@ namespace TowerDefense
     {
         public abstract void load(ContentManager content);
         public abstract void unload();
-        public abstract void update(GameTime gameTime);
+        public abstract void update(GameRessource gameRessource);
         public abstract void draw(SpriteBatch sb);
         public abstract bool isAvailable();
     }

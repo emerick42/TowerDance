@@ -18,7 +18,7 @@ namespace TowerDefense
     {
         SpriteObject spriteObject;
 
-        public Castle() : base(30, false)
+        public Castle() : base(25, false)
         {
             position = new Vector2(ControllerGame.sizeWidth / 2, ControllerGame.sizeHeight / 2);
         }
@@ -38,16 +38,23 @@ namespace TowerDefense
             spriteObject.unload();
         }
 
-        public override void update(GameTime gameTime)
+        public override void update(GameRessource gameRessource)
         {
             boundingSphere = new CollideSphere(position.X, position.Y, 1);
+            if (lifePoint <= 0)
+                outWorld = true;
 
-            spriteObject.Update(gameTime);
+            spriteObject.Update(gameRessource);
         }
 
         public override void draw(SpriteBatch sb)
         {
             spriteObject.draw(sb, SpriteEffects.None, position);
+        }
+
+        public override void drawLife(SpriteBatch sb, DrawPrimitive dp)
+        {
+            dp.drawLine(sb, 5, Color.Brown, new Vector2(position.X - spriteObject.Width / 2, position.Y - spriteObject.Height / 2), new Vector2(position.X + pourcentLife(spriteObject.Width / 2), position.Y - spriteObject.Height / 2));
         }
 
         public override void setAction(EntityUnit entityUnit, bool action) { }

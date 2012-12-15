@@ -111,6 +111,8 @@
     <Compile Include="Arrow.cs" />
     <Compile Include="CollideSphere.cs" />
     <Compile Include="CollisionAction.cs" />
+    <Compile Include="DrawPrimitive.cs" />
+    <Compile Include="GameRessource.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="World.cs" />
     <Compile Include="Castle.cs" />

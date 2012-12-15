@@ -36,10 +36,13 @@ namespace TowerDefense
 
         World world;
 
+        GameRessource gameRessource;
+
         public ControllerGame()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            view = new View(graphics);
         }
 
         /// <summary>
@@ -50,10 +53,7 @@ namespace TowerDefense
         /// </summary>
         protected override void Initialize()
         {
-            this.graphics.PreferredBackBufferWidth = sizeWidth;
-            this.graphics.PreferredBackBufferHeight = sizeHeight;
-            this.graphics.IsFullScreen = false;
-            this.graphics.ApplyChanges();
+            view.initialize();
 
             this.Window.Title = "Tower Defense";
 
@@ -62,12 +62,13 @@ namespace TowerDefense
             world = new World();
             world.CollisionAction = new CollisionAction();
             listEntity = new List<Entity>();
-            view = new View();
             player = new Player();
 
             player.setChoiceUnit();
 
             controlInput = new ControlInput();
+
+            gameRessource = new GameRessource();
 
             // CONFIGURE BEFORE ADD IN DA LIST
  
@@ -95,6 +96,7 @@ namespace TowerDefense
             world.setTexture(Content.Load<Texture2D>("background"));
 
             controlInput.SaveInput();
+            
             listEntity.Add(castle); // FIRST
 
             listEntity.Add(warrior);
@@ -122,6 +124,7 @@ namespace TowerDefense
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            gameRessource.update(gameTime);
             KeyboardState keyboard = Keyboard.GetState();
             GamePadState gamepad = GamePad.GetState(PlayerIndex.One);
 
@@ -132,13 +135,13 @@ namespace TowerDefense
 
             player.updateInput(controlInput);
 
-            if (player.newUnit())
+            if (player.newUnit(gameRessource))
                 listEntity.Add(player.createUnit(Content));
 
             listEntity = refreshListEntity();
 
             foreach (EntityUnit entity in listEntity)
-                entity.update(gameTime);
+                entity.update(gameRessource);
 
             world.CollisionAction.start(listEntity);
 
