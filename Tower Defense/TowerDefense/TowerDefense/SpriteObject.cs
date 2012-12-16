@@ -78,12 +78,12 @@ namespace TowerDefense
             texture.Dispose();
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameRessource gameRessource)
         {
             sourceRect = new Rectangle(currentFrame * sizeWidth, 0, sizeWidth, sizeHeight);
             origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
 
-            timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            timer += (float)gameRessource.GameTime.ElapsedGameTime.TotalMilliseconds;
             if (timer > interval)
             {
                 currentFrame += 1;
@@ -126,6 +126,23 @@ namespace TowerDefense
         {
             get { return finish; }
             set { finish = value; }
+        }
+
+        public Texture2D Texture
+        {
+            get { return texture; }
+        }
+
+        public int Width
+        {
+            get { return sizeWidth; }
+            set { sizeWidth = value; }
+        }
+
+        public int Height
+        {
+            get { return sizeHeight; }
+            set { sizeHeight = value; }
         }
     }
 }

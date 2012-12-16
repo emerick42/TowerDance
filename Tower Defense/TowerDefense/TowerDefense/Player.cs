@@ -95,10 +95,18 @@ namespace TowerDefense
             return archer;
         }
 
-        public bool newUnit()
+        public bool newUnit(GameRessource gameRessource)
         {
             if (currentUnit != ListKey.NONE && currentWay != ListKey.NONE)
+            {
+                if (dUnit[currentUnit] == UNIT.WARRIOR)
+                    if (gameRessource.Gold < 30) return false;
+                    else gameRessource.Gold -= 30;
+                else if (dUnit[currentUnit] == UNIT.ARCHER)
+                    if (gameRessource.Gold < 20) return false;
+                    else gameRessource.Gold -= 20;
                 return true;
+            }
             return false;
         }
 

@@ -38,9 +38,10 @@ namespace TowerDefense
 
         public override void load(ContentManager content) {}
         public override void unload() { }
-        public override void update(GameTime gameTime) {  }
+        public override void update(GameRessource gameRessource) { }
         public override void draw(SpriteBatch sb) {}
         public override void setAction(EntityUnit entityUnit, bool attack) { }
+        public override void drawLife(SpriteBatch sb, DrawPrimitive dp) { }
 
         public void move(DIRECTION direction)
         {

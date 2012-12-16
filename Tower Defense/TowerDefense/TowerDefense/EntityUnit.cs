@@ -10,6 +10,7 @@ namespace TowerDefense
 {
     class EntityUnit : Entity
     {
+        protected int maxPoint;
         protected int lifePoint;
         protected bool ennemy;
         protected CollideSphere boundingSphere;
@@ -17,6 +18,7 @@ namespace TowerDefense
 
         public EntityUnit(int newLife, bool newEnnemy)
         {
+            maxPoint = newLife;
             lifePoint = newLife;
             ennemy = newEnnemy;
             outWorld = false;
@@ -24,13 +26,26 @@ namespace TowerDefense
 
         public override void load(ContentManager content) {}
         public override void unload() { }
-        public override void update(GameTime gameTime) { }
+        public override void update(GameRessource gameRessource) { }
         public override void draw(SpriteBatch sb) { }
+
+        public virtual void drawLife(SpriteBatch sb, DrawPrimitive dp)
+        {
+        }
+
         public override bool isAvailable()
         {
             if (outWorld)
                 return false;
             return true;
+        }
+
+        public int pourcentLife(int ratio)
+        {
+            int res;
+
+            res = (int)(lifePoint * (ratio * 2) / maxPoint);
+            return res - ratio;
         }
 
         public virtual void setAction(EntityUnit entityUnit, bool attack) { }

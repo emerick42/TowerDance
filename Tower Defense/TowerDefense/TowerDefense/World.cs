@@ -36,7 +36,7 @@ namespace TowerDefense
             textureBack.Dispose();
         }
 
-        public override void update(GameTime gameTime)
+        public override void update(GameRessource gameRessource)
         { 
         }
 
