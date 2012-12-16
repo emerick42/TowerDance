@@ -111,7 +111,7 @@ namespace DDR
                     MusicSheet ms = new MusicSheet();
                     ms.notesType = notesType.ToString();
                     ms.difficultyMeter = int.Parse(difficultyMeter.ToString());
-                    string musicSheetPattern = "(?<measure>[0-9])*[,]*";
+                    string musicSheetPattern = "(?<measure>[0-9]*)[,]*";
                     foreach (Match match2 in Regex.Matches(musicSheet.ToString(), musicSheetPattern, RegexOptions.ExplicitCapture))
                     {
                         Group measure = match2.Groups["measure"];

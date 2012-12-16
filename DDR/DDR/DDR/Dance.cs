@@ -7,12 +7,13 @@ using System.IO;
 using Microsoft.Xna.Framework.Audio;
 using System.Reflection;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace DDR
 {
     class Dance : IGameable
     {
-        ContentManager _contentManager;
         List<Song> _songs = new List<Song>();
         int _currentSongIndex = -1;
         Song _currentSong = null;
@@ -21,6 +22,10 @@ namespace DDR
         bool _hasMusicStarted;
         MusicSheet _currentMusicSheet = null;
         List<Note> _notes = new List<Note>();
+        /* About the draw */
+        ContentManager _contentManager;
+        SpriteBatch _spriteBatch;
+        List<Texture2D> _spriteTextures = new List<Texture2D>();
 
         public Dance(ContentManager contentManager)
         {
@@ -31,8 +36,15 @@ namespace DDR
         {
         }
 
-        public void loadContent()
+        public void loadContent(GraphicsDevice graphicsDevice)
         {
+            /* loads about the draw */
+            _spriteBatch = new SpriteBatch(graphicsDevice);
+            _spriteTextures.Add(_contentManager.Load<Texture2D>("ddr_arrow_sprite_0"));
+            _spriteTextures.Add(_contentManager.Load<Texture2D>("ddr_arrow_sprite_1"));
+            _spriteTextures.Add(_contentManager.Load<Texture2D>("ddr_arrow_sprite_2"));
+            _spriteTextures.Add(_contentManager.Load<Texture2D>("ddr_arrow_sprite_3"));
+            /* load all the songs */
             DirectoryInfo dir = new DirectoryInfo("Songs");
             if (!dir.Exists)
                 return;
@@ -69,6 +81,8 @@ namespace DDR
                     _hasMusicStarted = false;
                     _currentSong = _songs[_currentSongIndex];
                     _currentMusicSheet = _currentSong.musicSheets[0];
+                    /* Load the musicSheets in note list */
+                    loadNotes();
                     if (_currentSong.offset >= 0)
                     {
                         _timeBeforePlay = new TimeSpan(0, 0, 0, 0, (int)(_currentSong.offset * 1000));
@@ -91,78 +105,41 @@ namespace DDR
                     if (_timeBeforePlay.TotalMilliseconds <= 0)
                         playSong(_currentSong.directory + "/" + _currentSong.music);
                 }
-                updateMusicSheet();
             }
-        }
-
-        public void updateMusicSheet()
-        {
-            _notes.Clear();
-            float beat = getBeatAt(_timePlayed);
-            float measure = getMeasureAt(beat);
-            /* We create notes for the n-1, n, n+1 and n+2 measure */
-            int n = (int)Math.Ceiling(measure);
-            for (int i = - 1; i < 2; i++)
-            {
-                /* If the measure exists, we can add its notes */
-                if (i + n >= 0 && i + n < _currentMusicSheet.measures.Count)
-                {
-                    int nbBeats = _currentMusicSheet.measures[i + n].Length / 4;
-                    while (nbBeats >= 0)
-                    {
-                        
-                    }
-                }
-            }
-        }
-        private float getBeatAt(TimeSpan timePlayed)
-        {
-            int i = 0;
-            float beatPlayed = 0;
-            TimeSpan timeLeft = timePlayed;
-            List<BeatValue> bpms = _currentSong.bpms;
-            /* Doesn't manage the stops for the moment */
-            List<BeatValue> stops = _currentSong.stops;
-            while (i < bpms.Count)
-            {
-                /* No other bpm */
-                if (i + 1 >= bpms.Count)
-                {
-                    beatPlayed += (float)timeLeft.TotalMinutes * bpms[i].getValue();
-                    break;
-                }
-                /* Time limited */
-                else
-                {
-                    float maxBeat = bpms[i + 1].getBeat();
-                    float beat = (float)timeLeft.TotalMinutes * bpms[i].getValue();
-                    /* It fits in the BPM session */
-                    if (beat < maxBeat)
-                    {
-                        beatPlayed += beat;
-                        break;
-                    }
-                    /* Too many time for this BPM session */
-                    else
-                    {
-                        beatPlayed += maxBeat;
-                        timeLeft -= new TimeSpan(0, (int)(maxBeat / bpms[i].getValue()), 0);
-                    }
-                }
-                i++;
-            }
-            return beatPlayed;
-        }
-        private float getMeasureAt(float beat)
-        {
-            return beat / 4.0f;
         }
 
         public void draw(Microsoft.Xna.Framework.GameTime gameTime)
         {
+            float spaceMultiplicatorBetweenArrows = 2.0f;
+            Vector2 pos;
+            _spriteBatch.Begin();
+            Color c = Color.Red;
+            foreach (Note n in _notes)
+            {
+                float pixelsBetweenTwoNotes = 100.0f * (n.getSpeed() / 60.0f);
+                pos = new Vector2(100.0f * n.getType(), pixelsBetweenTwoNotes * spaceMultiplicatorBetweenArrows * (n.getPosition() - (float)_timePlayed.TotalSeconds));
+                c = Color.Indigo;
+                switch (n.getTempo())
+                {
+                    case 0:
+                        c = Color.Red;
+                        break;
+                    case 1:
+                        c = Color.Blue;
+                        break;
+                    case 2:
+                        c = Color.Yellow;
+                        break;
+                    case 3:
+                        c = Color.Green;
+                        break;
+                }
+                _spriteBatch.Draw(_spriteTextures[n.getType()], pos, c);
+            }
+            _spriteBatch.End();
         }
 
-        public void playSong(string path)
+        private void playSong(string path)
         {
             /*var ctor = typeof(Microsoft.Xna.Framework.Media.Song).GetConstructor(
                 BindingFlags.NonPublic | BindingFlags.Instance, null,
@@ -173,6 +150,70 @@ namespace DDR
             Microsoft.Xna.Framework.Media.Song song = Microsoft.Xna.Framework.Media.Song.FromUri("song", songPath);
             _hasMusicStarted = true;
             MediaPlayer.Play(song);
+        }
+
+        private void loadNotes()
+        {
+            int currentTempo = 0;
+            int currentBeat = -1;
+            int currentMeasure = 0;
+            int currentBPMIndex = -1;
+            float currentTime = 0.0f;
+            _notes.Clear();
+            if (_currentMusicSheet.notesType == "dance-single")
+            {
+                /* We iterate on each measure */
+                while (currentMeasure < _currentMusicSheet.measures.Count())
+                {
+                    string measure = _currentMusicSheet.measures[currentMeasure];
+                    int nbNote = measure.Length / 4;
+                    int i = -1;
+                    /* We iterate on each note */
+                    while (++i < nbNote)
+                    {
+                        if (i % (nbNote / 4) == 0)
+                            currentBeat++;
+                        if (nbNote >= 4 && i % (nbNote / 4) == 0)
+                            currentTempo = 0; /* Red note */
+                        else if (nbNote >= 32 && i % (nbNote / 4) == 1)
+                            currentTempo = 3; /* Green note */
+                        else if (nbNote >= 16 && i % (nbNote / 4) == 1)
+                            currentTempo = 2; /* Yellow note */
+                        else if (nbNote >= 8 && i % (nbNote / 4) == 1)
+                            currentTempo = 1; /* Blue note */
+                        else
+                            currentTempo = 3; /* Purple note */
+                        if (currentBPMIndex + 1 < _currentSong.bpms.Count && _currentSong.bpms[currentBPMIndex + 1].getBeat() == currentBeat)
+                            currentBPMIndex++;
+                        string note = measure.Substring(i * 4, 4);
+                        int j = -1;
+                        while (++j < note.Length)
+                        {
+                            if (note[j] == '1' || note[j] == '2')
+                                _notes.Add(new Note(currentTime, _currentSong.bpms[currentBPMIndex].getValue(), j, currentTempo));
+                            /* We look for the last note with this type and set the positionStop to currentTime */
+                            if (note[j] == '3')
+                                searchForLastNoteOfTypeAndSetPositionStop(j, currentTime);
+                        }
+                        currentTime += (1.0f / (_currentSong.bpms[currentBPMIndex].getValue() / 60.0f)) / (nbNote / 4);
+                    }
+                    currentMeasure++;
+                }
+            }
+        }
+
+        private void searchForLastNoteOfTypeAndSetPositionStop(int type, float positionStop)
+        {
+            int i = _notes.Count - 1;
+            while (i >= 0)
+            {
+                if (_notes[i].getType() == type)
+                {
+                    _notes[i].setPositionStop(positionStop);
+                    return;
+                }
+                i--;
+            }
         }
     }
 }

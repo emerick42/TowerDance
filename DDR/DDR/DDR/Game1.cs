@@ -54,7 +54,7 @@ namespace DDR
             spriteBatch = new SpriteBatch(GraphicsDevice);
             // TODO: use this.Content to load your game content here
             foreach (IGameable game in _games)
-                game.loadContent();
+                game.loadContent(GraphicsDevice);
         }
 
         /// <summary>

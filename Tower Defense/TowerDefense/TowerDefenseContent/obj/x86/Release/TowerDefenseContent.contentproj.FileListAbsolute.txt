@@ -1,2 +1,3 @@
 C:\Users\Miraboule\Desktop\TowerDance\Prototype Tower Defense\PrototypeTowerDefense\PrototypeTowerDefenseContent\obj\x86\Release\ResolveAssemblyReference.cache
 C:\Users\Miraboule\Desktop\TowerDance\Tower Defense\TowerDefense\TowerDefenseContent\obj\x86\Release\ResolveAssemblyReference.cache
+C:\dev\TowerDance\Tower Defense\TowerDefense\TowerDefenseContent\obj\x86\Release\ResolveAssemblyReference.cache
