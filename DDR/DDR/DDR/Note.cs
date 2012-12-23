@@ -13,6 +13,7 @@ namespace DDR
         int _type;
         float _positionStop;
         int _tempo;
+        bool _valid;
 
         public Note(float position, float speed, int type, int tempo)
         {
@@ -51,6 +52,16 @@ namespace DDR
         public int getTempo()
         {
             return _tempo;
+        }
+
+        public bool isValid()
+        {
+            return _valid;
+        }
+
+        public void validate()
+        {
+            _valid = true;
         }
     }
 }

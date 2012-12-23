@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TowerDefense", "TowerDefense\TowerDefense\TowerDefense.csproj", "{B2B39A93-C12A-4F49-99CC-1E11122B1A60}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TowerDance", "TowerDefense\TowerDefense\TowerDance.csproj", "{B2B39A93-C12A-4F49-99CC-1E11122B1A60}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TowerDefenseContent", "TowerDefense\TowerDefenseContent\TowerDefenseContent.contentproj", "{507B11C6-9558-400D-AA8B-07BE739EA5C1}"
 EndProject

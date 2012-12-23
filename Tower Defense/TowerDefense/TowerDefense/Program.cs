@@ -1,6 +1,6 @@
 using System;
 
-namespace TowerDefense
+namespace TowerDance
 {
 #if WINDOWS || XBOX
     static class Program
@@ -10,12 +10,10 @@ namespace TowerDefense
         /// </summary>
         static void Main(string[] args)
         {
-            using (ControllerGame game = new ControllerGame())
+            using (ControllerManager game = new ControllerManager())
             {
                 game.Run();
             }
-
-
         }
     }
 #endif

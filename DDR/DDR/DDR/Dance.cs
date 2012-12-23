@@ -9,6 +9,7 @@ using System.Reflection;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace DDR
 {
@@ -85,18 +86,19 @@ namespace DDR
                     loadNotes();
                     if (_currentSong.offset >= 0)
                     {
+                        _timePlayed = new TimeSpan(0, 0, 0, 0, -500);
                         _timeBeforePlay = new TimeSpan(0, 0, 0, 0, (int)(_currentSong.offset * 1000));
-                        _timePlayed = new TimeSpan();
                     }
                     else
                     {
-                        _timePlayed = new TimeSpan(0, 0, 0, 0, (int)(_currentSong.offset * 1000));
+                        _timePlayed = new TimeSpan(0, 0, 0, 0, (int)(_currentSong.offset * 1000) - 500);
                         _timeBeforePlay = new TimeSpan();
                     }
                 }
             }
             else
             {
+                /* Main loop */
                 _timePlayed += gameTime.ElapsedGameTime;
                 if (_hasMusicStarted == false)
                 {
@@ -105,6 +107,15 @@ namespace DDR
                     if (_timeBeforePlay.TotalMilliseconds <= 0)
                         playSong(_currentSong.directory + "/" + _currentSong.music);
                 }
+                KeyboardState keyState = Keyboard.GetState();
+                if (keyState.IsKeyDown(Keys.Left))
+                    validNote(0);
+                if (keyState.IsKeyDown(Keys.Down))
+                    validNote(1);
+                if (keyState.IsKeyDown(Keys.Up))
+                    validNote(2);
+                if (keyState.IsKeyDown(Keys.Right))
+                    validNote(3);
             }
         }
 
@@ -134,9 +145,288 @@ namespace DDR
                         c = Color.Green;
                         break;
                 }
+                if (n.isValid())
+                    c = Color.White;
                 _spriteBatch.Draw(_spriteTextures[n.getType()], pos, c);
             }
             _spriteBatch.End();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
         private void playSong(string path)
@@ -169,20 +459,20 @@ namespace DDR
                     int nbNote = measure.Length / 4;
                     int i = -1;
                     /* We iterate on each note */
+                    currentTempo = 0;
                     while (++i < nbNote)
                     {
                         if (i % (nbNote / 4) == 0)
                             currentBeat++;
-                        if (nbNote >= 4 && i % (nbNote / 4) == 0)
-                            currentTempo = 0; /* Red note */
-                        else if (nbNote >= 32 && i % (nbNote / 4) == 1)
-                            currentTempo = 3; /* Green note */
-                        else if (nbNote >= 16 && i % (nbNote / 4) == 1)
+                        currentTempo = 4; /* Purple note */
+                        if (nbNote >= 32 && i % (nbNote / 16) == nbNote / 32)
+                            currentTempo = 3; /* Yellow note */
+                        else if (nbNote >= 16 && i % (nbNote / 8) == nbNote / 16)
                             currentTempo = 2; /* Yellow note */
-                        else if (nbNote >= 8 && i % (nbNote / 4) == 1)
+                        else if (nbNote >= 8 && i % (nbNote / 4) == nbNote / 8)
                             currentTempo = 1; /* Blue note */
-                        else
-                            currentTempo = 3; /* Purple note */
+                        else if (nbNote >= 4)
+                            currentTempo = 0; /* Red note */
                         if (currentBPMIndex + 1 < _currentSong.bpms.Count && _currentSong.bpms[currentBPMIndex + 1].getBeat() == currentBeat)
                             currentBPMIndex++;
                         string note = measure.Substring(i * 4, 4);
@@ -213,6 +503,21 @@ namespace DDR
                     return;
                 }
                 i--;
+            }
+        }
+
+        private void validNote(int type)
+        {
+            float diff = 0.1f;
+            float timePlayed = (float)_timePlayed.TotalSeconds;
+            foreach (Note n in _notes)
+            {
+                if (n.getType() == type)
+                {
+                    float position = n.getPosition();
+                    if (position >= timePlayed - diff && position <= timePlayed + diff)
+                        n.validate();
+                }
             }
         }
     }
