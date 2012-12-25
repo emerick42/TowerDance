@@ -8,7 +8,7 @@ namespace TowerDance.Models.Dance
 {
     class SongLibrary
     {
-        List<Song> _songs = new List<Song>();
+        public List<Song> songs = new List<Song>();
 
         public SongLibrary()
         {
@@ -34,7 +34,7 @@ namespace TowerDance.Models.Dance
                         s = new Song("Songs/" + directory.Name + "/" + files[0].Name, "dwi", "Songs/" + directory.Name);
                 }
                 if (s.isReady() && s.isValid())
-                    _songs.Add(s);
+                    songs.Add(s);
             }
 
         }

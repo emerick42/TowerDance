@@ -4,22 +4,37 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using TowerDance.Models.Dance;
+using TowerDance.Views.Dance;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using TowerDance.Views;
 
 namespace TowerDance.Controllers
 {
     class MainMenuController : AController
     {
         SongLibrary _songLibrary;
+        MainMenuView _mainMenuView;
 
         public MainMenuController()
         {
             _songLibrary = new SongLibrary();
             _songLibrary.initialize();
+            _mainMenuView = new MainMenuView();
+            children.Add(new GameController(_songLibrary.songs[0].musicSheets[0]));
+        }
+
+        public override void loadContent(GraphicsDevice graphicsDevice, ContentManager contentManager)
+        {
+            _graphicsDevice = graphicsDevice;
+            _contentManager = contentManager;
+            _mainMenuView.loadContent(_graphicsDevice, _contentManager);
         }
 
         override public void update(GameTime gameTime)
         {
-
+            if (children.Count <= 0)
+                stop();
         }
 
         override public void updateBackgrounded(GameTime gameTime)
@@ -29,7 +44,7 @@ namespace TowerDance.Controllers
 
         override public void draw(GameTime gameTime)
         {
-
+            _mainMenuView.draw();
         }
 
         override public void drawBackgrounded(GameTime gameTime)

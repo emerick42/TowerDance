@@ -108,7 +108,7 @@ namespace TowerDance.Models.Dance
                 Group musicSheet = match.Groups["musicSheet"];
                 if (notesType != null && difficultyMeter != null && musicSheet != null)
                 {
-                    MusicSheet ms = new MusicSheet();
+                    MusicSheet ms = new MusicSheet(_song);
                     ms.notesType = notesType.ToString();
                     ms.difficultyMeter = int.Parse(difficultyMeter.ToString());
                     string musicSheetPattern = "(?<measure>[0-9]*)[,]*";

@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework;
 using Input;
 using TowerDance.Models;
 using TowerDance.Controllers;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 namespace TowerDance
 {
@@ -30,8 +32,18 @@ namespace TowerDance
             base.Initialize();
         }
 
+        protected override void LoadContent()
+        {
+            _controller.loadContent(GraphicsDevice, Content);
+            foreach (AController c in _controller.children)
+            {
+                c.loadContent(GraphicsDevice, Content);
+            }
+        }
+
         protected override void Update(GameTime gameTime)
         {
+            cleanControllerTree(_controller);
             updateController(gameTime, _controller);
             base.Update(gameTime);
         }
@@ -67,6 +79,24 @@ namespace TowerDance
                 foreach (AController c in controller.children)
                 {
                     drawController(gameTime, c);
+                }
+            }
+        }
+
+        private void cleanControllerTree(AController controller)
+        {
+            int i = 0;
+
+            if (controller == _controller && controller.isStopped())
+                Exit();
+            while (i < controller.children.Count)
+            {
+                if (controller.children[i].isStopped())
+                    controller.children.RemoveAt(i);
+                else
+                {
+                    cleanControllerTree(controller.children[i]);
+                    i++;
                 }
             }
         }

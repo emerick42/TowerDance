@@ -119,13 +119,17 @@
     <Compile Include="GameRessource.cs" />
     <Compile Include="Models\Dance\BeatValue.cs" />
     <Compile Include="Models\Dance\DWIParser.cs" />
+    <Compile Include="Models\Dance\GameMechanic.cs" />
     <Compile Include="Models\Dance\IParser.cs" />
     <Compile Include="Models\Dance\MusicSheet.cs" />
+    <Compile Include="Models\Dance\Note.cs" />
     <Compile Include="Models\Dance\SMParser.cs" />
     <Compile Include="Models\Dance\Song.cs" />
     <Compile Include="Models\Dance\SongLibrary.cs" />
     <Compile Include="Models\WindowConfiguration.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="Views\Dance\NotesView.cs" />
+    <Compile Include="Views\MainMenuView.cs" />
     <Compile Include="World.cs" />
     <Compile Include="Castle.cs" />
     <Compile Include="ConfSprite.cs" />
@@ -149,8 +153,8 @@
       <Project>{358BAEA2-37AB-4A95-B0CF-3CD35F008BF1}</Project>
       <Name>Input</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TowerDefenseContent\TowerDefenseContent.contentproj">
-      <Name>TowerDefenseContent %28Content%29</Name>
+    <ProjectReference Include="..\TowerDefenseContent\TowerDanceContent.contentproj">
+      <Name>TowerDanceContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
       <Project>{507B11C6-9558-400D-AA8B-07BE739EA5C1}</Project>
     </ProjectReference>
@@ -182,9 +186,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--
