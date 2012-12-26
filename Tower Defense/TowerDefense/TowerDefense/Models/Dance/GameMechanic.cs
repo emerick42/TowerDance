@@ -16,9 +16,13 @@ namespace TowerDance.Models.Dance
         List<Note> _notes = new List<Note>();
         bool _hasMusicStarted;
         bool _needToPlaySong;
+        bool _hasNewFlashMessage;
+        string _flashMessage;
+        int _combo;
 
         public GameMechanic(MusicSheet musicSheet)
         {
+            _combo = 0;
             _musicSheet = musicSheet;
             _timePlayed = new TimeSpan();
             _hasMusicStarted = false;
@@ -98,17 +102,56 @@ namespace TowerDance.Models.Dance
             _hasMusicStarted = hasMusicStarted;
         }
 
+        public bool hasNewFlashMessage()
+        {
+            return _hasNewFlashMessage;
+        }
+
+        public string getFlashMessage()
+        {
+            return _flashMessage;
+        }
+
+        public int getCombo()
+        {
+            return _combo;
+        }
+
         private void validNote(int type)
         {
-            float diff = 0.1f;
+            float diff = 0.05f;
             float timePlayed = (float)_timePlayed.TotalSeconds;
+            _combo = 0;
             foreach (Note n in _notes)
             {
-                if (n.getType() == type)
+                if (n.getPosition() < timePlayed - 3 * diff)
+                {
+                    if (!n.isValid())
+                        _combo = 0;
+                    else
+                        _combo++;
+                }
+                if (n.getType() == type && !n.isValid())
                 {
                     float position = n.getPosition();
                     if (position >= timePlayed - diff && position <= timePlayed + diff)
-                        n.validate();
+                    {
+                        n.validate(Grade.Fantastic);
+                        _flashMessage = "FANTASTIC";
+                        _hasNewFlashMessage = true;
+                    }
+                    else if (position >= timePlayed - 2 * diff && position <= timePlayed + 2 * diff)
+                    {
+                        n.validate(Grade.Good);
+                        _flashMessage = "GOOD";
+                        _hasNewFlashMessage = true;
+                    }
+                    else if (position >= timePlayed - 3 * diff && position <= timePlayed + 3 * diff)
+                    {
+                        n.validate(Grade.Bad);
+                        _flashMessage = "BAD";
+                        _hasNewFlashMessage = true;
+                    }
                 }
             }
         }

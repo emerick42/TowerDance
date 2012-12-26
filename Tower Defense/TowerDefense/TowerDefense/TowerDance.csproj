@@ -129,6 +129,7 @@
     <Compile Include="Models\WindowConfiguration.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Views\Dance\NotesView.cs" />
+    <Compile Include="Views\IView.cs" />
     <Compile Include="Views\MainMenuView.cs" />
     <Compile Include="World.cs" />
     <Compile Include="Castle.cs" />

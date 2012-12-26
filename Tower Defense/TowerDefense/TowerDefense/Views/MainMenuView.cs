@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace TowerDance.Views
 {
-    class MainMenuView
+    class MainMenuView : IView
     {
         GraphicsDevice _graphicsDevice;
 

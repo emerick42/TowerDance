@@ -18,7 +18,9 @@ namespace TowerDance.Controllers
         public GameController(MusicSheet musicSheet)
         {
             _danceGameMechanic = new GameMechanic(musicSheet);
-            _notesView = new NotesView();
+            _notesView = new NotesView(_danceGameMechanic.getNotes(), _danceGameMechanic.getTimePlayed());
+            addView(_notesView);
+            addBackgroundView(_notesView);
         }
 
         public override void loadContent(GraphicsDevice graphicsDevice, ContentManager contentManager)
@@ -30,9 +32,7 @@ namespace TowerDance.Controllers
 
         override public void update(GameTime gameTime)
         {
-            stop();
-            return;
-//            _notesView.resumeSong();
+            _notesView.resumeSong();
             _danceGameMechanic.update(gameTime);
             if (_danceGameMechanic.needToPlaySong())
             {
@@ -41,21 +41,15 @@ namespace TowerDance.Controllers
             }
             if (_danceGameMechanic.isFinished())
                 stop();
+            if (_danceGameMechanic.hasNewFlashMessage())
+                _notesView.setFlashMessage(_danceGameMechanic.getFlashMessage());
+            _notesView.setTimePlayed(_danceGameMechanic.getTimePlayed());
+            _notesView.setCombo(_danceGameMechanic.getCombo());
         }
 
         override public void updateBackgrounded(GameTime gameTime)
         {
             _notesView.pauseSong();
-        }
-
-        override public void draw(GameTime gameTime)
-        {
-            _notesView.draw(_danceGameMechanic.getNotes(), _danceGameMechanic.getTimePlayed());
-        }
-
-        override public void drawBackgrounded(GameTime gameTime)
-        {
-            _notesView.draw(_danceGameMechanic.getNotes(), _danceGameMechanic.getTimePlayed());
         }
     }
 }

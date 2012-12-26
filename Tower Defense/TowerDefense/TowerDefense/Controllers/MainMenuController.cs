@@ -21,14 +21,8 @@ namespace TowerDance.Controllers
             _songLibrary = new SongLibrary();
             _songLibrary.initialize();
             _mainMenuView = new MainMenuView();
+            addView(_mainMenuView);
             children.Add(new GameController(_songLibrary.songs[0].musicSheets[0]));
-        }
-
-        public override void loadContent(GraphicsDevice graphicsDevice, ContentManager contentManager)
-        {
-            _graphicsDevice = graphicsDevice;
-            _contentManager = contentManager;
-            _mainMenuView.loadContent(_graphicsDevice, _contentManager);
         }
 
         override public void update(GameTime gameTime)
@@ -41,16 +35,5 @@ namespace TowerDance.Controllers
         {
 
         }
-
-        override public void draw(GameTime gameTime)
-        {
-            _mainMenuView.draw();
-        }
-
-        override public void drawBackgrounded(GameTime gameTime)
-        {
-
-        }
-
     }
 }

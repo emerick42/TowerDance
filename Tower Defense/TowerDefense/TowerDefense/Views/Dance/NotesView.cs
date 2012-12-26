@@ -10,15 +10,21 @@ using Microsoft.Xna.Framework.Media;
 
 namespace TowerDance.Views.Dance
 {
-    class NotesView
+    class NotesView : IView
     {
         SpriteBatch _spriteBatch;
         List<Texture2D> _spriteTextures = new List<Texture2D>();
         GraphicsDevice _graphicsDevice;
+        string _flashMessage = "";
+        SpriteFont _flashMessageFont;
+        List<Note> _notes;
+        TimeSpan _timePlayed;
+        int _combo;
 
-        public NotesView()
+        public NotesView(List<Note> notes, TimeSpan timePlayed)
         {
-            
+            _notes = notes;
+            _timePlayed = timePlayed;
         }
 
         public void loadContent(GraphicsDevice graphicsDevice, ContentManager contentManager)
@@ -29,18 +35,19 @@ namespace TowerDance.Views.Dance
             _spriteTextures.Add(contentManager.Load<Texture2D>("ddr_arrow_sprite_1"));
             _spriteTextures.Add(contentManager.Load<Texture2D>("ddr_arrow_sprite_2"));
             _spriteTextures.Add(contentManager.Load<Texture2D>("ddr_arrow_sprite_3"));
+            _flashMessageFont = contentManager.Load<SpriteFont>("DanceFlashFont");
         }
 
-        public void draw(List<Note> notes, TimeSpan timePlayed)
+        public void draw()
         {
             float spaceMultiplicatorBetweenArrows = 2.0f;
             Vector2 pos;
             _spriteBatch.Begin();
             Color c = Color.Red;
-            foreach (Note n in notes)
+            foreach (Note n in _notes)
             {
                 float pixelsBetweenTwoNotes = 100.0f * (n.getSpeed() / 60.0f);
-                pos = new Vector2(100.0f * n.getType(), pixelsBetweenTwoNotes * spaceMultiplicatorBetweenArrows * (n.getPosition() - (float)timePlayed.TotalSeconds));
+                pos = new Vector2(100.0f * n.getType(), pixelsBetweenTwoNotes * spaceMultiplicatorBetweenArrows * (n.getPosition() - (float)_timePlayed.TotalSeconds));
                 c = Color.Indigo;
                 switch (n.getTempo())
                 {
@@ -61,7 +68,14 @@ namespace TowerDance.Views.Dance
                     c = Color.White;
                 _spriteBatch.Draw(_spriteTextures[n.getType()], pos, c);
             }
+            drawFlashMessage();
+            drawCombo();
             _spriteBatch.End();
+        }
+
+        public void setFlashMessage(string flashMessage)
+        {
+            _flashMessage = flashMessage;
         }
 
         public void playSong(string songFileName)
@@ -79,6 +93,30 @@ namespace TowerDance.Views.Dance
         public void pauseSong()
         {
             MediaPlayer.Pause();
+        }
+
+        public void setTimePlayed(TimeSpan timePlayed)
+        {
+            _timePlayed = timePlayed;
+        }
+
+        public void setCombo(int combo)
+        {
+            _combo = combo;
+        }
+
+        private void drawFlashMessage()
+        {
+            Vector2 _msgSize = _flashMessageFont.MeasureString(_flashMessage);
+            _spriteBatch.DrawString(_flashMessageFont, _flashMessage, new Vector2(), Color.Red);
+        }
+
+        private void drawCombo()
+        {
+            if (_combo > 1)
+            {
+                _spriteBatch.DrawString(_flashMessageFont, _combo.ToString() + " combos", new Vector2(0, 200), Color.Red);
+            }
         }
     }
 }
