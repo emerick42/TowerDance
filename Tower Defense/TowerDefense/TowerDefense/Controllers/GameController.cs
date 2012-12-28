@@ -37,10 +37,16 @@ namespace TowerDance.Controllers
             if (_danceGameMechanic.needToPlaySong())
             {
                 _notesView.playSong(_danceGameMechanic.getSongFileName());
-                _danceGameMechanic.setMusicStarted(true);
+            }
+            if (!_danceGameMechanic.hasMusicStarted() && _notesView.hasSongStarted())
+            {
+                _danceGameMechanic.syncWithSong(_notesView.getSongPosition());
             }
             if (_danceGameMechanic.isFinished())
+            {
+                _notesView.stopSong();
                 stop();
+            }
             if (_danceGameMechanic.hasNewFlashMessage())
                 _notesView.setFlashMessage(_danceGameMechanic.getFlashMessage());
             _notesView.setTimePlayed(_danceGameMechanic.getTimePlayed());

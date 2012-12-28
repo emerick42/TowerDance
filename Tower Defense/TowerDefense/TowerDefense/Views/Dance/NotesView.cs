@@ -70,6 +70,7 @@ namespace TowerDance.Views.Dance
             }
             drawFlashMessage();
             drawCombo();
+            drawTimePlayed();
             _spriteBatch.End();
         }
 
@@ -95,6 +96,11 @@ namespace TowerDance.Views.Dance
             MediaPlayer.Pause();
         }
 
+        public void stopSong()
+        {
+            MediaPlayer.Stop();
+        }
+
         public void setTimePlayed(TimeSpan timePlayed)
         {
             _timePlayed = timePlayed;
@@ -103,6 +109,18 @@ namespace TowerDance.Views.Dance
         public void setCombo(int combo)
         {
             _combo = combo;
+        }
+
+        public bool hasSongStarted()
+        {
+            if (MediaPlayer.State == MediaState.Playing && MediaPlayer.PlayPosition > TimeSpan.Zero)
+                return true;
+            return false;
+        }
+
+        public TimeSpan getSongPosition()
+        {
+            return MediaPlayer.PlayPosition;
         }
 
         private void drawFlashMessage()
@@ -117,6 +135,11 @@ namespace TowerDance.Views.Dance
             {
                 _spriteBatch.DrawString(_flashMessageFont, _combo.ToString() + " combos", new Vector2(0, 200), Color.Red);
             }
+        }
+
+        private void drawTimePlayed()
+        {
+            _spriteBatch.DrawString(_flashMessageFont, _timePlayed.ToString(), new Vector2(450, 0), Color.White);
         }
     }
 }

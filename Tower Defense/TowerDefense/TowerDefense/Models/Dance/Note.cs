@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TowerDance.Models.Dance
 {
-    enum Grade { Fail, Bad, Good, Fantastic };
+    enum Grade { Fail, NotPlayed, Bad, Good, Fantastic };
     class Note
     {
         Grade _grade;
@@ -23,7 +23,7 @@ namespace TowerDance.Models.Dance
             _type = type;
             _positionStop = 0.0f;
             _tempo = tempo;
-            _grade = Grade.Fail;
+            _grade = Grade.NotPlayed;
         }
 
         public float getPosition()
@@ -63,7 +63,8 @@ namespace TowerDance.Models.Dance
 
         public void validate(Grade grade)
         {
-            _valid = true;
+            if (grade >= Grade.Bad)
+                _valid = true;
             _grade = grade;
         }
 

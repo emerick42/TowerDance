@@ -12,13 +12,13 @@ namespace TowerDance.Models.Dance
         Song _song;
         MusicSheet _musicSheet;
         TimeSpan _timePlayed;
-        TimeSpan _timeBeforePlay;
         List<Note> _notes = new List<Note>();
         bool _hasMusicStarted;
         bool _needToPlaySong;
         bool _hasNewFlashMessage;
         string _flashMessage;
         int _combo;
+        int _lastValidatedNoteId;
 
         public GameMechanic(MusicSheet musicSheet)
         {
@@ -26,43 +26,29 @@ namespace TowerDance.Models.Dance
             _musicSheet = musicSheet;
             _timePlayed = new TimeSpan();
             _hasMusicStarted = false;
-            _needToPlaySong = false;
+            _needToPlaySong = true;
             _notes = _musicSheet.getNotes();
             _song = _musicSheet.getSong();
-            /* Load the musicSheets in note list */
-            if (_song.offset >= 0)
-            {
-                _timePlayed = new TimeSpan(0, 0, 0, 0, -500);
-                _timeBeforePlay = new TimeSpan(0, 0, 0, 0, (int)(_song.offset * 1000));
-            }
-            else
-            {
-                _timePlayed = new TimeSpan(0, 0, 0, 0, (int)(_song.offset * 1000) - 150);
-                _timeBeforePlay = new TimeSpan();
-            }
-
+            _timePlayed = new TimeSpan(0, 0, 0, 0, (int)(_song.offset * 1000) - 300);
+            _lastValidatedNoteId = -1;
         }
 
         public void update(GameTime gameTime)
         {
-            /* Main loop */
-            _timePlayed += gameTime.ElapsedGameTime;
-            if (_hasMusicStarted == false)
-            {
-                /* Begin to play the song if needed */
-                _timeBeforePlay -= gameTime.ElapsedGameTime;
-                if (_timeBeforePlay.TotalMilliseconds <= 0)
-                    _needToPlaySong = true;
-            }
+            if (_hasMusicStarted)
+                _timePlayed += gameTime.ElapsedGameTime;
+            /* We check inputs */
             KeyboardState keyState = Keyboard.GetState();
             if (keyState.IsKeyDown(Keys.Left))
-                validNote(0);
+                tryToValid(0);
             if (keyState.IsKeyDown(Keys.Down))
-                validNote(1);
+                tryToValid(1);
             if (keyState.IsKeyDown(Keys.Up))
-                validNote(2);
+                tryToValid(2);
             if (keyState.IsKeyDown(Keys.Right))
-                validNote(3);
+                tryToValid(3);
+            failNotes();
+            recalculateCombo();
         }
 
         public bool isFinished()
@@ -102,6 +88,11 @@ namespace TowerDance.Models.Dance
             _hasMusicStarted = hasMusicStarted;
         }
 
+        public bool hasMusicStarted()
+        {
+            return _hasMusicStarted;
+        }
+
         public bool hasNewFlashMessage()
         {
             return _hasNewFlashMessage;
@@ -112,48 +103,134 @@ namespace TowerDance.Models.Dance
             return _flashMessage;
         }
 
+        public void setFlashMessage(string flashMessage)
+        {
+            _flashMessage = flashMessage;
+            _hasNewFlashMessage = true;
+        }
+
         public int getCombo()
         {
             return _combo;
         }
 
-        private void validNote(int type)
+        public void syncWithSong(TimeSpan songPosition)
+        {
+            _timePlayed += songPosition;
+            _hasMusicStarted = true;
+        }
+
+        private void tryToValid(int type)
+        {
+            Note n;
+            Grade g;
+            int i = _lastValidatedNoteId;
+            int j = 0;
+            while (i + j > 0)
+            {
+                if (_notes[i + j - 1].getPosition() == _notes[_lastValidatedNoteId].getPosition())
+                    j--;
+                else
+                    break;
+            }
+            if (j < 0)
+                j--;
+            i += j;
+            while (++i < _notes.Count)
+            {
+                n = _notes[i];
+                g = retrieveGrade(n);
+                if (g == Grade.NotPlayed)
+                    break;
+                if (n.getType() == type && !n.isValid() && g >= Grade.Bad)
+                    validNote(n, i, g);
+            }
+        }
+
+        private void validNote(Note note, int id, Grade grade)
+        {
+            note.validate(grade);
+            string flashMessage = "";
+            switch (grade)
+            {
+                case Grade.Fantastic:
+                    flashMessage = "FANTASTIC";
+                    break;
+                case Grade.Good:
+                    flashMessage = "GOOD";
+                    break;
+                case Grade.Bad:
+                    flashMessage = "BAD";
+                    break;
+                case Grade.Fail:
+                    flashMessage = "";
+                    break;
+            }
+            setFlashMessage(flashMessage);
+            _lastValidatedNoteId = id;
+        }
+
+        private void failNotes()
+        {
+            Grade g;
+            int i = _lastValidatedNoteId;
+            int j = 0;
+            while (i + j > 0)
+            {
+                if (_notes[i + j - 1].getPosition() == _notes[_lastValidatedNoteId].getPosition())
+                    j--;
+                else
+                    break;
+            }
+            if (j < 0)
+                j--;
+            i += j;
+            while (++i < _notes.Count)
+            {
+                g = retrieveGrade(_notes[i]);
+                if (g == Grade.Fail && !_notes[i].isValid())
+                    validNote(_notes[i], i, g);
+                if (g == Grade.NotPlayed)
+                    break;
+            }
+        }
+
+        private void recalculateCombo()
+        {
+            _combo = 0;
+            int i = _lastValidatedNoteId;
+            while (i >= 0 && i < _notes.Count - 1)
+            {
+                if (_notes[i + 1].getPosition() == _notes[_lastValidatedNoteId].getPosition())
+                    i++;
+                else
+                    break;
+            }
+            while (i >= 0)
+            {
+                Note n = _notes[i];
+                if (n.isValid())
+                    _combo++;
+                else if (n.getPosition() != _notes[_lastValidatedNoteId].getPosition())
+                    break;
+                i--;
+            }
+        }
+
+        private Grade retrieveGrade(Note note)
         {
             float diff = 0.05f;
             float timePlayed = (float)_timePlayed.TotalSeconds;
-            _combo = 0;
-            foreach (Note n in _notes)
-            {
-                if (n.getPosition() < timePlayed - 3 * diff)
-                {
-                    if (!n.isValid())
-                        _combo = 0;
-                    else
-                        _combo++;
-                }
-                if (n.getType() == type && !n.isValid())
-                {
-                    float position = n.getPosition();
-                    if (position >= timePlayed - diff && position <= timePlayed + diff)
-                    {
-                        n.validate(Grade.Fantastic);
-                        _flashMessage = "FANTASTIC";
-                        _hasNewFlashMessage = true;
-                    }
-                    else if (position >= timePlayed - 2 * diff && position <= timePlayed + 2 * diff)
-                    {
-                        n.validate(Grade.Good);
-                        _flashMessage = "GOOD";
-                        _hasNewFlashMessage = true;
-                    }
-                    else if (position >= timePlayed - 3 * diff && position <= timePlayed + 3 * diff)
-                    {
-                        n.validate(Grade.Bad);
-                        _flashMessage = "BAD";
-                        _hasNewFlashMessage = true;
-                    }
-                }
-            }
+            float position = note.getPosition();
+            if (position >= timePlayed - diff && position <= timePlayed + diff)
+                return Grade.Fantastic;
+            else if (position >= timePlayed - 2 * diff && position <= timePlayed + 2 * diff)
+                return Grade.Good;
+            else if (position >= timePlayed - 3 * diff && position <= timePlayed + 3 * diff)
+                return Grade.Bad;
+            else if (position > timePlayed + 3 * diff)
+                return Grade.NotPlayed;
+            return Grade.Fail;
         }
     }
 }
