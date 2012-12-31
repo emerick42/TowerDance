@@ -25,6 +25,7 @@ namespace TowerDance.Models.Dance
             _combo = 0;
             _musicSheet = musicSheet;
             _timePlayed = new TimeSpan();
+            _hasNewFlashMessage = false;
             _hasMusicStarted = false;
             _needToPlaySong = true;
             _notes = _musicSheet.getNotes();
@@ -95,7 +96,12 @@ namespace TowerDance.Models.Dance
 
         public bool hasNewFlashMessage()
         {
-            return _hasNewFlashMessage;
+            if (_hasNewFlashMessage)
+            {
+                _hasNewFlashMessage = false;
+                return true;
+            }
+            return false;
         }
 
         public string getFlashMessage()

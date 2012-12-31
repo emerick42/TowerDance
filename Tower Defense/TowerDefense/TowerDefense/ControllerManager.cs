@@ -34,10 +34,10 @@ namespace TowerDance
 
         protected override void LoadContent()
         {
-            _controller.loadContent(GraphicsDevice, Content);
+            _controller.loadContent(GraphicsDevice, Content, _windowConfiguration);
             foreach (AController c in _controller.children)
             {
-                c.loadContent(GraphicsDevice, Content);
+                c.loadContent(GraphicsDevice, Content, _windowConfiguration);
             }
         }
 

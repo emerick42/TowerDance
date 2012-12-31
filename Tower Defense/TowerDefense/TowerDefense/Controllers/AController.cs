@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using TowerDance.Views;
+using TowerDance.Models;
 
 namespace TowerDance.Controllers
 {
@@ -14,20 +15,22 @@ namespace TowerDance.Controllers
         public List<AController> children = new List<AController>();
         protected GraphicsDevice _graphicsDevice;
         protected ContentManager _contentManager;
+        protected WindowConfiguration _windowConfiguration;
         private bool _isStopped = false;
         protected List<IView> _views = new List<IView>();
         protected List<IView> _backgroundedViews = new List<IView>();
         protected bool _contentIsLoaded = false;
 
-        public virtual void loadContent(GraphicsDevice graphicsDevice, ContentManager contentManager)
+        public virtual void loadContent(GraphicsDevice graphicsDevice, ContentManager contentManager, WindowConfiguration windowConfiguration)
         {
             _contentIsLoaded = true;
             _graphicsDevice = graphicsDevice;
             _contentManager = contentManager;
+            _windowConfiguration = windowConfiguration;
             foreach (IView v in _views)
-                v.loadContent(_graphicsDevice, _contentManager);
+                v.loadContent(_graphicsDevice, _contentManager, _windowConfiguration);
             foreach (IView v in _backgroundedViews)
-                v.loadContent(_graphicsDevice, _contentManager);
+                v.loadContent(_graphicsDevice, _contentManager, _windowConfiguration);
         }
         public void stop()
         {
@@ -41,13 +44,13 @@ namespace TowerDance.Controllers
         {
             _views.Add(view);
             if (_contentIsLoaded)
-                view.loadContent(_graphicsDevice, _contentManager);
+                view.loadContent(_graphicsDevice, _contentManager, _windowConfiguration);
         }
         public void addBackgroundView(IView view)
         {
             _backgroundedViews.Add(view);
             if (_contentIsLoaded)
-                view.loadContent(_graphicsDevice, _contentManager);
+                view.loadContent(_graphicsDevice, _contentManager, _windowConfiguration);
         }
         public abstract void update(GameTime gameTime);
         public abstract void updateBackgrounded(GameTime gameTime);

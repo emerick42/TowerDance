@@ -32,13 +32,17 @@ namespace TowerDance.Models
         private GraphicsDeviceManager _graphics;
         private GameWindow _window;
 
-        public WindowConfiguration(GraphicsDeviceManager graphics, GameWindow window, int width = 800, int height = 600, string name = "TowerDance")
+        public WindowConfiguration(GraphicsDeviceManager graphics, GameWindow window, int width = 1280, int height = 720, string name = "TowerDance")
         {
             _graphics = graphics;
             _window = window;
+            _newWidth = width;
             _width = width;
+            _newHeight = height;
             _height = height;
+            _newName = name;
             _name = name;
+            applyChanges();
         }
 
         public void applyChanges()

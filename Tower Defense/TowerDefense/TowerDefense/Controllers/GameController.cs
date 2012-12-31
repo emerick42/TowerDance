@@ -7,6 +7,7 @@ using TowerDance.Models.Dance;
 using TowerDance.Views.Dance;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using TowerDance.Models;
 
 namespace TowerDance.Controllers
 {
@@ -21,13 +22,6 @@ namespace TowerDance.Controllers
             _notesView = new NotesView(_danceGameMechanic.getNotes(), _danceGameMechanic.getTimePlayed());
             addView(_notesView);
             addBackgroundView(_notesView);
-        }
-
-        public override void loadContent(GraphicsDevice graphicsDevice, ContentManager contentManager)
-        {
-            _graphicsDevice = graphicsDevice;
-            _contentManager = contentManager;
-            _notesView.loadContent(_graphicsDevice, _contentManager);
         }
 
         override public void update(GameTime gameTime)
