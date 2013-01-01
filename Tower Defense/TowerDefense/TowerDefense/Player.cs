@@ -28,6 +28,7 @@ namespace TowerDefense
         ListKey currentWay;
         Dictionary<ListKey, UNIT> dUnit;
         Dictionary<ListKey, DIRECTION> dWay;
+        int expPlayer;
 
         public Player()
         {
@@ -35,6 +36,7 @@ namespace TowerDefense
             dWay = new Dictionary<ListKey, DIRECTION>();
             currentUnit = ListKey.NONE;
             currentWay = ListKey.NONE;
+            expPlayer = 0;
         }
 
         public void setChoiceUnit(/* A choisir en fonction de l'option du joueur */)
@@ -61,13 +63,13 @@ namespace TowerDefense
             else if (controlInput.isPressed(ListKey.FOURTHUNIT))
                 currentUnit = ListKey.FOURTHUNIT;
 
-            if (controlInput.isPressed(ListKey.LEFTWAY) && !controlInput.isPreviousPressed(ListKey.LEFTWAY))
+            if (controlInput.isPushed(ListKey.LEFTWAY))
                 currentWay = ListKey.LEFTWAY;
-            else if (controlInput.isPressed(ListKey.UPWAY) && !controlInput.isPreviousPressed(ListKey.UPWAY))
+            else if (controlInput.isPushed(ListKey.UPWAY))
                 currentWay = ListKey.UPWAY;
-            else if (controlInput.isPressed(ListKey.RIGHTWAY) && !controlInput.isPreviousPressed(ListKey.RIGHTWAY))
+            else if (controlInput.isPushed(ListKey.RIGHTWAY))
                 currentWay = ListKey.RIGHTWAY;
-            else if (controlInput.isPressed(ListKey.DOWNWAY) && !controlInput.isPreviousPressed(ListKey.DOWNWAY))
+            else if (controlInput.isPushed(ListKey.DOWNWAY))
                 currentWay = ListKey.DOWNWAY;
             else
                 currentWay = ListKey.NONE;

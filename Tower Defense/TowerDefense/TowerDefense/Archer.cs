@@ -89,7 +89,10 @@ namespace TowerDefense
                 if (spriteObject[(int)(currentSprite)].Finish == true)
                 {
                     if (ennemy)
+                    {
                         gameRessource.Gold += 10;
+                        gameRessource.ExpCurrentGame += 10;
+                    }
                     outWorld = true;
                 }
             }

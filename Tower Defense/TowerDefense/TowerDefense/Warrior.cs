@@ -91,7 +91,7 @@ namespace TowerDefense
                     if (ennemy)
                     {
                         gameRessource.Gold += 15;
-                        Console.Out.WriteLine("Argent --> " + gameRessource.Gold);
+                        gameRessource.ExpCurrentGame += 15;
                     }
 
                     outWorld = true;

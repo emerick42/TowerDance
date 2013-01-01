@@ -46,6 +46,10 @@ namespace Input
         FOURTHUNIT,
         #endregion
 
+        #region VALID
+        VALID,
+        #endregion
+
         #region PAUSE
         PAUSE
         #endregion
@@ -143,6 +147,13 @@ namespace Input
         {
             if (previousKeysState.IsKeyUp(keyConfig.getValue(key_))
                 || previousGamepadStatePlayerOne.IsButtonUp(buttonsConfig.getValue(key_)))
+                return true;
+            return false;
+        }
+
+        public bool isPushed(ListKey key_)
+        {
+            if (isPressed(key_) && !isPreviousPressed(key_))
                 return true;
             return false;
         }

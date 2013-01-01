@@ -9,11 +9,13 @@ namespace TowerDefense
     class GameRessource
     {
         int gold;
+        int expCurrentGame;
         GameTime gameTime;
 
         public GameRessource()
         {
             gold = 100;
+            expCurrentGame = 0;
         }
 
         public void update(GameTime g)
@@ -30,6 +32,12 @@ namespace TowerDefense
         public GameTime GameTime
         {
             get { return gameTime; }
+        }
+
+        public int ExpCurrentGame
+        {
+            get { return expCurrentGame; }
+            set { expCurrentGame = value; }
         }
     }
 }
