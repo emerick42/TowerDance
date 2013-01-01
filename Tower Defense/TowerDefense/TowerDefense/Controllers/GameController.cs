@@ -34,13 +34,13 @@ namespace TowerDance.Controllers
             _notesView.resumeSong();
             /* We check inputs */
             KeyboardState keyState = Keyboard.GetState();
-            if (_controlInput.isPressed(ListKey.LEFTARROW))
+            if (_controlInput.isPushed(ListKey.LEFTARROW))
                 _danceGameMechanic.tryToValid(0);
-            if (_controlInput.isPressed(ListKey.DOWNARROW))
+            if (_controlInput.isPushed(ListKey.DOWNARROW))
                 _danceGameMechanic.tryToValid(1);
-            if (_controlInput.isPressed(ListKey.UPARROW))
+            if (_controlInput.isPushed(ListKey.UPARROW))
                 _danceGameMechanic.tryToValid(2);
-            if (_controlInput.isPressed(ListKey.RIGHTARROW))
+            if (_controlInput.isPushed(ListKey.RIGHTARROW))
                 _danceGameMechanic.tryToValid(3);
             _danceGameMechanic.update(gameTime);
             if (_danceGameMechanic.needToPlaySong())

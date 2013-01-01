@@ -29,22 +29,31 @@ namespace TowerDance.Controllers
             _songLibrary.initialize();
             _mainMenuView = new MainMenuView(_menu);
             addView(_mainMenuView);
-//            children.Add(new GameController(_songLibrary.songs[0].musicSheets[0]));
         }
 
         override public void update(GameTime gameTime)
         {
             _controlInput.update();
             /* We check inputs */
-            if (_controlInput.isPressed(ListKey.DOWNARROW))
+            if (_controlInput.isPushed(ListKey.DOWNARROW))
                 _menu.selectNext();
-            if (_controlInput.isPressed(ListKey.UPARROW))
+            if (_controlInput.isPushed(ListKey.UPARROW))
                 _menu.selectPrevious();
+            if (_controlInput.isPushed(ListKey.VALID))
+                menuSelectExecute();
         }
 
         override public void updateBackgrounded(GameTime gameTime)
         {
 
+        }
+
+        private void menuSelectExecute()
+        {
+            if (_menu.getSelectedTitleIndex() == 0)
+                children.Add(new GameController(_songLibrary.songs[0].musicSheets[0]));
+            if (_menu.getSelectedTitleIndex() == 2)
+                stop();
         }
     }
 }

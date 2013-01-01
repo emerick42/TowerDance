@@ -21,6 +21,11 @@ namespace TowerDance.Controllers
         protected List<IView> _backgroundedViews = new List<IView>();
         protected bool _contentIsLoaded = false;
 
+        public bool isContentLoaded()
+        {
+            return _contentIsLoaded;
+        }
+
         public virtual void loadContent(GraphicsDevice graphicsDevice, ContentManager contentManager, WindowConfiguration windowConfiguration)
         {
             _contentIsLoaded = true;

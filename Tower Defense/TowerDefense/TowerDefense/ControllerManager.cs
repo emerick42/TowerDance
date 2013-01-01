@@ -50,6 +50,8 @@ namespace TowerDance
 
         private void updateController(GameTime gameTime, AController controller)
         {
+            if (!controller.isContentLoaded())
+                controller.loadContent(GraphicsDevice, Content, _windowConfiguration);
             if (controller.children.Count <= 0)
                 controller.update(gameTime);
             else
@@ -71,6 +73,8 @@ namespace TowerDance
 
         private void drawController(GameTime gameTime, AController controller)
         {
+            if (!controller.isContentLoaded())
+                controller.loadContent(GraphicsDevice, Content, _windowConfiguration);
             if (controller.children.Count <= 0)
                 controller.draw(gameTime);
             else
