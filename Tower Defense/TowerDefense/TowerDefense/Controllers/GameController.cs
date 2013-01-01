@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using TowerDance.Models;
 using Microsoft.Xna.Framework.Input;
+using Input;
 
 namespace TowerDance.Controllers
 {
@@ -16,9 +17,11 @@ namespace TowerDance.Controllers
     {
         GameMechanic _danceGameMechanic;
         NotesView _notesView;
+        ControlInput _controlInput;
 
         public GameController(MusicSheet musicSheet)
         {
+            _controlInput = new ControlInput();
             _danceGameMechanic = new GameMechanic(musicSheet);
             _notesView = new NotesView(_danceGameMechanic.getNotes(), _danceGameMechanic.getTimePlayed());
             addView(_notesView);
@@ -27,16 +30,17 @@ namespace TowerDance.Controllers
 
         override public void update(GameTime gameTime)
         {
+            _controlInput.update();
             _notesView.resumeSong();
             /* We check inputs */
             KeyboardState keyState = Keyboard.GetState();
-            if (keyState.IsKeyDown(Keys.Left))
+            if (_controlInput.isPressed(ListKey.LEFTARROW))
                 _danceGameMechanic.tryToValid(0);
-            if (keyState.IsKeyDown(Keys.Down))
+            if (_controlInput.isPressed(ListKey.DOWNARROW))
                 _danceGameMechanic.tryToValid(1);
-            if (keyState.IsKeyDown(Keys.Up))
+            if (_controlInput.isPressed(ListKey.UPARROW))
                 _danceGameMechanic.tryToValid(2);
-            if (keyState.IsKeyDown(Keys.Right))
+            if (_controlInput.isPressed(ListKey.RIGHTARROW))
                 _danceGameMechanic.tryToValid(3);
             _danceGameMechanic.update(gameTime);
             if (_danceGameMechanic.needToPlaySong())
