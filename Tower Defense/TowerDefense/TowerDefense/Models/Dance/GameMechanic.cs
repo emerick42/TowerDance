@@ -38,23 +38,15 @@ namespace TowerDance.Models.Dance
         {
             if (_hasMusicStarted)
                 _timePlayed += gameTime.ElapsedGameTime;
-            /* We check inputs */
-            KeyboardState keyState = Keyboard.GetState();
-            if (keyState.IsKeyDown(Keys.Left))
-                tryToValid(0);
-            if (keyState.IsKeyDown(Keys.Down))
-                tryToValid(1);
-            if (keyState.IsKeyDown(Keys.Up))
-                tryToValid(2);
-            if (keyState.IsKeyDown(Keys.Right))
-                tryToValid(3);
             failNotes();
             recalculateCombo();
         }
 
         public bool isFinished()
         {
-            if (_timePlayed.TotalSeconds >= _notes[_notes.Count - 1].getPosition() + 2.0f)
+            if (_notes.Count <= 0)
+                return true;
+            if (_timePlayed.TotalSeconds >= _notes[_notes.Count - 1].getPosition() + 1.0f)
                 return true;
             return false;
         }
@@ -126,7 +118,7 @@ namespace TowerDance.Models.Dance
             _hasMusicStarted = true;
         }
 
-        private void tryToValid(int type)
+        public void tryToValid(int type)
         {
             Note n;
             Grade g;
@@ -151,6 +143,8 @@ namespace TowerDance.Models.Dance
                 if (n.getType() == type && !n.isValid() && g >= Grade.Bad)
                     validNote(n, i, g);
             }
+            failNotes();
+            recalculateCombo();
         }
 
         private void validNote(Note note, int id, Grade grade)

@@ -8,6 +8,7 @@ using TowerDance.Views.Dance;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using TowerDance.Models;
+using Microsoft.Xna.Framework.Input;
 
 namespace TowerDance.Controllers
 {
@@ -27,6 +28,16 @@ namespace TowerDance.Controllers
         override public void update(GameTime gameTime)
         {
             _notesView.resumeSong();
+            /* We check inputs */
+            KeyboardState keyState = Keyboard.GetState();
+            if (keyState.IsKeyDown(Keys.Left))
+                _danceGameMechanic.tryToValid(0);
+            if (keyState.IsKeyDown(Keys.Down))
+                _danceGameMechanic.tryToValid(1);
+            if (keyState.IsKeyDown(Keys.Up))
+                _danceGameMechanic.tryToValid(2);
+            if (keyState.IsKeyDown(Keys.Right))
+                _danceGameMechanic.tryToValid(3);
             _danceGameMechanic.update(gameTime);
             if (_danceGameMechanic.needToPlaySong())
             {

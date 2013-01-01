@@ -126,6 +126,7 @@
     <Compile Include="Models\Dance\SMParser.cs" />
     <Compile Include="Models\Dance\Song.cs" />
     <Compile Include="Models\Dance\SongLibrary.cs" />
+    <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\WindowConfiguration.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Views\Dance\NotesView.cs" />
