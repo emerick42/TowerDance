@@ -49,6 +49,8 @@ namespace Input
 
             configInput = serializeData.LoadGameConfiguration(configInput, "Config");
 
+            configKeys.Add(ListKey.VALID, Keys.Enter);
+
             #region ARROW
             configKeys.Add(ListKey.LEFTARROW, configInput.LeftArrow);
             configKeys.Add(ListKey.DOWNARROW, configInput.DownArrow);
