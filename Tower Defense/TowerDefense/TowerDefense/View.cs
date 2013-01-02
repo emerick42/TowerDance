@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TowerDefense
+namespace TowerDance
 {
     class View
     {
@@ -27,8 +27,8 @@ namespace TowerDefense
 
         public void initialize()
         {
-            this.graphics.PreferredBackBufferWidth = ControllerGame.sizeWidth;
-            this.graphics.PreferredBackBufferHeight = ControllerGame.sizeHeight;
+            this.graphics.PreferredBackBufferWidth = World.sizeWidth;
+            this.graphics.PreferredBackBufferHeight = World.sizeHeight;
             this.graphics.IsFullScreen = false;
             this.graphics.ApplyChanges();
         }
@@ -39,7 +39,7 @@ namespace TowerDefense
             dp.load(graphicsDevice);
         }
 
-        public void draw(List<Entity> listEntity, World world)
+        public void draw(List<Entity> listEntity, Background world)
         {
             spriteBatch.Begin();
 

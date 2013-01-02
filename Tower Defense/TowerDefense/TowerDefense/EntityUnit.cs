@@ -6,8 +6,15 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TowerDefense
+namespace TowerDance
 {
+    public enum ENTITYTYPE
+    {
+        WARRIOR = 0,
+        ARCHER,
+        CASTLE
+    }
+
     class EntityUnit : Entity
     {
         protected int maxPoint;
@@ -15,13 +22,15 @@ namespace TowerDefense
         protected bool ennemy;
         protected CollideSphere boundingSphere;
         protected bool outWorld;
+        protected ENTITYTYPE type;
 
-        public EntityUnit(int newLife, bool newEnnemy)
+        public EntityUnit(int newLife, bool newEnnemy, ENTITYTYPE newType)
         {
             maxPoint = newLife;
             lifePoint = newLife;
             ennemy = newEnnemy;
             outWorld = false;
+            type = newType;
         }
 
         public override void load(ContentManager content) {}
@@ -56,6 +65,12 @@ namespace TowerDefense
             set { lifePoint = value; }
         }
 
+        public int MaxPoint
+        {
+            get { return maxPoint; }
+            set { maxPoint = value; }
+        }
+
         public bool Ennemy
         {
             get { return ennemy; }
@@ -71,6 +86,12 @@ namespace TowerDefense
         {
             get { return outWorld; }
             set { outWorld = value; }
+        }
+
+        public ENTITYTYPE Type
+        {
+            get { return type; }
+            set { type = value; }
         }
     }
 }

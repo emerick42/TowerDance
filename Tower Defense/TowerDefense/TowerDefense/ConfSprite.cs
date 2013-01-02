@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 using System.Diagnostics;
 
-namespace TowerDefense
+namespace TowerDance
 {
     class ConfSprite
     {

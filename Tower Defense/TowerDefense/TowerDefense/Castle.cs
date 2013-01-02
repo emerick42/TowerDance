@@ -12,20 +12,22 @@ using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 using System.Diagnostics;
 
-namespace TowerDefense
+namespace TowerDance
 {
     class Castle : EntityUnit
     {
         SpriteObject spriteObject;
 
-        public Castle() : base(25, false)
+        public Castle()
+            : base(25, false, ENTITYTYPE.CASTLE)
         {
-            position = new Vector2(ControllerGame.sizeWidth / 2, ControllerGame.sizeHeight / 2);
+            position = new Vector2(World.sizeWidth / 2, World.sizeHeight / 2);
         }
 
-        public Castle(int lifePoint) : base(lifePoint, false)
+        public Castle(int lifePoint)
+            : base(lifePoint, false, ENTITYTYPE.CASTLE)
         {
-            position = new Vector2(ControllerGame.sizeWidth / 2, ControllerGame.sizeHeight / 2);
+            position = new Vector2(World.sizeWidth / 2, World.sizeHeight / 2);
         }
 
         public override void load(ContentManager content)

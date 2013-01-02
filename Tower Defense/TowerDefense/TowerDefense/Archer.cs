@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 using System.Diagnostics;
 
-namespace TowerDefense
+namespace TowerDance
 {
     class Archer : Unit
     {
@@ -22,31 +22,31 @@ namespace TowerDefense
         DIRECTION direction;
         EntityUnit recipientUnit;
 
-        public Archer() : base(5, 4, 900, 400, 200, false)
+        public Archer() : base(5, 4, 900, 400, 200, false, ENTITYTYPE.ARCHER)
         {
             spriteObject = new SpriteObject[3];
             currentSprite = ACTION.MOVE;
             if (ennemy == false)
-                position = new Vector2(ControllerGame.sizeWidth / 2, ControllerGame.sizeHeight / 2);
+                position = new Vector2(World.sizeWidth / 2, World.sizeHeight / 2);
         }
 
         public Archer(bool newEnnemy)
-            : base(5, 4, 900, 400, 200, newEnnemy)
+            : base(5, 4, 900, 400, 200, newEnnemy, ENTITYTYPE.ARCHER)
         {
             spriteObject = new SpriteObject[3];
             currentSprite = ACTION.MOVE;
             if (ennemy == false)
-                position = new Vector2(ControllerGame.sizeWidth / 2, ControllerGame.sizeHeight / 2);
+                position = new Vector2(World.sizeWidth / 2, World.sizeHeight / 2);
         }
 
         public Archer(int newLife, int newDamage, int coolDownShoot, 
                       int coolDownWalk, int newRange, bool newEnnemy)
-            : base(newLife, newDamage, coolDownShoot, coolDownWalk, newRange, newEnnemy)
+            : base(newLife, newDamage, coolDownShoot, coolDownWalk, newRange, newEnnemy, ENTITYTYPE.ARCHER)
         {
             spriteObject = new SpriteObject[3];
             currentSprite = ACTION.MOVE;
             if (ennemy == false)
-                position = new Vector2(ControllerGame.sizeWidth / 2, ControllerGame.sizeHeight / 2);
+                position = new Vector2(World.sizeWidth / 2, World.sizeHeight / 2);
         }
 
         public override void load(ContentManager content)
