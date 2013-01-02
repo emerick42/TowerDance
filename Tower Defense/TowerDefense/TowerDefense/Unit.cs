@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TowerDefense
+namespace TowerDance
 {
     public enum ACTION
     {
@@ -20,19 +20,23 @@ namespace TowerDefense
         protected int damage;
         protected int coolDownShoot;
         protected int coolDownWalk;
+        protected int coolDownDie;
         protected float currentCoolDownShoot;
         protected float currentCoolDownWalk;
+        protected float currentCoolDownDie;
         protected float timer;
         protected int range;
 
-        public Unit(int life, int newDamage, int coolD, int coolW, int newRange, bool ennemy)
-            : base(life, ennemy)
+        public Unit(int life, int newDamage, int coolD, int coolW, int newRange, bool ennemy, ENTITYTYPE type)
+            : base(life, ennemy, type)
         {
             damage = newDamage;
             coolDownShoot = coolD;
             coolDownWalk = coolW;
+            coolDownDie = 250;
             currentCoolDownShoot = 0;
             currentCoolDownWalk = 0;
+            currentCoolDownDie = 0;
             range = newRange;
         }
 
@@ -50,8 +54,8 @@ namespace TowerDefense
 
             if (ennemy)
             {
-                limitX = ControllerGame.sizeWidth / 2;
-                limitY = ControllerGame.sizeHeight / 2;
+                limitX = World.sizeWidth / 2;
+                limitY = World.sizeHeight / 2;
             }
                 
             else
@@ -59,11 +63,11 @@ namespace TowerDefense
                 if (direction == DIRECTION.UP)
                     limitY = 0;
                 else if (direction == DIRECTION.DOWN)
-                    limitY = ControllerGame.sizeHeight ;
+                    limitY = World.sizeHeight;
                 else if (direction == DIRECTION.LEFT)
                     limitX = 0;
                 else
-                    limitX = ControllerGame.sizeWidth;
+                    limitX = World.sizeWidth;
             }
 
             switch (direction)
@@ -113,6 +117,12 @@ namespace TowerDefense
             set { coolDownWalk = value; }
         }
 
+        public int CoolDownDie
+        {
+            get { return coolDownDie; }
+            set { coolDownDie = value; }
+        }
+
         public float Timer
         {
             get { return timer; }
@@ -125,5 +135,10 @@ namespace TowerDefense
             set { range = value; }
         }
 
+        public float CurrentCoolDownDie
+        {
+            get { return currentCoolDownDie; }
+            set { currentCoolDownDie = value; }
+        }
     }
 }

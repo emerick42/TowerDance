@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace TowerDefense
+namespace TowerDance
 {
     public enum DIRECTION
     {
@@ -78,12 +78,12 @@ namespace TowerDefense
             texture.Dispose();
         }
 
-        public void Update(GameRessource gameRessource)
+        public void Update(GameTime gameTime)
         {
             sourceRect = new Rectangle(currentFrame * sizeWidth, 0, sizeWidth, sizeHeight);
             origin = new Vector2(sourceRect.Width / 2, sourceRect.Height / 2);
 
-            timer += (float)gameRessource.GameTime.ElapsedGameTime.TotalMilliseconds;
+            timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             if (timer > interval)
             {
                 currentFrame += 1;
