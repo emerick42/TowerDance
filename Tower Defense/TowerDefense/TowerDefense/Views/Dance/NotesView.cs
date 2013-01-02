@@ -95,6 +95,7 @@ namespace TowerDance.Views.Dance
         {
             Uri songPath = new Uri(songFileName, UriKind.Relative);
             Microsoft.Xna.Framework.Media.Song song = Microsoft.Xna.Framework.Media.Song.FromUri("song", songPath);
+            MediaPlayer.IsRepeating = false;
             MediaPlayer.Play(song);
         }
 

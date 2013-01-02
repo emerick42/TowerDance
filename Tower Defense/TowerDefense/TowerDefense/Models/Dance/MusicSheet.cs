@@ -45,18 +45,20 @@ namespace TowerDance.Models.Dance
                     while (++i < nbNote)
                     {
                         if (i % (nbNote / 4) == 0)
+                        {
                             currentBeat++;
-                        currentTempo = 4; /* Purple note */
-                        if (nbNote >= 32 && i % (nbNote / 16) == nbNote / 32)
-                            currentTempo = 3; /* Yellow note */
-                        else if (nbNote >= 16 && i % (nbNote / 8) == nbNote / 16)
-                            currentTempo = 2; /* Yellow note */
-                        else if (nbNote >= 8 && i % (nbNote / 4) == nbNote / 8)
-                            currentTempo = 1; /* Blue note */
-                        else if (nbNote >= 4)
-                            currentTempo = 0; /* Red note */
-                        if (currentBPMIndex + 1 < _song.bpms.Count && _song.bpms[currentBPMIndex + 1].getBeat() == currentBeat)
-                            currentBPMIndex++;
+                            foreach (BeatValue b in _song.stops)
+                            {
+                                if (b.getBeat() == currentBeat)
+                                    currentTime += b.getValue();
+                            }
+                            foreach (BeatValue b in _song.bpms)
+                            {
+                                if (b.getBeat() == currentBeat && currentBPMIndex + 1 < _song.bpms.Count)
+                                    currentBPMIndex++;
+                            }
+                        }
+                        currentTempo = findCurrentTempo(i, nbNote);
                         string note = measure.Substring(i * 4, 4);
                         int j = -1;
                         while (++j < note.Length)
@@ -67,10 +69,34 @@ namespace TowerDance.Models.Dance
                             if (note[j] == '3')
                                 searchForLastNoteOfTypeAndSetPositionStop(j, currentTime);
                         }
-                        currentTime += (1.0f / (_song.bpms[currentBPMIndex].getValue() / 60.0f)) / (nbNote / 4);
+                        currentTime += (1.0f / (_song.bpms[currentBPMIndex].getValue() / 60.0f)) / ((float)nbNote / 4.0f);
                     }
                     currentMeasure++;
                 }
+            }
+        }
+
+        private int findCurrentTempo(int i, int nbNote)
+        {
+            int currentTempo = 0;
+            int ecart = 0;
+            if (nbNote % 4 != 0)
+                return 4;
+            currentTempo = 0;
+            ecart = nbNote / 4;
+            i %= ecart;
+            while (true)
+            {
+                if (i == 0)
+                    return currentTempo;
+                if (ecart % 2 == 0)
+                {
+                    ecart /= 2;
+                    i %= ecart;
+                    currentTempo++;
+                }
+                else
+                    return 4;
             }
         }
 

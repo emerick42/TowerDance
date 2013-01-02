@@ -30,10 +30,10 @@ namespace TowerDance.Controllers
 
         override public void update(GameTime gameTime)
         {
+            _danceGameMechanic.update(gameTime);
             _controlInput.update();
             _notesView.resumeSong();
             /* We check inputs */
-            KeyboardState keyState = Keyboard.GetState();
             if (_controlInput.isPushed(ListKey.LEFTARROW))
                 _danceGameMechanic.tryToValid(0);
             if (_controlInput.isPushed(ListKey.DOWNARROW))
@@ -42,15 +42,11 @@ namespace TowerDance.Controllers
                 _danceGameMechanic.tryToValid(2);
             if (_controlInput.isPushed(ListKey.RIGHTARROW))
                 _danceGameMechanic.tryToValid(3);
-            _danceGameMechanic.update(gameTime);
+            /* Manage interaction with NotesView */
             if (_danceGameMechanic.needToPlaySong())
-            {
                 _notesView.playSong(_danceGameMechanic.getSongFileName());
-            }
             if (!_danceGameMechanic.hasMusicStarted() && _notesView.hasSongStarted())
-            {
                 _danceGameMechanic.syncWithSong(_notesView.getSongPosition());
-            }
             if (_danceGameMechanic.isFinished())
             {
                 _notesView.stopSong();

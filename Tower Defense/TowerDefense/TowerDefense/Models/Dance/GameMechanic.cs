@@ -30,7 +30,7 @@ namespace TowerDance.Models.Dance
             _needToPlaySong = true;
             _notes = _musicSheet.getNotes();
             _song = _musicSheet.getSong();
-            _timePlayed = new TimeSpan(0, 0, 0, 0, (int)(_song.offset * 1000) - 300);
+            _timePlayed = new TimeSpan(0, 0, 0, 0, (int)(_song.offset * 1000) - 200);
             _lastValidatedNoteId = -1;
         }
 
@@ -46,7 +46,7 @@ namespace TowerDance.Models.Dance
         {
             if (_notes.Count <= 0)
                 return true;
-            if (_timePlayed.TotalSeconds >= _notes[_notes.Count - 1].getPosition() + 1.0f)
+            if (_timePlayed.TotalSeconds >= _notes[_notes.Count - 1].getPosition() + 2.0f)
                 return true;
             return false;
         }
