@@ -108,19 +108,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Views\ArcherView.cs" />
-    <Compile Include="Models\ConfViewArcher.cs" />
+    <Compile Include="Views\ConfViewArcher.cs" />
     <Compile Include="Views\AConfView.cs" />
     <Compile Include="Models\Archer.cs" />
-    <Compile Include="CollideSphere.cs" />
-    <Compile Include="CollisionAction.cs" />
+    <Compile Include="Models\CollideSphere.cs" />
+    <Compile Include="Models\CollisionAction.cs" />
     <Compile Include="Views\ConfViewWarrior.cs" />
     <Compile Include="ControllerManager.cs" />
     <Compile Include="Controllers\AController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\MainMenuController.cs" />
     <Compile Include="Views\WarriorView.cs" />
-    <Compile Include="DrawPrimitive.cs" />
-    <Compile Include="GameRessource.cs" />
+    <Compile Include="Models\DrawPrimitive.cs" />
+    <Compile Include="Models\GameRessource.cs" />
     <Compile Include="Models\Dance\BeatValue.cs" />
     <Compile Include="Models\Dance\DWIParser.cs" />
     <Compile Include="Models\Dance\GameMechanic.cs" />
@@ -132,13 +132,13 @@
     <Compile Include="Models\Dance\SongLibrary.cs" />
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\WindowConfiguration.cs" />
-    <Compile Include="Player.cs" />
+    <Compile Include="Models\Player.cs" />
     <Compile Include="Views\Dance\NotesView.cs" />
     <Compile Include="Views\IView.cs" />
     <Compile Include="Views\MainMenuView.cs" />
-    <Compile Include="Background.cs" />
+    <Compile Include="Models\Background.cs" />
     <Compile Include="Models\Castle.cs" />
-    <Compile Include="ConfSprite.cs" />
+    <Compile Include="Views\ConfSprite.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\EntityUnit.cs" />
     <Compile Include="Positionnable.cs" />
