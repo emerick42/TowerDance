@@ -35,7 +35,7 @@ namespace TowerDance
         protected override void LoadContent()
         {
             _controller.loadContent(GraphicsDevice, Content, _windowConfiguration);
-            foreach (AController c in _controller.children)
+            foreach (AController c in _controller.getChildren())
             {
                 c.loadContent(GraphicsDevice, Content, _windowConfiguration);
             }
@@ -52,12 +52,12 @@ namespace TowerDance
         {
             if (!controller.isContentLoaded())
                 controller.loadContent(GraphicsDevice, Content, _windowConfiguration);
-            if (controller.children.Count <= 0)
+            if (controller.getChildren().Count <= 0)
                 controller.update(gameTime);
             else
             {
                 controller.updateBackgrounded(gameTime);
-                foreach (AController c in controller.children)
+                foreach (AController c in controller.getChildren())
                 {
                     updateController(gameTime, c);
                 }
@@ -75,12 +75,12 @@ namespace TowerDance
         {
             if (!controller.isContentLoaded())
                 controller.loadContent(GraphicsDevice, Content, _windowConfiguration);
-            if (controller.children.Count <= 0)
+            if (controller.getChildren().Count <= 0)
                 controller.draw(gameTime);
             else
             {
                 controller.drawBackgrounded(gameTime);
-                foreach (AController c in controller.children)
+                foreach (AController c in controller.getChildren())
                 {
                     drawController(gameTime, c);
                 }
@@ -93,13 +93,13 @@ namespace TowerDance
 
             if (controller == _controller && controller.isStopped())
                 Exit();
-            while (i < controller.children.Count)
+            while (i < controller.getChildren().Count)
             {
-                if (controller.children[i].isStopped())
-                    controller.children.RemoveAt(i);
+                if (controller.getChildren()[i].isStopped())
+                    controller.getChildren().RemoveAt(i);
                 else
                 {
-                    cleanControllerTree(controller.children[i]);
+                    cleanControllerTree(controller.getChildren()[i]);
                     i++;
                 }
             }

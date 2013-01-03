@@ -12,7 +12,7 @@ namespace TowerDance.Controllers
 {
     abstract class AController
     {
-        protected List<AController> _children = new List<AController>();
+        public List<AController> children = new List<AController>();
         protected GraphicsDevice _graphicsDevice;
         protected ContentManager _contentManager;
         protected WindowConfiguration _windowConfiguration;
@@ -20,7 +20,6 @@ namespace TowerDance.Controllers
         protected List<IView> _views = new List<IView>();
         protected List<IView> _backgroundedViews = new List<IView>();
         protected bool _contentIsLoaded = false;
-        protected AController _parent = null;
 
         public bool isContentLoaded()
         {
@@ -38,7 +37,7 @@ namespace TowerDance.Controllers
             foreach (IView v in _backgroundedViews)
                 v.loadContent(_graphicsDevice, _contentManager, _windowConfiguration);
         }
-        public virtual void stop()
+        public void stop()
         {
             _isStopped = true;
         }
@@ -69,25 +68,6 @@ namespace TowerDance.Controllers
         {
             foreach (IView v in _backgroundedViews)
                 v.draw();
-        }
-        public virtual void signal(string signal)
-        {
-
-        }
-        public void addChild(AController child)
-        {
-            _children.Add(child);
-            child._parent = this;
-        }
-
-        public List<AController> getChildren()
-        {
-            return _children;
-        }
-
-        public AController getParent()
-        {
-            return _parent;
         }
     }
 }
