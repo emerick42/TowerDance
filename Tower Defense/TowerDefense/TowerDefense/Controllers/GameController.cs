@@ -47,6 +47,11 @@ namespace TowerDance.Controllers
             _controlInput.update();
             _notesView.resumeSong();
             /* We check inputs */
+            if (_controlInput.isPushed(ListKey.PAUSE))
+            {
+                menuPause();
+                return;
+            }
             if (_controlInput.isPushed(ListKey.LEFTARROW))
                 _danceGameMechanic.tryToValid(0);
             if (_controlInput.isPushed(ListKey.DOWNARROW))
@@ -92,7 +97,25 @@ namespace TowerDance.Controllers
 
         override public void updateBackgrounded(GameTime gameTime)
         {
+        }
+
+        public override void signal(string signal)
+        {
+            if (signal.Equals("exit"))
+                stop();
+        }
+
+        public override void stop()
+        {
+            _notesView.stopSong();
+            base.stop();
+        }
+
+        private void menuPause()
+        {
+            _danceGameMechanic.setMusicStarted(false);
             _notesView.pauseSong();
+            addChild(new PauseMenuController());
         }
     }
 }
