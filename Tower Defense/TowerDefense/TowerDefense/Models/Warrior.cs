@@ -20,18 +20,21 @@ namespace TowerDance
         ACTION previousAction;
         DIRECTION direction;
         EntityUnit recipientUnit;
+        private float cooldownHit;
 
-        public Warrior() : base(10, 3, 1000, 500, 40, false, ENTITYTYPE.WARRIOR)
+        public Warrior() : base(10, 3, 2500, 1900, 40, false, ENTITYTYPE.WARRIOR)
         {
             currentAction = ACTION.MOVE;
+            cooldownHit = 0;
             if (ennemy == false)
                 position = new Vector2(World.sizeWidth / 2, World.sizeHeight / 2);
         }
 
         public Warrior(bool newEnnemy)
-            : base(10, 3, 1000, 500, 40, newEnnemy, ENTITYTYPE.WARRIOR)
+            : base(10, 3, 2500, 1900, 40, newEnnemy, ENTITYTYPE.WARRIOR)
         {
             currentAction = ACTION.MOVE;
+            cooldownHit = 0;
             if (ennemy == false)
                 position = new Vector2(World.sizeWidth / 2, World.sizeHeight / 2);
         }
@@ -41,6 +44,7 @@ namespace TowerDance
             : base(newLife, newDamage, coolDownShoot, coolDownWalk, newRange, newEnnemy, ENTITYTYPE.WARRIOR)
         {
             currentAction = ACTION.MOVE;
+            cooldownHit = 0;
             if (ennemy == false)
                 position = new Vector2(World.sizeWidth / 2, World.sizeHeight / 2);
         }
@@ -56,6 +60,7 @@ namespace TowerDance
             currentCoolDownShoot -= (float)gameRessource.GameTime.ElapsedGameTime.TotalMilliseconds;
             currentCoolDownWalk -= (float)gameRessource.GameTime.ElapsedGameTime.TotalMilliseconds;
             currentCoolDownDie -= (float)gameRessource.GameTime.ElapsedGameTime.TotalMilliseconds;
+            cooldownHit -= (float)gameRessource.GameTime.ElapsedGameTime.TotalMilliseconds;
 
             if (currentAction == ACTION.DIE)
             {
@@ -66,20 +71,29 @@ namespace TowerDance
                         gameRessource.Gold += 15;
                         gameRessource.ExpCurrentGame += 15;
                     }
-                    coolDownDie = 250;
+                    currentCoolDownDie = 250f;
                 }
-                if (coolDownDie <= 0)
+                if (currentCoolDownDie <= 0)
                     outWorld = true;
             }
 
-            if (currentAction == ACTION.ATTACK && currentCoolDownShoot <= 0)
+            if (currentAction == ACTION.ATTACK)
             {
+                if (currentCoolDownShoot <= 0)
+                {
+                    cooldownHit = 1400f;
                     currentCoolDownShoot = coolDownShoot;
                     currentCoolDownWalk = coolDownWalk;
+                }
 
+                if (cooldownHit <= 0)
+                {
                     recipientUnit.LifePoint -= damage;
-                    if (recipientUnit.LifePoint <= 0)
-                        recipientUnit.LifePoint = 0;
+                    cooldownHit = 999999f;
+                }
+
+                if (recipientUnit.LifePoint <= 0)
+                    recipientUnit.LifePoint = 0;
             }
 
             else if (currentAction == ACTION.MOVE && currentCoolDownWalk <= 0)

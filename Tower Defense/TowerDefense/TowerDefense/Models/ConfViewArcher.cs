@@ -8,28 +8,28 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace TowerDance
 {
-    class ConfViewWarrior : AConfView
+    class ConfViewArcher : AConfView
     {
         SpriteObject[] spriteObject;
 
-        public ConfViewWarrior() : base()
+        public ConfViewArcher() : base()
         {
             spriteObject = new SpriteObject[3];
-            coolDownShoot = 2500;
-            coolDownWalk = 1900;
+            coolDownShoot = 2390;
+            coolDownWalk = 1990;
             coolDownDie = 250;
             currentCoolDownShoot = 0;
             currentCoolDownWalk = 0;
             currentCoolDownDie = 0;
         }
 
-        public ConfViewWarrior(DIRECTION d)
+        public ConfViewArcher(DIRECTION d)
             : base(d)
         {
             spriteObject = new SpriteObject[3];
 
-            coolDownShoot = 2500;
-            coolDownWalk = 1900;
+            coolDownShoot = 2390;
+            coolDownWalk = 1990;
             coolDownDie = 250;
             currentCoolDownShoot = 0;
             currentCoolDownWalk = 0;
@@ -38,16 +38,16 @@ namespace TowerDance
 
         public override void loadAllie(ContentManager content)
         {
-            spriteObject[(int)(ACTION.DIE)] = new SpriteObject(content.Load<Texture2D>("WarriorDieAllies"), 64, 95, 1, 180f);
-            spriteObject[(int)(ACTION.MOVE)] = new SpriteObject(content.Load<Texture2D>("WarriorWalkAllies"), 70, 95, 5, 120f);
-            spriteObject[(int)(ACTION.ATTACK)] = new SpriteObject(content.Load<Texture2D>("WarriorHitAllies"), 102, 95, 20, 70f);
+            spriteObject[(int)(ACTION.DIE)] = new SpriteObject(content.Load<Texture2D>("ArcherDieAllies"), 74, 88, 3, 180f);
+            spriteObject[(int)(ACTION.MOVE)] = new SpriteObject(content.Load<Texture2D>("ArcherWalkAllies"), 78, 88, 5, 120f);
+            spriteObject[(int)(ACTION.ATTACK)] = new SpriteObject(content.Load<Texture2D>("ArcherHitAllies"), 112, 88, 29, 60f);
         }
 
         public override void loadEnnemy(ContentManager content)
         {
-            spriteObject[(int)(ACTION.DIE)] = new SpriteObject(content.Load<Texture2D>("WarriorDieEnnemy"), 64, 95, 3, 180f);
-            spriteObject[(int)(ACTION.MOVE)] = new SpriteObject(content.Load<Texture2D>("WarriorWalkEnnemy"), 70, 95, 5, 120f);
-            spriteObject[(int)(ACTION.ATTACK)] = new SpriteObject(content.Load<Texture2D>("WarriorHitEnnemy"), 102, 95, 20, 70f);
+            spriteObject[(int)(ACTION.DIE)] = new SpriteObject(content.Load<Texture2D>("ArcherDieEnnemy"), 74, 88, 3, 180f);
+            spriteObject[(int)(ACTION.MOVE)] = new SpriteObject(content.Load<Texture2D>("ArcherWalkEnnemy"), 78, 88, 5, 120f);
+            spriteObject[(int)(ACTION.ATTACK)] = new SpriteObject(content.Load<Texture2D>("ArcherHitEnnemy"), 112, 88, 29, 60f);
         }
 
         public override void load(ContentManager content) { }
@@ -88,7 +88,7 @@ namespace TowerDance
                     currentCoolDownShoot = coolDownShoot;
                     currentCoolDownWalk = coolDownWalk;
                 }
-    
+
                 if (spriteObject[(int)(currentSprite)].Finish == false)
                     spriteObject[(int)(currentSprite)].Update(gameTime);
             }

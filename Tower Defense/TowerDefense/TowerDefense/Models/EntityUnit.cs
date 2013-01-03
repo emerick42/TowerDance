@@ -17,6 +17,9 @@ namespace TowerDance
 
     public class EntityUnit : Entity
     {
+        static int idCount = 0;
+
+        private int objectID;
         protected int maxPoint;
         protected int lifePoint;
         protected bool ennemy;
@@ -31,6 +34,8 @@ namespace TowerDance
             ennemy = newEnnemy;
             outWorld = false;
             type = newType;
+            idCount += 1;
+            objectID = idCount;
         }
 
         public override void load(ContentManager content) {}
@@ -97,6 +102,11 @@ namespace TowerDance
         {
             get { return type; }
             set { type = value; }
+        }
+
+        public int ObjectID
+        {
+            get { return objectID; }
         }
     }
 }

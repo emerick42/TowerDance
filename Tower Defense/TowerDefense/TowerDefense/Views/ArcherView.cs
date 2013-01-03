@@ -12,29 +12,29 @@ using TowerDance.Models;
 
 namespace TowerDance
 {
-    class WarriorView : IView
+    class ArcherView : IView
     {
-        List<Warrior> listAddWarrior;
-        Dictionary<ConfViewWarrior, Warrior> listWarrior;
+        List<Archer> listAddArcher;
+        Dictionary<ConfViewArcher, Archer> listArcher;
         SpriteBatch sb;
         DrawPrimitive dp;
         GraphicsDevice _graphicsDevice;
         ContentManager _contentManager;
 
-        public WarriorView()
+        public ArcherView()
         {
-            listAddWarrior = new List<Warrior>();
-            listWarrior = new Dictionary<ConfViewWarrior, Warrior>();
+            listAddArcher = new List<Archer>();
+            listArcher = new Dictionary<ConfViewArcher, Archer>();
             dp = new DrawPrimitive();
         }
 
-        public void setWarrior(List<Warrior> newWarriors)
+        public void setArcher(List<Archer> newArchers)
         {
-            listAddWarrior = newWarriors;
-            foreach (Warrior w in listAddWarrior)
+            listAddArcher = newArchers;
+            foreach (Archer a in listAddArcher)
             {
-                ConfViewWarrior newConf = new ConfViewWarrior(w.Direction);
-                listWarrior[newConf] = w;
+                ConfViewArcher newConf = new ConfViewArcher(a.Direction);
+                listArcher[newConf] = a;
             }
         }
 
@@ -48,7 +48,7 @@ namespace TowerDance
 
         public void loadSprite()
         {
-            foreach (KeyValuePair<ConfViewWarrior, Warrior> pair in listWarrior)
+            foreach (KeyValuePair<ConfViewArcher, Archer> pair in listArcher)
             {
                 if (pair.Value.Ennemy)
                     pair.Key.loadEnnemy(_contentManager);
@@ -59,19 +59,19 @@ namespace TowerDance
 
         public void unload()
         {
-            foreach (KeyValuePair<ConfViewWarrior, Warrior> pair in listWarrior)
+            foreach (KeyValuePair<ConfViewArcher, Archer> pair in listArcher)
                 pair.Key.unload();
         }
 
-        public void setRefreshList(List<Warrior> listRefreshWarrior)
+        public void setRefreshList(List<Archer> listRefreshArcher)
         {
-            foreach (Warrior w in listRefreshWarrior)
+            foreach (Archer w in listRefreshArcher)
             {
-                Dictionary<ConfViewWarrior, Warrior> testWarrior = new Dictionary<ConfViewWarrior, Warrior>(listWarrior);
-                foreach (KeyValuePair<ConfViewWarrior, Warrior> pair in testWarrior)
+                Dictionary<ConfViewArcher, Archer> testArcher = new Dictionary<ConfViewArcher, Archer>(listArcher);
+                foreach (KeyValuePair<ConfViewArcher, Archer> pair in testArcher)
                 {
                     if (pair.Value.ObjectID == w.ObjectID)
-                        listWarrior[pair.Key] = w;
+                        listArcher[pair.Key] = w;
                 }
             }
         }
@@ -80,25 +80,25 @@ namespace TowerDance
         {
             refreshList();
 
-            foreach (KeyValuePair<ConfViewWarrior, Warrior> pair in listWarrior)
+            foreach (KeyValuePair<ConfViewArcher, Archer> pair in listArcher)
                 pair.Key.update(gameTime, pair.Value.CurrentAction);
         }
 
         private void refreshList()
         {
-            Dictionary<ConfViewWarrior, Warrior> testWarrior = new Dictionary<ConfViewWarrior, Warrior>(listWarrior);
+            Dictionary<ConfViewArcher, Archer> testArcher = new Dictionary<ConfViewArcher, Archer>(listArcher);
 
-            foreach (KeyValuePair<ConfViewWarrior, Warrior> pair in testWarrior)//Entity unit in listEntity)
+            foreach (KeyValuePair<ConfViewArcher, Archer> pair in testArcher)//Entity unit in listEntity)
             {
                 if (pair.Key.isAvaible())
-                    listWarrior.Remove(pair.Key);
+                    listArcher.Remove(pair.Key);
             }
         }
 
         public void draw()
         {
             sb.Begin();
-            foreach (KeyValuePair<ConfViewWarrior, Warrior> pair in listWarrior)
+            foreach (KeyValuePair<ConfViewArcher, Archer> pair in listArcher)
                 pair.Key.draw(sb, dp, pair.Value.Position, pair.Value.LifePoint, pair.Value.MaxPoint);
             sb.End();
         }

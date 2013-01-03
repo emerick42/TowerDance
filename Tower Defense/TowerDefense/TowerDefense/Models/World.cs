@@ -82,7 +82,9 @@ namespace TowerDance
             listEntity.Add(warrior2);
             listNewEntity.Add(warrior);
             listNewEntity.Add(warrior2);
-            //listEntity.Add(archer);
+
+            listEntity.Add(archer);
+            listNewEntity.Add(archer);
 
             //foreach (Entity entity in listEntity)
             //    entity.load(Content);
@@ -105,7 +107,10 @@ namespace TowerDance
             player.updateInput(controlInput);
 
             if (player.newUnit(gameRessource))
-                ;//    listEntity.Add(player.createUnit(Content));
+            {
+                listEntity.Add(player.createUnit());
+                listNewEntity.Add( listEntity.ElementAt(listEntity.Count - 1) );
+            }
 
             listEntity = refreshListEntity();
 
@@ -115,11 +120,70 @@ namespace TowerDance
             world.CollisionAction.start(listEntity);
         }
 
-        public bool isNew()
+        private List<Entity> refreshListEntity()
         {
-            if (listNewEntity.Count > 0)
+            List<Entity> res = new List<Entity>();
+
+            foreach (Entity unit in listEntity)
+            {
+                if (unit.isAvailable())
+                    res.Add(unit);
+            }
+            return res;
+        }
+
+        public bool isNewWarrior()
+        {
+            int i = 0;
+            foreach (EntityUnit w in listNewEntity)
+            {
+                if (w.getType() == ENTITYTYPE.WARRIOR)
+                    i += 1;
+            }
+
+            if (i > 0)
                 return true;
             return false;
+        }
+
+        public bool isNewArcher()
+        {
+            int i = 0;
+            foreach (EntityUnit w in listNewEntity)
+            {
+                if (w.getType() == ENTITYTYPE.ARCHER)
+                    i += 1;
+            }
+
+            if (i > 0)
+                return true;
+            return false;
+        }
+
+        public bool isNewCastle()
+        {
+            int i = 0;
+            foreach (EntityUnit w in listNewEntity)
+            {
+                if (w.getType() == ENTITYTYPE.CASTLE)
+                    i += 1;
+            }
+
+            if (i > 0)
+                return true;
+            return false;
+        }
+
+        public List<Warrior> getAllWarrior()
+        {
+            List<Warrior> res = new List<Warrior>();
+
+            foreach (EntityUnit unit in listEntity)
+            {
+                if (unit.getType() == ENTITYTYPE.WARRIOR)
+                    res.Add((Warrior)unit);
+            }
+            return res;
         }
 
         public List<Warrior> getWarrior()
@@ -141,6 +205,18 @@ namespace TowerDance
                 }
                 else
                     i += 1;
+            }
+            return res;
+        }
+
+        public List<Archer> getAllArcher()
+        {
+            List<Archer> res = new List<Archer>();
+
+            foreach (Entity unit in listEntity)
+            {
+                if (unit.getType() == ENTITYTYPE.ARCHER)
+                    res.Add((Archer)unit);
             }
             return res;
         }
@@ -187,18 +263,6 @@ namespace TowerDance
                 }
                 else
                     i += 1;
-            }
-            return res;
-        }
-
-        private List<Entity> refreshListEntity()
-        {
-            List<Entity> res = new List<Entity>();
-
-            foreach (Entity unit in listEntity)
-            {
-                if (unit.isAvailable())
-                    res.Add(unit);
             }
             return res;
         }

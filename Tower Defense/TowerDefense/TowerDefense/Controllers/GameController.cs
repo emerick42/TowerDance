@@ -20,6 +20,7 @@ namespace TowerDance.Controllers
         ControlInput _controlInput;
         World _world;
         WarriorView _warriorView;
+        ArcherView _archerView;
 
         public GameController(MusicSheet musicSheet)
         {
@@ -27,6 +28,7 @@ namespace TowerDance.Controllers
             _danceGameMechanic = new GameMechanic(musicSheet);
             _notesView = new NotesView(_danceGameMechanic.getNotes(), _danceGameMechanic.getTimePlayed());
             _world = new World();
+            _archerView = new ArcherView();
             _warriorView = new WarriorView();
 
             addView(_notesView);
@@ -34,19 +36,17 @@ namespace TowerDance.Controllers
 
             addView(_warriorView);
             addBackgroundView(_warriorView);
+
+            addView(_archerView);
+            addBackgroundView(_archerView);
         }
 
         override public void update(GameTime gameTime)
         {
+            _danceGameMechanic.update(gameTime);
             _controlInput.update();
             _notesView.resumeSong();
             /* We check inputs */
-            if (_controlInput.isPushed(ListKey.PAUSE))
-            {
-                menuPause();
-                return;
-            }
-            _danceGameMechanic.update(gameTime);
             if (_controlInput.isPushed(ListKey.LEFTARROW))
                 _danceGameMechanic.tryToValid(0);
             if (_controlInput.isPushed(ListKey.DOWNARROW))
@@ -61,7 +61,10 @@ namespace TowerDance.Controllers
             if (!_danceGameMechanic.hasMusicStarted() && _notesView.hasSongStarted())
                 _danceGameMechanic.syncWithSong(_notesView.getSongPosition());
             if (_danceGameMechanic.isFinished())
+            {
+                _notesView.stopSong();
                 stop();
+            }
             if (_danceGameMechanic.hasNewFlashMessage())
                 _notesView.setFlashMessage(_danceGameMechanic.getFlashMessage());
             _notesView.setTimePlayed(_danceGameMechanic.getTimePlayed());
@@ -69,35 +72,27 @@ namespace TowerDance.Controllers
 
             _world.Update(gameTime);
 
-            if (_world.isNew())
+            if (_world.isNewWarrior())
             {
                 _warriorView.setWarrior(_world.getWarrior());
                 _warriorView.loadSprite();
             }
+            if (_world.isNewArcher())
+            {
+                _archerView.setArcher(_world.getArcher());
+                _archerView.loadSprite();
+            }
+
+            _warriorView.setRefreshList(_world.getAllWarrior());
+            _archerView.setRefreshList(_world.getAllArcher());
 
             _warriorView.update(gameTime);
+            _archerView.update(gameTime);
         }
 
         override public void updateBackgrounded(GameTime gameTime)
         {
-        }
-
-        public override void signal(string signal)
-        {
-            if (signal.Equals("exit"))
-                stop();
-        }
-
-        public override void stop()
-        {
-            _notesView.stopSong();
-            base.stop();
-        }
-
-        private void menuPause()
-        {
             _notesView.pauseSong();
-            addChild(new PauseMenuController());
         }
     }
 }

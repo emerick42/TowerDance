@@ -79,21 +79,21 @@ namespace TowerDance
         {
         }
 
-        private Entity createWarrior(ContentManager content)
+        private Entity createWarrior()//ContentManager content)
         {
             Warrior warrior = new Warrior(false);
 
             warrior.Direction = dWay[currentWay];
-            warrior.load(content);
+//            warrior.load(content);
             return warrior;
         }
 
-        private Entity createArcher(ContentManager content)
+        private Entity createArcher()//ContentManager content)
         {
             Archer archer = new Archer(false);
 
             archer.Direction = dWay[currentWay];
-            archer.load(content);
+//            archer.load(content);
             return archer;
         }
 
@@ -112,14 +112,14 @@ namespace TowerDance
             return false;
         }
 
-        public Entity createUnit(ContentManager content)
+        public Entity createUnit()//ContentManager content)
         {
             if (dUnit[currentUnit] == UNIT.WARRIOR)
-                return createWarrior(content);
+                return createWarrior();
             else if (dUnit[currentUnit] == UNIT.ARCHER)
-                return createArcher(content);
+                return createArcher();
 
-            return createWarrior(content);
+            return createWarrior();
         }
 
         public ListKey CurrentUnit
