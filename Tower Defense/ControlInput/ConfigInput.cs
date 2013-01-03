@@ -52,7 +52,7 @@ namespace Input
             ThirdUnit = Keys.D3;
             FourthUnit = Keys.D4;
 
-            Pause = Keys.P;
+            Pause = Keys.Escape;
         }
 
         public ConfigInput(Dictionary<ListKey, Keys> configKeys)

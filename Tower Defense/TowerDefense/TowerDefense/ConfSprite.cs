@@ -14,7 +14,7 @@ using System.Diagnostics;
 
 namespace TowerDance
 {
-    class ConfSprite
+    public class ConfSprite
     {
         Texture2D texture;
         ContentManager content;

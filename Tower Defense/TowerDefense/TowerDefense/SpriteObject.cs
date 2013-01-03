@@ -19,7 +19,7 @@ namespace TowerDance
         DOWN
     }
 
-    class SpriteObject
+    public class SpriteObject
     {
         Texture2D texture;
 

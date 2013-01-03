@@ -14,7 +14,7 @@ using System.Diagnostics;
 
 namespace TowerDance
 {
-    class DrawPrimitive
+    public class DrawPrimitive
     {
         GraphicsDevice graphics;
         Texture2D blank;
