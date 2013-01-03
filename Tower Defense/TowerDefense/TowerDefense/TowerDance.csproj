@@ -107,14 +107,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Archer.cs" />
-    <Compile Include="Arrow.cs" />
+    <Compile Include="Views\AConfView.cs" />
+    <Compile Include="Models\Archer.cs" />
     <Compile Include="CollideSphere.cs" />
     <Compile Include="CollisionAction.cs" />
+    <Compile Include="Views\ConfViewWarrior.cs" />
     <Compile Include="ControllerManager.cs" />
     <Compile Include="Controllers\AController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\MainMenuController.cs" />
+    <Compile Include="Views\WarriorView.cs" />
     <Compile Include="DrawPrimitive.cs" />
     <Compile Include="GameRessource.cs" />
     <Compile Include="Models\Dance\BeatValue.cs" />
@@ -132,19 +134,19 @@
     <Compile Include="Views\Dance\NotesView.cs" />
     <Compile Include="Views\IView.cs" />
     <Compile Include="Views\MainMenuView.cs" />
-    <Compile Include="World.cs" />
-    <Compile Include="Castle.cs" />
+    <Compile Include="Background.cs" />
+    <Compile Include="Models\Castle.cs" />
     <Compile Include="ConfSprite.cs" />
-    <Compile Include="Entity.cs" />
-    <Compile Include="EntityUnit.cs" />
+    <Compile Include="Models\Entity.cs" />
+    <Compile Include="Models\EntityUnit.cs" />
     <Compile Include="Positionnable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="ControllerGame.cs" />
+    <Compile Include="Models\World.cs" />
     <Compile Include="SpriteObject.cs" />
-    <Compile Include="Unit.cs" />
+    <Compile Include="Models\Unit.cs" />
     <Compile Include="View.cs" />
-    <Compile Include="Warrior.cs" />
+    <Compile Include="Models\Warrior.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
