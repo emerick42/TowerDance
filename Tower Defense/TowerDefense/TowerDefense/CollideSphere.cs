@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace TowerDance
 {
-    class CollideSphere
+    public class CollideSphere
     {
         public float X;
         public float Y;

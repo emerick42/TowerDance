@@ -18,14 +18,22 @@ namespace TowerDance.Controllers
         GameMechanic _danceGameMechanic;
         NotesView _notesView;
         ControlInput _controlInput;
+        World _world;
+        WarriorView _warriorView;
 
         public GameController(MusicSheet musicSheet)
         {
             _controlInput = new ControlInput();
             _danceGameMechanic = new GameMechanic(musicSheet);
             _notesView = new NotesView(_danceGameMechanic.getNotes(), _danceGameMechanic.getTimePlayed());
+            _world = new World();
+            _warriorView = new WarriorView();
+
             addView(_notesView);
             addBackgroundView(_notesView);
+
+            addView(_warriorView);
+            addBackgroundView(_warriorView);
         }
 
         override public void update(GameTime gameTime)
@@ -56,6 +64,16 @@ namespace TowerDance.Controllers
                 _notesView.setFlashMessage(_danceGameMechanic.getFlashMessage());
             _notesView.setTimePlayed(_danceGameMechanic.getTimePlayed());
             _notesView.setCombo(_danceGameMechanic.getCombo());
+
+            _world.Update(gameTime);
+
+            if (_world.isNew())
+            {
+                _warriorView.setWarrior(_world.getWarrior());
+                _warriorView.loadSprite();
+            }
+
+            _warriorView.update(gameTime);
         }
 
         override public void updateBackgrounded(GameTime gameTime)

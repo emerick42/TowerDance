@@ -15,7 +15,7 @@ using System.Diagnostics;
 
 namespace TowerDance
 {
-    class Positionnable
+    public class Positionnable
     {
         protected Vector2 position;
 

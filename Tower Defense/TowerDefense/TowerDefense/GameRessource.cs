@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace TowerDance
 {
-    class GameRessource
+    public class GameRessource
     {
         int gold;
         int expCurrentGame;
