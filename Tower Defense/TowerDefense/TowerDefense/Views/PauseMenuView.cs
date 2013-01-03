@@ -16,6 +16,7 @@ namespace TowerDance.Views
         Menu _menu;
         SpriteBatch _spriteBatch;
         SpriteFont _menuFont;
+        Texture2D _backgroundTexture;
 
         public PauseMenuView(Menu menu)
         {
@@ -28,6 +29,8 @@ namespace TowerDance.Views
             _graphicsDevice = graphicsDevice;
             _spriteBatch = new SpriteBatch(_graphicsDevice);
             _menuFont = contentManager.Load<SpriteFont>("MenuFont");
+            _backgroundTexture = new Texture2D(graphicsDevice, 1, 1);
+            _backgroundTexture.SetData(new Color[] { Color.Black });
         }
 
         public void draw()
@@ -46,6 +49,9 @@ namespace TowerDance.Views
             int gapX = 0;
             int gapY = (_windowConfiguration.height - menuHeight) / 2;
             _spriteBatch.Begin();
+            Color c = Color.White;
+            c.A = 200;
+            _spriteBatch.Draw(_backgroundTexture, new Rectangle(0, 0, _windowConfiguration.width, _windowConfiguration.height), c);
             int idx = 0;
             int gapY2 = 0;
             Color textColor = Color.Gray;

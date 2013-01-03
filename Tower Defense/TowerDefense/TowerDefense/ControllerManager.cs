@@ -36,9 +36,7 @@ namespace TowerDance
         {
             _controller.loadContent(GraphicsDevice, Content, _windowConfiguration);
             foreach (AController c in _controller.getChildren())
-            {
                 c.loadContent(GraphicsDevice, Content, _windowConfiguration);
-            }
         }
 
         protected override void Update(GameTime gameTime)
@@ -50,17 +48,13 @@ namespace TowerDance
 
         private void updateController(GameTime gameTime, AController controller)
         {
-            if (!controller.isContentLoaded())
-                controller.loadContent(GraphicsDevice, Content, _windowConfiguration);
             if (controller.getChildren().Count <= 0)
                 controller.update(gameTime);
             else
             {
                 controller.updateBackgrounded(gameTime);
                 foreach (AController c in controller.getChildren())
-                {
                     updateController(gameTime, c);
-                }
             }
         }
 
@@ -81,9 +75,7 @@ namespace TowerDance
             {
                 controller.drawBackgrounded(gameTime);
                 foreach (AController c in controller.getChildren())
-                {
                     drawController(gameTime, c);
-                }
             }
         }
 
@@ -93,13 +85,14 @@ namespace TowerDance
 
             if (controller == _controller && controller.isStopped())
                 Exit();
-            while (i < controller.getChildren().Count)
+            List<AController> children = controller.getChildren();
+            while (i < children.Count)
             {
-                if (controller.getChildren()[i].isStopped())
-                    controller.getChildren().RemoveAt(i);
+                if (children[i].isStopped())
+                    children.RemoveAt(i);
                 else
                 {
-                    cleanControllerTree(controller.getChildren()[i]);
+                    cleanControllerTree(children[i]);
                     i++;
                 }
             }

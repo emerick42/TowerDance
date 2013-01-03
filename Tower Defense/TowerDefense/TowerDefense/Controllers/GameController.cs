@@ -38,12 +38,15 @@ namespace TowerDance.Controllers
 
         override public void update(GameTime gameTime)
         {
-            _danceGameMechanic.update(gameTime);
             _controlInput.update();
             _notesView.resumeSong();
             /* We check inputs */
             if (_controlInput.isPushed(ListKey.PAUSE))
+            {
                 menuPause();
+                return;
+            }
+            _danceGameMechanic.update(gameTime);
             if (_controlInput.isPushed(ListKey.LEFTARROW))
                 _danceGameMechanic.tryToValid(0);
             if (_controlInput.isPushed(ListKey.DOWNARROW))
@@ -77,7 +80,6 @@ namespace TowerDance.Controllers
 
         override public void updateBackgrounded(GameTime gameTime)
         {
-            _notesView.pauseSong();
         }
 
         public override void signal(string signal)
@@ -94,6 +96,7 @@ namespace TowerDance.Controllers
 
         private void menuPause()
         {
+            _notesView.pauseSong();
             addChild(new PauseMenuController());
         }
     }

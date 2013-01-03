@@ -38,6 +38,7 @@ namespace TowerDance.Controllers
             foreach (IView v in _backgroundedViews)
                 v.loadContent(_graphicsDevice, _contentManager, _windowConfiguration);
         }
+
         public virtual void stop()
         {
             _isStopped = true;
