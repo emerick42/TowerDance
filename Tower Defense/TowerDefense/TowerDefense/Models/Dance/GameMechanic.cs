@@ -30,7 +30,7 @@ namespace TowerDance.Models.Dance
             _needToPlaySong = true;
             _notes = _musicSheet.getNotes();
             _song = _musicSheet.getSong();
-            _timePlayed = new TimeSpan(0, 0, 0, 0, (int)(_song.offset * 1000) - 200);
+            _timePlayed = new TimeSpan(0, 0, 0, 0, (int)(_song.offset * 1000) - 500);
             _lastValidatedNoteId = -1;
         }
 
@@ -141,6 +141,35 @@ namespace TowerDance.Models.Dance
                 if (g == Grade.NotPlayed)
                     break;
                 if (n.getType() == type && !n.isValid() && g >= Grade.Bad)
+                    validNote(n, i, g);
+            }
+            failNotes();
+            recalculateCombo();
+        }
+
+        public void autoValid()
+        {
+            Note n;
+            Grade g;
+            int i = _lastValidatedNoteId;
+            int j = 0;
+            while (i + j > 0)
+            {
+                if (_notes[i + j - 1].getPosition() == _notes[_lastValidatedNoteId].getPosition())
+                    j--;
+                else
+                    break;
+            }
+            if (j < 0)
+                j--;
+            i += j;
+            while (++i < _notes.Count)
+            {
+                n = _notes[i];
+                g = retrieveGrade(n);
+                if (g == Grade.NotPlayed)
+                    break;
+                if (!n.isValid() && g >= Grade.Fantastic)
                     validNote(n, i, g);
             }
             failNotes();

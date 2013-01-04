@@ -51,7 +51,7 @@ namespace TowerDance.Controllers
         private void menuSelectExecute()
         {
             if (_menu.getSelectedTitleIndex() == 0)
-                addChild(new GameController(_songLibrary.songs[0].musicSheets[0]));
+                addChild(new ControlSelectController(_songLibrary.songs[0].musicSheets[0]));
             if (_menu.getSelectedTitleIndex() == 1)
                 stop();
         }
