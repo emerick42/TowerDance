@@ -35,11 +35,11 @@ namespace TowerDance.Controllers
         {
             _controlInput.update();
             /* We check inputs */
-            if (_controlInput.playerOneisPushed(ListKey.DOWNARROW))
+            if (_controlInput.isPushed(ListKey.DOWNARROW))
                 _menu.selectNext();
-            if (_controlInput.playerOneisPushed(ListKey.UPARROW))
+            if (_controlInput.isPushed(ListKey.UPARROW))
                 _menu.selectPrevious();
-            if (_controlInput.playerOneisPushed(ListKey.VALID))
+            if (_controlInput.isPushed(ListKey.VALID))
                 menuSelectExecute();
             _mainMenuView.setElapsedTime(gameTime.ElapsedGameTime);
         }
