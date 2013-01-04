@@ -119,44 +119,132 @@ namespace Input
             buttonsConfig.SaveConfig();
         }
 
-        public bool isPressed(ListKey key_)
+        public bool isFirstPlayer()
         {
-            if (keysState.IsKeyDown(keyConfig.getValue(key_)) 
-                || gamepadStatePlayerOne.IsButtonDown(buttonsConfig.getValue(key_)))
+#if XBOX
+            if (GamePad.GetState(PlayerIndex.One).IsConnected)
+                return true;
+            return false;
+#else
+            return true;
+#endif
+        }
+
+        public bool isSecondPlayer()
+        {
+#if XBOX
+            if (GamePad.GetState(PlayerIndex.Two).IsConnected)
+                return true;
+#else
+            if (GamePad.GetState(PlayerIndex.One).IsConnected)
+                return true;
+#endif
+            return false;
+        }
+
+
+        public bool playerOneisPressed(ListKey key_)
+        {
+#if XBOX
+            if (gamepadStatePlayerOne.IsButtonDown(buttonsConfig.getValue(key_)))
+#else
+            if (keysState.IsKeyDown(keyConfig.getValue(key_)) )
+#endif
                 return true;
             return false;
         }
 
-        public bool isUp(ListKey key_)
+        public bool playerOneisUp(ListKey key_)
         {
-            if (keysState.IsKeyUp(keyConfig.getValue(key_))
-                || gamepadStatePlayerOne.IsButtonUp(buttonsConfig.getValue(key_)))
+#if XBOX
+            if (gamepadStatePlayerOne.IsButtonUp(buttonsConfig.getValue(key_)))
+#else
+            if (keysState.IsKeyUp(keyConfig.getValue(key_)))
+#endif
                 return true;
             return false;
         }
 
-        public bool isPreviousPressed(ListKey key_)
+        public bool playerOneisPreviousPressed(ListKey key_)
         {
-            if (previousKeysState.IsKeyDown(keyConfig.getValue(key_))
-                || previousGamepadStatePlayerOne.IsButtonDown(buttonsConfig.getValue(key_)))
+#if XBOX
+            if (previousGamepadStatePlayerOne.IsButtonDown(buttonsConfig.getValue(key_)))
+#else
+            if (previousKeysState.IsKeyDown(keyConfig.getValue(key_)))
+#endif
                 return true;
             return false;
         }
 
-        public bool isPreviousUp(ListKey key_)
+        public bool playerOneisPreviousUp(ListKey key_)
         {
-            if (previousKeysState.IsKeyUp(keyConfig.getValue(key_))
-                || previousGamepadStatePlayerOne.IsButtonUp(buttonsConfig.getValue(key_)))
+#if XBOX
+            if (previousGamepadStatePlayerOne.IsButtonUp(buttonsConfig.getValue(key_)))
+#else
+            if (previousKeysState.IsKeyUp(keyConfig.getValue(key_)))
+#endif
                 return true;
             return false;
         }
 
-        public bool isPushed(ListKey key_)
+        public bool playerOneisPushed(ListKey key_)
         {
-            if (isPressed(key_) && !isPreviousPressed(key_))
+            if (playerOneisPressed(key_) && !playerOneisPreviousPressed(key_))
                 return true;
             return false;
         }
+
+        public bool playerTwoisPressed(ListKey key_)
+        {
+#if XBOX
+            if (gamepadStatePlayerTwo.IsButtonDown(buttonsConfig.getValue(key_)))
+#else
+            if (gamepadStatePlayerOne.IsButtonDown(buttonsConfig.getValue(key_)))
+#endif
+                return true;
+            return false;
+        }
+
+        public bool playerTwoisUp(ListKey key_)
+        {
+#if XBOX
+            if (gamepadStatePlayerTwo.IsButtonUp(buttonsConfig.getValue(key_)))
+#else
+            if (gamepadStatePlayerOne.IsButtonUp(buttonsConfig.getValue(key_)))
+#endif
+                return true;
+            return false;
+        }
+
+        public bool playerTwoisPreviousPressed(ListKey key_)
+        {
+#if XBOX
+            if (previousGamepadStatePlayerTwo.IsButtonDown(buttonsConfig.getValue(key_)))
+#else
+            if (previousGamepadStatePlayerOne.IsButtonDown(buttonsConfig.getValue(key_)))
+#endif
+                return true;
+            return false;
+        }
+
+        public bool playerTwoisPreviousUp(ListKey key_)
+        {
+#if XBOX
+            if (previousGamepadStatePlayerTwo.IsButtonUp(buttonsConfig.getValue(key_)))
+#else
+            if (previousGamepadStatePlayerOne.IsButtonUp(buttonsConfig.getValue(key_)))
+#endif
+                return true;
+            return false;
+        }
+
+        public bool playerTwoisPushed(ListKey key_)
+        {
+            if (playerTwoisPressed(key_) && !playerTwoisPreviousPressed(key_))
+                return true;
+            return false;
+        }
+
 
         public void update()
         {

@@ -47,18 +47,18 @@ namespace TowerDance.Controllers
             _controlInput.update();
             _notesView.resumeSong();
             /* We check inputs */
-            if (_controlInput.isPushed(ListKey.PAUSE))
+            if (_controlInput.playerOneisPushed(ListKey.PAUSE))
             {
                 menuPause();
                 return;
             }
-            if (_controlInput.isPushed(ListKey.LEFTARROW))
+            if (_controlInput.playerOneisPushed(ListKey.LEFTARROW))
                 _danceGameMechanic.tryToValid(0);
-            if (_controlInput.isPushed(ListKey.DOWNARROW))
+            if (_controlInput.playerOneisPushed(ListKey.DOWNARROW))
                 _danceGameMechanic.tryToValid(1);
-            if (_controlInput.isPushed(ListKey.UPARROW))
+            if (_controlInput.playerOneisPushed(ListKey.UPARROW))
                 _danceGameMechanic.tryToValid(2);
-            if (_controlInput.isPushed(ListKey.RIGHTARROW))
+            if (_controlInput.playerOneisPushed(ListKey.RIGHTARROW))
                 _danceGameMechanic.tryToValid(3);
             /* Manage interaction with NotesView */
             if (_danceGameMechanic.needToPlaySong())
