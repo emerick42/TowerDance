@@ -59,13 +59,17 @@ namespace TowerDance.Controllers
             /* Dance inputs, must only be done by the dancePlayerID */
             if (_dancePlayerID >= 0)
             {
-                if (_controlInput.isPushed(_dancePlayerID, ListKey.LEFTARROW))
+                if (_controlInput.isPushed(_dancePlayerID, ListKey.LEFTARROW)
+                    || _controlInput.isPushed(_dancePlayerID, ListKey.LEFTARROWRIGHT))
                     _danceGameMechanic.tryToValid(0);
-                if (_controlInput.isPushed(_dancePlayerID, ListKey.DOWNARROW))
+                if (_controlInput.isPushed(_dancePlayerID, ListKey.DOWNARROW)
+                    || _controlInput.isPushed(_dancePlayerID, ListKey.DOWNARROWRIGHT))
                     _danceGameMechanic.tryToValid(1);
-                if (_controlInput.isPushed(_dancePlayerID, ListKey.UPARROW))
+                if (_controlInput.isPushed(_dancePlayerID, ListKey.UPARROW)
+                    || _controlInput.isPushed(_dancePlayerID, ListKey.UPARROWRIGHT))
                     _danceGameMechanic.tryToValid(2);
-                if (_controlInput.isPushed(_dancePlayerID, ListKey.RIGHTARROW))
+                if (_controlInput.isPushed(_dancePlayerID, ListKey.RIGHTARROW)
+                    || _controlInput.isPushed(_dancePlayerID, ListKey.RIGHTARROWRIGHT))
                     _danceGameMechanic.tryToValid(3);
             }
             else
