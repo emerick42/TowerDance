@@ -16,6 +16,8 @@ namespace TowerDance.Views
         Menu _menu;
         SpriteBatch _spriteBatch;
         SpriteFont _menuFont;
+        Texture2D _logoTexture;
+        TimeSpan _animationLogo = new TimeSpan();
 
         public MainMenuView(Menu menu)
         {
@@ -28,6 +30,7 @@ namespace TowerDance.Views
             _graphicsDevice = graphicsDevice;
             _spriteBatch = new SpriteBatch(_graphicsDevice);
             _menuFont = contentManager.Load<SpriteFont>("MenuFont");
+            _logoTexture = contentManager.Load<Texture2D>("logo");
         }
 
         public void draw()
@@ -46,6 +49,7 @@ namespace TowerDance.Views
             int gapX = 0;
             int gapY = (_windowConfiguration.height - menuHeight) / 2;
             _spriteBatch.Begin();
+            drawLogo();
             int idx = 0;
             int gapY2 = 0;
             Color textColor = Color.Gray;
@@ -62,6 +66,28 @@ namespace TowerDance.Views
                 gapY2 += (int)_msgSize.Y;
             }
             _spriteBatch.End();
+        }
+
+        public void setElapsedTime(TimeSpan elapsedTime)
+        {
+            _animationLogo += elapsedTime;
+        }
+
+        private void drawLogo()
+        {
+            int x = (int)((_windowConfiguration.width - 400.0f) / 2.0f);
+            int y = (int)((_windowConfiguration.height - 150.0f) / 4.0f);
+            int yAnimation = 0;
+            if (_animationLogo.TotalMilliseconds < 1000)
+            {
+                yAnimation = (int)((-y - 150.0f) * (1000.0f - _animationLogo.TotalMilliseconds) / 1000.0f);
+                if (yAnimation < 0)
+                    yAnimation *= -yAnimation;
+                else
+                    yAnimation *= yAnimation;
+                yAnimation /= 20;
+            }
+            _spriteBatch.Draw(_logoTexture, new Rectangle(x, y + yAnimation, 400, 150), Color.White);
         }
     }
 }

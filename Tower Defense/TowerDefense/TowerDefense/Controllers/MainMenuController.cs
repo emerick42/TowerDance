@@ -41,6 +41,7 @@ namespace TowerDance.Controllers
                 _menu.selectPrevious();
             if (_controlInput.playerOneisPushed(ListKey.VALID))
                 menuSelectExecute();
+            _mainMenuView.setElapsedTime(gameTime.ElapsedGameTime);
         }
 
         override public void updateBackgrounded(GameTime gameTime)
