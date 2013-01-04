@@ -24,7 +24,7 @@ namespace TowerDance.Controllers
         public MainMenuController()
         {
             _controlInput = new ControlInput();
-            _menu = new Menu(new List<string>() {"Campaign", "Exit"});
+            _menu = new Menu(new List<string>() {"Campaign", "Credits", "Exit"});
             _songLibrary = new SongLibrary();
             _songLibrary.initialize();
             _mainMenuView = new MainMenuView(_menu);
@@ -61,6 +61,8 @@ namespace TowerDance.Controllers
             if (_menu.getSelectedTitleIndex() == 0)
                 addChild(new ControlSelectController(_songLibrary.songs[0].musicSheets[0], defaultPlayerID));
             if (_menu.getSelectedTitleIndex() == 1)
+                addChild(new CreditController());
+            if (_menu.getSelectedTitleIndex() == 2)
                 stop();
         }
     }
