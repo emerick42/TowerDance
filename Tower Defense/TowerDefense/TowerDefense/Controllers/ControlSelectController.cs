@@ -124,6 +124,7 @@ namespace TowerDance.Controllers
                 i++;
             }
             addChild(new GameController(_musicSheet, dancePlayerID, towerDefensePlayerID));
+            stop();
             _shouldStop = true;
         }
 

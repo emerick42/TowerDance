@@ -98,10 +98,9 @@ namespace TowerDance.Controllers
 
             if (_castleView.isNewCastle())
             {
-//                _castleView.setCastle(_world.getCastle());
+                _castleView.setCastle(_world.getCastle());
                 _castleView.loadSprite();
             }
-            _castleView.setRefreshList(_world.getCastle());
 
             if (_world.isNewWarrior())
             {

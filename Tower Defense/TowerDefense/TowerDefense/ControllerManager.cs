@@ -41,20 +41,22 @@ namespace TowerDance
 
         protected override void Update(GameTime gameTime)
         {
-            cleanControllerTree(_controller);
+            if (cleanControllerTree(_controller))
+                Exit();
             updateController(gameTime, _controller);
             base.Update(gameTime);
         }
 
         private void updateController(GameTime gameTime, AController controller)
         {
-            controller.flushChildren();
             if (!controller.isContentLoaded())
                 controller.loadContent(GraphicsDevice, Content, _windowConfiguration);
-            if (!controller.isReady())
-                return;
             if (controller.getChildren().Count <= 0)
+            {
+                if (!controller.isReady())
+                    return;
                 controller.update(gameTime);
+            }
             else
             {
                 controller.updateBackgrounded(gameTime);
@@ -72,8 +74,6 @@ namespace TowerDance
 
         private void drawController(GameTime gameTime, AController controller)
         {
-            if (!controller.isReady())
-                return;
             if (controller.getChildren().Count <= 0)
                 controller.draw(gameTime);
             else
@@ -84,7 +84,35 @@ namespace TowerDance
             }
         }
 
-        private void cleanControllerTree(AController controller)
+        private bool cleanControllerTree(AController controller)
+        {
+            controller.flushChildren();
+            int i = 0;
+            List<AController> children = controller.getChildren();
+            if (children.Count > 0)
+            {
+                while (i < children.Count)
+                {
+                    if (!cleanControllerTree(children[i]))
+                        i++;
+                }
+            }
+            children = controller.getChildren();
+            if (children.Count <= 0 && controller.isStopped())
+            {
+                if (controller == _controller)
+                    Exit();
+                else
+                {
+                    AController parent = controller.getParent();
+                    parent.getChildren().Remove(controller);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+/*        private void cleanControllerTree(AController controller)
         {
             int i = 0;
 
@@ -106,6 +134,6 @@ namespace TowerDance
                 if (controller.getChildren().Count <= 0)
                     controller.switchState();
             }
-        }
+        }*/
     }
 }
