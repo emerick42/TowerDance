@@ -51,16 +51,27 @@ namespace TowerDance.Controllers
                 return;
             }
             /* Check the player 1 controls */
-            if (_controlInput.isPushed(ListKey.LEFTARROW))
+            if (_controlInput.isPushed(0, ListKey.LEFTARROW))
                 tryToMovePlayerPosition(0, 0);
-            if (_controlInput.isPushed(ListKey.DOWNARROW))
+            if (_controlInput.isPushed(0, ListKey.DOWNARROW))
                 tryToMovePlayerPosition(0, 1);
-            if (_controlInput.isPushed(ListKey.UPARROW))
+            if (_controlInput.isPushed(0, ListKey.UPARROW))
                 tryToMovePlayerPosition(0, 2);
-            if (_controlInput.isPushed(ListKey.RIGHTARROW))
+            if (_controlInput.isPushed(0, ListKey.RIGHTARROW))
                 tryToMovePlayerPosition(0, 3);
-            if (_controlInput.isPushed(ListKey.VALID))
+            if (_controlInput.isPushed(0, ListKey.VALID))
                 tryToSetPlayerReady(0);
+            /* Check the player 2 controls */
+            if (_controlInput.isPushed(1, ListKey.LEFTARROW))
+                tryToMovePlayerPosition(1, 0);
+            if (_controlInput.isPushed(1, ListKey.DOWNARROW))
+                tryToMovePlayerPosition(1, 1);
+            if (_controlInput.isPushed(1, ListKey.UPARROW))
+                tryToMovePlayerPosition(1, 2);
+            if (_controlInput.isPushed(1, ListKey.RIGHTARROW))
+                tryToMovePlayerPosition(1, 3);
+            if (_controlInput.isPushed(1, ListKey.VALID))
+                tryToSetPlayerReady(1);
             _controlSelectView.setPlayersPosition(_p);
             _controlSelectView.setPlayersState(_pState);
             if (everyoneIsReady())
