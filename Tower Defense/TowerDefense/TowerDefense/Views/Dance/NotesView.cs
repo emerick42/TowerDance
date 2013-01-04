@@ -131,9 +131,9 @@ namespace TowerDance.Views.Dance
             return false;
         }
 
-        public TimeSpan getSongPosition()
+        public TimeSpan getSongDiffPosition()
         {
-            return MediaPlayer.PlayPosition;
+            return TimeSpan.Zero;
         }
 
         private void drawFlashMessage()

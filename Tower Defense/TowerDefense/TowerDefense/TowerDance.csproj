@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ControlSelectController.cs" />
     <Compile Include="Controllers\PauseMenuController.cs" />
     <Compile Include="Views\ArcherView.cs" />
     <Compile Include="Views\ConfViewArcher.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Controllers\AController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\MainMenuController.cs" />
+    <Compile Include="Views\ControlSelectView.cs" />
     <Compile Include="Views\PauseMenuView.cs" />
     <Compile Include="Views\WarriorView.cs" />
     <Compile Include="Models\DrawPrimitive.cs" />

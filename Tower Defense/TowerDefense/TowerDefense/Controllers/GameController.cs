@@ -21,9 +21,13 @@ namespace TowerDance.Controllers
         World _world;
         WarriorView _warriorView;
         ArcherView _archerView;
+        int _dancePlayerID;
+        int _towerDefensePlayerID;
 
-        public GameController(MusicSheet musicSheet)
+        public GameController(MusicSheet musicSheet, int dancePlayerID, int towerDefensePlayerID)
         {
+            _dancePlayerID = dancePlayerID;
+            _towerDefensePlayerID = towerDefensePlayerID;
             _controlInput = new ControlInput();
             _danceGameMechanic = new GameMechanic(musicSheet);
             _notesView = new NotesView(_danceGameMechanic.getNotes(), _danceGameMechanic.getTimePlayed());
@@ -52,19 +56,25 @@ namespace TowerDance.Controllers
                 menuPause();
                 return;
             }
-            if (_controlInput.playerOneisPushed(ListKey.LEFTARROW))
-                _danceGameMechanic.tryToValid(0);
-            if (_controlInput.playerOneisPushed(ListKey.DOWNARROW))
-                _danceGameMechanic.tryToValid(1);
-            if (_controlInput.playerOneisPushed(ListKey.UPARROW))
-                _danceGameMechanic.tryToValid(2);
-            if (_controlInput.playerOneisPushed(ListKey.RIGHTARROW))
-                _danceGameMechanic.tryToValid(3);
+            /* Dance inputs, must only be done by the dancePlayerID */
+            if (_dancePlayerID >= 0)
+            {
+                if (_controlInput.playerOneisPushed(ListKey.LEFTARROW))
+                    _danceGameMechanic.tryToValid(0);
+                if (_controlInput.playerOneisPushed(ListKey.DOWNARROW))
+                    _danceGameMechanic.tryToValid(1);
+                if (_controlInput.playerOneisPushed(ListKey.UPARROW))
+                    _danceGameMechanic.tryToValid(2);
+                if (_controlInput.playerOneisPushed(ListKey.RIGHTARROW))
+                    _danceGameMechanic.tryToValid(3);
+            }
+            else
+                _danceGameMechanic.autoValid();
             /* Manage interaction with NotesView */
             if (_danceGameMechanic.needToPlaySong())
                 _notesView.playSong(_danceGameMechanic.getSongFileName());
             if (!_danceGameMechanic.hasMusicStarted() && _notesView.hasSongStarted())
-                _danceGameMechanic.syncWithSong(_notesView.getSongPosition());
+                _danceGameMechanic.syncWithSong(_notesView.getSongDiffPosition());
             if (_danceGameMechanic.isFinished())
             {
                 _notesView.stopSong();
