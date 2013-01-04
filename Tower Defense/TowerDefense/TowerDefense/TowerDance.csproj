@@ -121,6 +121,8 @@
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\MainMenuController.cs" />
     <Compile Include="Views\ControlSelectView.cs" />
+    <Compile Include="Views\CastleView.cs" />
+    <Compile Include="Views\ConfViewCastle.cs" />
     <Compile Include="Views\PauseMenuView.cs" />
     <Compile Include="Views\WarriorView.cs" />
     <Compile Include="Models\DrawPrimitive.cs" />

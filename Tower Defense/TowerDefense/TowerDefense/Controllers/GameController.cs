@@ -21,6 +21,7 @@ namespace TowerDance.Controllers
         World _world;
         WarriorView _warriorView;
         ArcherView _archerView;
+        CastleView _castleView;
         int _dancePlayerID;
         int _towerDefensePlayerID;
 
@@ -34,9 +35,13 @@ namespace TowerDance.Controllers
             _world = new World();
             _archerView = new ArcherView();
             _warriorView = new WarriorView();
+            _castleView = new CastleView();
 
             addView(_notesView);
             addBackgroundView(_notesView);
+
+            addView(_castleView);
+            addBackgroundView(_castleView);
 
             addView(_warriorView);
             addBackgroundView(_warriorView);
@@ -87,6 +92,13 @@ namespace TowerDance.Controllers
 
             _world.Update(gameTime);
 
+            if (_castleView.isNewCastle())
+            {
+//                _castleView.setCastle(_world.getCastle());
+                _castleView.loadSprite();
+            }
+            _castleView.setRefreshList(_world.getCastle());
+
             if (_world.isNewWarrior())
             {
                 _warriorView.setWarrior(_world.getWarrior());
@@ -101,6 +113,7 @@ namespace TowerDance.Controllers
             _warriorView.setRefreshList(_world.getAllWarrior());
             _archerView.setRefreshList(_world.getAllArcher());
 
+            _castleView.update(gameTime);
             _warriorView.update(gameTime);
             _archerView.update(gameTime);
         }

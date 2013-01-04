@@ -76,7 +76,7 @@ namespace TowerDance
 
             controlInput.SaveInput();
 
-            //listEntity.Add(castle); // FIRST
+            listEntity.Add(castle);
 
             listEntity.Add(warrior);
             listEntity.Add(warrior2);
@@ -85,9 +85,6 @@ namespace TowerDance
 
             listEntity.Add(archer);
             listNewEntity.Add(archer);
-
-            //foreach (Entity entity in listEntity)
-            //    entity.load(Content);
         }
 
         public void UnloadContent()
@@ -152,20 +149,6 @@ namespace TowerDance
             foreach (EntityUnit w in listNewEntity)
             {
                 if (w.getType() == ENTITYTYPE.ARCHER)
-                    i += 1;
-            }
-
-            if (i > 0)
-                return true;
-            return false;
-        }
-
-        public bool isNewCastle()
-        {
-            int i = 0;
-            foreach (EntityUnit w in listNewEntity)
-            {
-                if (w.getType() == ENTITYTYPE.CASTLE)
                     i += 1;
             }
 
@@ -247,22 +230,14 @@ namespace TowerDance
         public Castle getCastle()
         {
             Castle res = new Castle();
-            int i = 0;
 
-            foreach (Entity unit in listNewEntity)
+            foreach (Entity unit in listEntity)
             {
                 if (unit.getType() == ENTITYTYPE.CASTLE)
-                    res = (Castle)unit;
-            }
-            while (i < listNewEntity.Count)
-            {
-                if (listNewEntity[i].getType() == ENTITYTYPE.CASTLE)
                 {
-                    listNewEntity.RemoveAt(i);
-                    i = 0;
+                    Castle send = new Castle((Castle)unit);
+                    return send;
                 }
-                else
-                    i += 1;
             }
             return res;
         }
