@@ -13,6 +13,7 @@ namespace TowerDance.Controllers
     abstract class AController
     {
         protected List<AController> _children = new List<AController>();
+        protected List<AController> _tmpChildren = new List<AController>();
         protected GraphicsDevice _graphicsDevice;
         protected ContentManager _contentManager;
         protected WindowConfiguration _windowConfiguration;
@@ -67,19 +68,29 @@ namespace TowerDance.Controllers
             foreach (IView v in _views)
                 v.draw();
         }
+
         public virtual void drawBackgrounded(GameTime gameTime)
         {
             foreach (IView v in _backgroundedViews)
                 v.draw();
         }
+
         public virtual void signal(string signal)
         {
 
         }
+
         public void addChild(AController child)
         {
-            _children.Add(child);
+            _tmpChildren.Add(child);
             child._parent = this;
+        }
+
+        public void flushChildren()
+        {
+            foreach (AController child in _tmpChildren)
+                _children.Add(child);
+            _tmpChildren.Clear();
         }
 
         public List<AController> getChildren()

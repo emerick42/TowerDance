@@ -48,6 +48,9 @@ namespace TowerDance
 
         private void updateController(GameTime gameTime, AController controller)
         {
+            controller.flushChildren();
+            if (!controller.isContentLoaded())
+                controller.loadContent(GraphicsDevice, Content, _windowConfiguration);
             if (!controller.isReady())
                 return;
             if (controller.getChildren().Count <= 0)
@@ -69,8 +72,6 @@ namespace TowerDance
 
         private void drawController(GameTime gameTime, AController controller)
         {
-            if (!controller.isContentLoaded())
-                controller.loadContent(GraphicsDevice, Content, _windowConfiguration);
             if (!controller.isReady())
                 return;
             if (controller.getChildren().Count <= 0)
