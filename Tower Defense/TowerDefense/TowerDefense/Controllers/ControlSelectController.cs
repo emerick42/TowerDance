@@ -45,21 +45,21 @@ namespace TowerDance.Controllers
             if (_shouldStop)
                 stop();
             _controlInput.update();
-            if (_controlInput.playerOneisPushed(ListKey.PAUSE))
+            if (_controlInput.isPushed(ListKey.PAUSE))
             {
                 stop();
                 return;
             }
             /* Check the player 1 controls */
-            if (_controlInput.playerOneisPushed(ListKey.LEFTARROW))
+            if (_controlInput.isPushed(ListKey.LEFTARROW))
                 tryToMovePlayerPosition(0, 0);
-            if (_controlInput.playerOneisPushed(ListKey.DOWNARROW))
+            if (_controlInput.isPushed(ListKey.DOWNARROW))
                 tryToMovePlayerPosition(0, 1);
-            if (_controlInput.playerOneisPushed(ListKey.UPARROW))
+            if (_controlInput.isPushed(ListKey.UPARROW))
                 tryToMovePlayerPosition(0, 2);
-            if (_controlInput.playerOneisPushed(ListKey.RIGHTARROW))
+            if (_controlInput.isPushed(ListKey.RIGHTARROW))
                 tryToMovePlayerPosition(0, 3);
-            if (_controlInput.playerOneisPushed(ListKey.VALID))
+            if (_controlInput.isPushed(ListKey.VALID))
                 tryToSetPlayerReady(0);
             _controlSelectView.setPlayersPosition(_p);
             _controlSelectView.setPlayersState(_pState);

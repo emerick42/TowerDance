@@ -54,22 +54,22 @@ namespace TowerDance
 
         public void updateInput(ControlInput controlInput)
         {
-            if (controlInput.playerOneisPressed(ListKey.FIRSTUNIT))
+            if (controlInput.playerisPressed(0, ListKey.FIRSTUNIT))
                 currentUnit = ListKey.FIRSTUNIT;
-            else if (controlInput.playerOneisPressed(ListKey.SECONDUNIT))
+            else if (controlInput.playerisPressed(0, ListKey.SECONDUNIT))
                 currentUnit = ListKey.SECONDUNIT;
-            else if (controlInput.playerOneisPressed(ListKey.THIRDUNIT))
+            else if (controlInput.playerisPressed(0, ListKey.THIRDUNIT))
                 currentUnit = ListKey.THIRDUNIT;
-            else if (controlInput.playerOneisPressed(ListKey.FOURTHUNIT))
+            else if (controlInput.playerisPressed(0, ListKey.FOURTHUNIT))
                 currentUnit = ListKey.FOURTHUNIT;
 
-            if (controlInput.playerOneisPushed(ListKey.LEFTWAY))
+            if (controlInput.playerisPushed(0, ListKey.LEFTWAY))
                 currentWay = ListKey.LEFTWAY;
-            else if (controlInput.playerOneisPushed(ListKey.UPWAY))
+            else if (controlInput.playerisPushed(0, ListKey.UPWAY))
                 currentWay = ListKey.UPWAY;
-            else if (controlInput.playerOneisPushed(ListKey.RIGHTWAY))
+            else if (controlInput.playerisPushed(0, ListKey.RIGHTWAY))
                 currentWay = ListKey.RIGHTWAY;
-            else if (controlInput.playerOneisPushed(ListKey.DOWNWAY))
+            else if (controlInput.playerisPushed(0, ListKey.DOWNWAY))
                 currentWay = ListKey.DOWNWAY;
             else
                 currentWay = ListKey.NONE;

@@ -51,7 +51,7 @@ namespace TowerDance.Controllers
             _controlInput.update();
             _notesView.resumeSong();
             /* We check inputs */
-            if (_controlInput.playerOneisPushed(ListKey.PAUSE))
+            if (_controlInput.isPushed(ListKey.PAUSE))
             {
                 menuPause();
                 return;
@@ -59,13 +59,13 @@ namespace TowerDance.Controllers
             /* Dance inputs, must only be done by the dancePlayerID */
             if (_dancePlayerID >= 0)
             {
-                if (_controlInput.playerOneisPushed(ListKey.LEFTARROW))
+                if (_controlInput.isPushed(ListKey.LEFTARROW))
                     _danceGameMechanic.tryToValid(0);
-                if (_controlInput.playerOneisPushed(ListKey.DOWNARROW))
+                if (_controlInput.isPushed(ListKey.DOWNARROW))
                     _danceGameMechanic.tryToValid(1);
-                if (_controlInput.playerOneisPushed(ListKey.UPARROW))
+                if (_controlInput.isPushed(ListKey.UPARROW))
                     _danceGameMechanic.tryToValid(2);
-                if (_controlInput.playerOneisPushed(ListKey.RIGHTARROW))
+                if (_controlInput.isPushed(ListKey.RIGHTARROW))
                     _danceGameMechanic.tryToValid(3);
             }
             else
