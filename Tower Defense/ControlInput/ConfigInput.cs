@@ -62,6 +62,11 @@ namespace Input
             UpArrow = configKeys[ListKey.UPARROW];
             RightArrow = configKeys[ListKey.RIGHTARROW];
 
+            LeftArrow = configKeys[ListKey.LEFTARROWRIGHT];
+            DownArrow = configKeys[ListKey.DOWNARROWRIGHT];
+            UpArrow = configKeys[ListKey.UPARROWRIGHT];
+            RightArrow = configKeys[ListKey.RIGHTARROWRIGHT];
+
             LeftWay = configKeys[ListKey.LEFTWAY];
             DownWay = configKeys[ListKey.DOWNWAY];
             RightWay = configKeys[ListKey.RIGHTWAY];

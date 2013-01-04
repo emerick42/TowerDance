@@ -56,6 +56,11 @@ namespace Input
             configKeys.Add(ListKey.DOWNARROW, configInput.DownArrow);
             configKeys.Add(ListKey.UPARROW, configInput.UpArrow);
             configKeys.Add(ListKey.RIGHTARROW, configInput.RightArrow);
+
+            configKeys.Add(ListKey.LEFTARROWRIGHT, configInput.LeftArrow);
+            configKeys.Add(ListKey.DOWNARROWRIGHT, configInput.DownArrow);
+            configKeys.Add(ListKey.UPARROWRIGHT, configInput.UpArrow);
+            configKeys.Add(ListKey.RIGHTARROWRIGHT, configInput.RightArrow);
             #endregion
 
             #region WAY
