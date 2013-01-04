@@ -131,7 +131,7 @@ namespace TowerDance.Controllers
         {
             if (_pState[playerID] == PlayerSelectState.Ready)
                 return;
-            if (playerID == 1)
+            if (_p[playerID] == PlayerSelectPosition.NonExisting)
             {
                 _p[playerID] = PlayerSelectPosition.NonAssigned;
                 _pState[playerID] = PlayerSelectState.Selecting;
