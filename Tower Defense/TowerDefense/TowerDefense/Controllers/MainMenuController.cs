@@ -24,7 +24,7 @@ namespace TowerDance.Controllers
         public MainMenuController()
         {
             _controlInput = new ControlInput();
-            _menu = new Menu(new List<string>() {"Campaign", "Exit"});
+            _menu = new Menu(new List<string>() {"Campaign", "Credits", "Exit"});
             _songLibrary = new SongLibrary();
             _songLibrary.initialize();
             _mainMenuView = new MainMenuView(_menu);
@@ -35,12 +35,20 @@ namespace TowerDance.Controllers
         {
             _controlInput.update();
             /* We check inputs */
+            if (_controlInput.isPushed(ListKey.PAUSE))
+            {
+                stop();
+                return;
+            }
             if (_controlInput.isPushed(ListKey.DOWNARROW))
                 _menu.selectNext();
             if (_controlInput.isPushed(ListKey.UPARROW))
                 _menu.selectPrevious();
-            if (_controlInput.isPushed(ListKey.VALID))
-                menuSelectExecute();
+            if (_controlInput.isPushed(0, ListKey.VALID))
+                menuSelectExecute(0);
+            if (_controlInput.isPushed(1, ListKey.VALID))
+                menuSelectExecute(1);
+            _mainMenuView.setElapsedTime(gameTime.ElapsedGameTime);
         }
 
         override public void updateBackgrounded(GameTime gameTime)
@@ -48,11 +56,13 @@ namespace TowerDance.Controllers
 
         }
 
-        private void menuSelectExecute()
+        private void menuSelectExecute(int defaultPlayerID)
         {
             if (_menu.getSelectedTitleIndex() == 0)
-                addChild(new ControlSelectController(_songLibrary.songs[0].musicSheets[0]));
+                addChild(new ControlSelectController(_songLibrary.songs[0].musicSheets[0], defaultPlayerID));
             if (_menu.getSelectedTitleIndex() == 1)
+                addChild(new CreditController());
+            if (_menu.getSelectedTitleIndex() == 2)
                 stop();
         }
     }

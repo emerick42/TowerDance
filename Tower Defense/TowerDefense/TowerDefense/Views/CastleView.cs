@@ -74,7 +74,6 @@ namespace TowerDance
         public void draw()
         {
             sb.Begin();
-            Console.Out.WriteLine("Life = " + castle.LifePoint);
             castleConfView.draw(sb, dp, castle.Position, castle.LifePoint, castle.MaxPoint);
             sb.End();
         }

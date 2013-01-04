@@ -13,6 +13,7 @@ namespace TowerDance.Controllers
     abstract class AController
     {
         protected List<AController> _children = new List<AController>();
+        protected List<AController> _tmpChildren = new List<AController>();
         protected GraphicsDevice _graphicsDevice;
         protected ContentManager _contentManager;
         protected WindowConfiguration _windowConfiguration;
@@ -67,19 +68,33 @@ namespace TowerDance.Controllers
             foreach (IView v in _views)
                 v.draw();
         }
+
         public virtual void drawBackgrounded(GameTime gameTime)
         {
             foreach (IView v in _backgroundedViews)
                 v.draw();
         }
+
         public virtual void signal(string signal)
         {
 
         }
+
         public void addChild(AController child)
         {
-            _children.Add(child);
+            _tmpChildren.Add(child);
             child._parent = this;
+        }
+
+        public void flushChildren()
+        {
+            if (_tmpChildren.Count > 0)
+            {
+                foreach (AController child in _tmpChildren)
+                    _children.Add(child);
+                _tmpChildren.Clear();
+                switchState();
+            }
         }
 
         public List<AController> getChildren()
@@ -94,10 +109,15 @@ namespace TowerDance.Controllers
 
         public bool isReady()
         {
-            if (_frame > 120)
+            if (_frame > 80)
                 return true;
             _frame++;
             return false;
+        }
+
+        public void switchState()
+        {
+            _frame = 0;
         }
     }
 }

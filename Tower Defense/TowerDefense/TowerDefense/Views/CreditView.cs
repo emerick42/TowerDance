@@ -3,23 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
+using TowerDance.Models;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
-using TowerDance.Models;
 
 namespace TowerDance.Views
 {
-    class MainMenuView : IView
+    class CreditView : IView
     {
         GraphicsDevice _graphicsDevice;
         WindowConfiguration _windowConfiguration;
         Menu _menu;
         SpriteBatch _spriteBatch;
         SpriteFont _menuFont;
-        Texture2D _logoTexture;
-        TimeSpan _animationLogo = new TimeSpan();
+        Texture2D _backgroundTexture;
 
-        public MainMenuView(Menu menu)
+        public CreditView(Menu menu)
         {
             _menu = menu;
         }
@@ -30,7 +29,8 @@ namespace TowerDance.Views
             _graphicsDevice = graphicsDevice;
             _spriteBatch = new SpriteBatch(_graphicsDevice);
             _menuFont = contentManager.Load<SpriteFont>("MenuFont");
-            _logoTexture = contentManager.Load<Texture2D>("logo");
+            _backgroundTexture = new Texture2D(graphicsDevice, 1, 1);
+            _backgroundTexture.SetData(new Color[] { Color.Black });
         }
 
         public void draw()
@@ -49,45 +49,27 @@ namespace TowerDance.Views
             int gapX = 0;
             int gapY = (_windowConfiguration.height - menuHeight) / 2;
             _spriteBatch.Begin();
-            drawLogo();
+            Color c = Color.White;
+            c.A = 200;
+            _spriteBatch.Draw(_backgroundTexture, new Rectangle(0, 0, _windowConfiguration.width, _windowConfiguration.height), c);
             int idx = 0;
             int gapY2 = 0;
             Color textColor = Color.Gray;
+            int name = 1;
             foreach (string t in menu)
             {
-                textColor = Color.Gray;
-                if (idx == _menu.getSelectedTitleIndex())
-                    textColor = Color.White;
+                textColor = Color.White;
+                if (name < 0)
+                    textColor = Color.LightGray;
                 Vector2 _msgSize = _menuFont.MeasureString(t);
                 gapX = (_windowConfiguration.width - (int)_msgSize.X) / 2;
                 pos = new Vector2(gapX, gapY + gapY2);
                 _spriteBatch.DrawString(_menuFont, t, pos, textColor);
                 idx++;
                 gapY2 += (int)_msgSize.Y;
+                name *= -1;
             }
             _spriteBatch.End();
-        }
-
-        public void setElapsedTime(TimeSpan elapsedTime)
-        {
-            _animationLogo += elapsedTime;
-        }
-
-        private void drawLogo()
-        {
-            int x = (int)((_windowConfiguration.width - 400.0f) / 2.0f);
-            int y = (int)((_windowConfiguration.height - 150.0f) / 4.0f);
-            int yAnimation = 0;
-            if (_animationLogo.TotalMilliseconds < 1000)
-            {
-                yAnimation = (int)((-y - 150.0f) * (1000.0f - _animationLogo.TotalMilliseconds) / 1000.0f);
-                if (yAnimation < 0)
-                    yAnimation *= -yAnimation;
-                else
-                    yAnimation *= yAnimation;
-                yAnimation /= 20;
-            }
-            _spriteBatch.Draw(_logoTexture, new Rectangle(x, y + yAnimation, 400, 150), Color.White);
         }
     }
 }

@@ -16,12 +16,11 @@ namespace TowerDance.Views
         WindowConfiguration _windowConfiguration;
         SpriteBatch _spriteBatch;
         SpriteFont _menuTitleFont;
-        List<PlayerSelectPosition> _p = new List<PlayerSelectPosition>() { PlayerSelectPosition.NonAssigned, PlayerSelectPosition.NonExisting };
-        List<PlayerSelectState> _pState = new List<PlayerSelectState>() { PlayerSelectState.Selecting, PlayerSelectState.NonExisting };
+        List<PlayerSelectPosition> _p = new List<PlayerSelectPosition>() { PlayerSelectPosition.NonExisting, PlayerSelectPosition.NonExisting };
+        List<PlayerSelectState> _pState = new List<PlayerSelectState>() { PlayerSelectState.NonExisting, PlayerSelectState.NonExisting };
 
         public ControlSelectView()
         {
-
         }
 
         public void loadContent(GraphicsDevice graphicsDevice, ContentManager contentManager, WindowConfiguration windowConfiguration)
@@ -93,8 +92,6 @@ namespace TowerDance.Views
                 Color usedColor = Color.Yellow;
                 Color usedBackgroundColor = Color.DarkOrange;
                 SpriteFont usedFont = _menuTitleFont;
-                if (p == PlayerSelectPosition.NonExisting)
-                    continue;
                 string text = "Player " + (player + 1).ToString();
                 if (_pState[player] == PlayerSelectState.Ready)
                 {
@@ -114,8 +111,11 @@ namespace TowerDance.Views
                     pos = new Vector2(_windowConfiguration.width / 2.0f, _windowConfiguration.height * 2.0f / 3.0f);
                 gapY += (int)msgSize.Y + 20;
                 pos.Y += gapY;
-                _spriteBatch.DrawString(usedFont, text, pos - msgSize + new Vector2(2, 2), usedBackgroundColor);
-                _spriteBatch.DrawString(usedFont, text, pos - msgSize, usedColor);
+                if (p != PlayerSelectPosition.NonExisting)
+                {
+                    _spriteBatch.DrawString(usedFont, text, pos - msgSize + new Vector2(2, 2), usedBackgroundColor);
+                    _spriteBatch.DrawString(usedFont, text, pos - msgSize, usedColor);
+                }
                 player++;
             }
         }

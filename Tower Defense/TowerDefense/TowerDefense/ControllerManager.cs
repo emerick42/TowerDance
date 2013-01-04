@@ -48,6 +48,9 @@ namespace TowerDance
 
         private void updateController(GameTime gameTime, AController controller)
         {
+            controller.flushChildren();
+            if (!controller.isContentLoaded())
+                controller.loadContent(GraphicsDevice, Content, _windowConfiguration);
             if (!controller.isReady())
                 return;
             if (controller.getChildren().Count <= 0)
@@ -69,8 +72,6 @@ namespace TowerDance
 
         private void drawController(GameTime gameTime, AController controller)
         {
-            if (!controller.isContentLoaded())
-                controller.loadContent(GraphicsDevice, Content, _windowConfiguration);
             if (!controller.isReady())
                 return;
             if (controller.getChildren().Count <= 0)
@@ -90,15 +91,20 @@ namespace TowerDance
             if (controller == _controller && controller.isStopped())
                 Exit();
             List<AController> children = controller.getChildren();
-            while (i < children.Count)
+            if (children.Count > 0)
             {
-                if (children[i].isStopped())
-                    children.RemoveAt(i);
-                else
+                while (i < children.Count)
                 {
-                    cleanControllerTree(children[i]);
-                    i++;
+                    if (children[i].isStopped())
+                        children.RemoveAt(i);
+                    else
+                    {
+                        cleanControllerTree(children[i]);
+                        i++;
+                    }
                 }
+                if (controller.getChildren().Count <= 0)
+                    controller.switchState();
             }
         }
     }
