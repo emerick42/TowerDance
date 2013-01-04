@@ -263,6 +263,12 @@ namespace Input
             return false;
         }
 
+        public bool isPushed(int id, ListKey key_)
+        {
+            if ((playerisPressed(id, key_) && !playerisPreviousPressed(id, key_)))
+                return true;
+            return false;
+        }
 
         public void update()
         {
