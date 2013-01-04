@@ -124,6 +124,8 @@
     <Compile Include="Views\ControlSelectView.cs" />
     <Compile Include="Views\CastleView.cs" />
     <Compile Include="Views\ConfViewCastle.cs" />
+    <Compile Include="Views\ConfViewBackground.cs" />
+    <Compile Include="Views\BackgroundView.cs" />
     <Compile Include="Views\CreditView.cs" />
     <Compile Include="Views\PauseMenuView.cs" />
     <Compile Include="Views\WarriorView.cs" />

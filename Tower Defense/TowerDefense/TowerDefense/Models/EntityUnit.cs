@@ -12,7 +12,8 @@ namespace TowerDance
     {
         WARRIOR = 0,
         ARCHER,
-        CASTLE
+        CASTLE,
+        BACKGROUND
     }
 
     public class EntityUnit : Entity
@@ -25,7 +26,6 @@ namespace TowerDance
         protected bool ennemy;
         protected CollideSphere boundingSphere;
         protected bool outWorld;
-        protected ENTITYTYPE type;
 
         public EntityUnit(int newLife, bool newEnnemy, ENTITYTYPE newType)
         {
@@ -96,12 +96,6 @@ namespace TowerDance
         {
             get { return outWorld; }
             set { outWorld = value; }
-        }
-
-        public ENTITYTYPE Type
-        {
-            get { return type; }
-            set { type = value; }
         }
 
         public int ObjectID

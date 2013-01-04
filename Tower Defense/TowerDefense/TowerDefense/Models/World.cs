@@ -64,6 +64,7 @@ namespace TowerDance
             warrior2 = new Warrior(true);
             archer = new Archer(true);
             castle = new Castle();
+            world = new Background();
 
             warrior.setPositionDirection(new Vector2(sizeWidth / 2, 0), DIRECTION.DOWN);
             warrior2.setPositionDirection(new Vector2(0, sizeHeight / 2), DIRECTION.RIGHT);
@@ -75,6 +76,8 @@ namespace TowerDance
             //world.setTexture(Content.Load<Texture2D>("background"));
 
             controlInput.SaveInput();
+
+//            listEntity.Add(world);
 
             listEntity.Add(castle);
 
@@ -111,7 +114,7 @@ namespace TowerDance
 
             listEntity = refreshListEntity();
 
-            foreach (EntityUnit entity in listEntity)
+            foreach (Entity entity in listEntity)
                 entity.update(gameRessource);
 
             world.CollisionAction.start(listEntity);

@@ -22,6 +22,7 @@ namespace TowerDance.Controllers
         WarriorView _warriorView;
         ArcherView _archerView;
         CastleView _castleView;
+        BackgroundView _backView;
         int _dancePlayerID;
         int _towerDefensePlayerID;
 
@@ -36,9 +37,14 @@ namespace TowerDance.Controllers
             _archerView = new ArcherView();
             _warriorView = new WarriorView();
             _castleView = new CastleView();
+            _backView = new BackgroundView();
+
 
             addView(_notesView);
             addBackgroundView(_notesView);
+
+            //addView(_backView);
+            //addBackgroundView(_backView);
 
             addView(_castleView);
             addBackgroundView(_castleView);
@@ -96,11 +102,17 @@ namespace TowerDance.Controllers
 
             _world.Update(gameTime);
 
-            if (_castleView.isNewCastle())
-            {
-//                _castleView.setCastle(_world.getCastle());
-                _castleView.loadSprite();
-            }
+//            if (!_backView.SetBack)
+//            {
+//                _backView.setBackround();
+//                _backView.loadSprite();
+//            }
+
+//            if (_castleView.isNewCastle())
+//            {
+////                _castleView.setCastle(_world.getCastle());
+//                _castleView.loadSprite();
+//            }
             _castleView.setRefreshList(_world.getCastle());
 
             if (_world.isNewWarrior())
@@ -111,12 +123,13 @@ namespace TowerDance.Controllers
             if (_world.isNewArcher())
             {
                 _archerView.setArcher(_world.getArcher());
-                _archerView.loadSprite();
+                //_archerView.loadSprite();
             }
 
             _warriorView.setRefreshList(_world.getAllWarrior());
             _archerView.setRefreshList(_world.getAllArcher());
 
+            //_backView.update(gameTime);
             _castleView.update(gameTime);
             _warriorView.update(gameTime);
             _archerView.update(gameTime);

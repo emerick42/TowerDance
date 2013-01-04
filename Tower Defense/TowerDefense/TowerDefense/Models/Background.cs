@@ -14,26 +14,19 @@ using System.Diagnostics;
 
 namespace TowerDance
 {
-    class Background : Entity
+    class Background : EntityUnit
     {
-        Texture2D textureBack;
         CollisionAction collisionAction;
 
-        public Background()
+        public Background() : base(0, false, ENTITYTYPE.BACKGROUND)
         {
+            collisionAction = new CollisionAction();
         }
-
-        public void setTexture(Texture2D newTexture)
-        {
-            textureBack = newTexture;
-        }
-
 
         public override void load(ContentManager content) { }
 
         public override void unload()
         {
-            textureBack.Dispose();
         }
 
         public override void update(GameRessource gameRessource)
@@ -42,7 +35,6 @@ namespace TowerDance
 
         public override void draw(SpriteBatch sb)
         {
-            sb.Draw(textureBack, position, Color.White);
         }
 
         public override ENTITYTYPE getType()
@@ -52,7 +44,7 @@ namespace TowerDance
 
         public override bool isAvailable()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public CollisionAction CollisionAction

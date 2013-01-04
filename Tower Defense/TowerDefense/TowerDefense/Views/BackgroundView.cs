@@ -12,26 +12,27 @@ using TowerDance.Models;
 
 namespace TowerDance
 {
-    class CastleView : IView
+    class BackgroundView : IView
     {
-        ConfViewCastle castleConfView;
-        Castle castle;
+        ConfViewBackground backView;
+        Background back;
         SpriteBatch sb;
         DrawPrimitive dp;
         GraphicsDevice _graphicsDevice;
         ContentManager _contentManager;
-        bool newCastle;
+        bool setBack;
 
-        public CastleView()
+        public BackgroundView()
         {
+            setBack = false;
             dp = new DrawPrimitive();
-            castleConfView = new ConfViewCastle();
-            newCastle = true;
         }
 
-        public void setCastle(Castle _newCastle)
+        public void setBackround()
         {
-            castle = _newCastle;
+            setBack = true;
+            backView = new ConfViewBackground();
+            back = new Background();
         }
 
         public void loadContent(GraphicsDevice graphicsDevice, ContentManager contentManager, WindowConfiguration windowConfiguration)
@@ -40,43 +41,32 @@ namespace TowerDance
             sb = new SpriteBatch(_graphicsDevice);
             _contentManager = contentManager;
             dp.load(graphicsDevice);
-            castleConfView.load(_contentManager);
-        }
-
-        public bool isNewCastle()
-        {
-            if (newCastle == true)
-                return true;
-            return false;
         }
 
         public void loadSprite()
         {
-            newCastle = false;
-            castleConfView.load(_contentManager);
+            backView.load(_contentManager);
         }
 
         public void unload()
         {
-            castleConfView.unload();
-        }
-
-        public void setRefreshList(Castle refreshCastle)
-        {
-            castle = new Castle(refreshCastle);
+            backView.unload();
         }
 
         public void update(GameTime gameTime)
         {
-            if (castleConfView.isAvaible())
-                castleConfView.update(gameTime, 0);
         }
 
         public void draw()
         {
             sb.Begin();
-            castleConfView.draw(sb, dp, castle.Position, castle.LifePoint, castle.MaxPoint);
+            backView.draw(sb, dp, back.Position, 0, 0);
             sb.End();
+        }
+
+        public bool SetBack
+        {
+            get { return setBack; }
         }
     }
 }

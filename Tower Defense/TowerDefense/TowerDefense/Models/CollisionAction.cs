@@ -23,7 +23,8 @@ namespace TowerDance
                 foreach (EntityUnit checkEntity in listEntity)
                 {
                     if (entity != checkEntity && entity.Ennemy != checkEntity.Ennemy
-                        && (entity.LifePoint > 0 || checkEntity.LifePoint > 0))
+                        && (entity.LifePoint > 0 || checkEntity.LifePoint > 0) &&
+                        (entity.Type != ENTITYTYPE.BACKGROUND && checkEntity.Type != ENTITYTYPE.BACKGROUND))
                     {
                         if (entity.Sphere.Intersect(checkEntity.Sphere))
                         {
