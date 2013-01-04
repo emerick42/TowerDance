@@ -109,7 +109,7 @@ namespace TowerDance.Controllers
 
         public bool isReady()
         {
-            if (_frame > 80)
+            if (_frame > 40)
                 return true;
             _frame++;
             return false;
