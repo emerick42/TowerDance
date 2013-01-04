@@ -88,9 +88,13 @@ namespace TowerDance.Controllers
 
         public void flushChildren()
         {
-            foreach (AController child in _tmpChildren)
-                _children.Add(child);
-            _tmpChildren.Clear();
+            if (_tmpChildren.Count > 0)
+            {
+                foreach (AController child in _tmpChildren)
+                    _children.Add(child);
+                _tmpChildren.Clear();
+                switchState();
+            }
         }
 
         public List<AController> getChildren()
@@ -105,10 +109,15 @@ namespace TowerDance.Controllers
 
         public bool isReady()
         {
-            if (_frame > 120)
+            if (_frame > 80)
                 return true;
             _frame++;
             return false;
+        }
+
+        public void switchState()
+        {
+            _frame = 0;
         }
     }
 }
