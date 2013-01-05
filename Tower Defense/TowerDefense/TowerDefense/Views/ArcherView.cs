@@ -15,6 +15,8 @@ namespace TowerDance
     class ArcherView : IView
     {
         List<Archer> listAddArcher;
+
+        // Avoir juste un COnfViewArcher et une seule liste d'archer
         Dictionary<ConfViewArcher, Archer> listArcher;
         SpriteBatch sb;
         DrawPrimitive dp;

@@ -102,6 +102,7 @@ namespace TowerDance.Controllers
 
             _world.Update(gameTime);
 
+            // A Rajouter apres le travail sur le view
 //            if (!_backView.SetBack)
 //            {
 //                _backView.setBackround();
@@ -123,7 +124,7 @@ namespace TowerDance.Controllers
             if (_world.isNewArcher())
             {
                 _archerView.setArcher(_world.getArcher());
-                //_archerView.loadSprite();
+                _archerView.loadSprite();
             }
 
             _warriorView.setRefreshList(_world.getAllWarrior());

@@ -75,7 +75,10 @@ namespace TowerDance
         public void draw()
         {
             sb.Begin();
-            castleConfView.draw(sb, dp, castle.Position, castle.LifePoint, castle.MaxPoint);
+
+            // Segfault a cause des view
+            //castleConfView.draw(sb, dp, castle.Position, castle.LifePoint, castle.MaxPoint);
+
             sb.End();
         }
     }
