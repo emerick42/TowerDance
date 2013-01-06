@@ -24,6 +24,11 @@ namespace TowerDance.Models.Dance
             return _notes;
         }
 
+        public TimeSpan getDuration()
+        {
+            return new TimeSpan(0, 0, 0, 2, (int)(_notes[_notes.Count - 1].getPosition() * 1000));
+        }
+
         private void loadNotes()
         {
             int currentTempo = 0;

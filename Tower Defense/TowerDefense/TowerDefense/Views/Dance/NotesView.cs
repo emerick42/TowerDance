@@ -97,6 +97,8 @@ namespace TowerDance.Views.Dance
             Microsoft.Xna.Framework.Media.Song song = Microsoft.Xna.Framework.Media.Song.FromUri("song", songPath);
             MediaPlayer.IsRepeating = false;
             MediaPlayer.Play(song);
+            /* Temporary */
+            MediaPlayer.IsMuted = true;
         }
 
         public void resumeSong()

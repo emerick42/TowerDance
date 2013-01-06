@@ -8,9 +8,9 @@ using TowerDance.Views.Dance;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using TowerDance.Views;
-using TowerDance.Models;
 using Microsoft.Xna.Framework.Input;
 using Input;
+using TowerDance.Models.Interface;
 
 namespace TowerDance.Controllers
 {

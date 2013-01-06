@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 using System.Diagnostics;
 
-namespace TowerDance
+namespace TowerDance.Models
 {
     public class Castle : EntityUnit
     {

@@ -110,6 +110,17 @@
     <Compile Include="Controllers\ControlSelectController.cs" />
     <Compile Include="Controllers\CreditController.cs" />
     <Compile Include="Controllers\PauseMenuController.cs" />
+    <Compile Include="Models\Saves\Save.cs" />
+    <Compile Include="Models\Skills\Skill.cs" />
+    <Compile Include="Models\Saves\Upgrade.cs" />
+    <Compile Include="Models\Skills\InvokeWarrior.cs" />
+    <Compile Include="Models\TowerDefense\Action.cs" />
+    <Compile Include="Models\TowerDefense\Attack.cs" />
+    <Compile Include="Models\TowerDefense\Castle.cs" />
+    <Compile Include="Models\TowerDefense\Entity.cs" />
+    <Compile Include="Models\TowerDefense\GameMechanic.cs" />
+    <Compile Include="Models\TowerDefense\Move.cs" />
+    <Compile Include="Models\TowerDefense\Warrior.cs" />
     <Compile Include="Views\ArcherView.cs" />
     <Compile Include="Views\ConfViewArcher.cs" />
     <Compile Include="Views\AConfView.cs" />
@@ -128,6 +139,7 @@
     <Compile Include="Views\BackgroundView.cs" />
     <Compile Include="Views\CreditView.cs" />
     <Compile Include="Views\PauseMenuView.cs" />
+    <Compile Include="Views\TowerDefense\BoardView.cs" />
     <Compile Include="Views\WarriorView.cs" />
     <Compile Include="Models\DrawPrimitive.cs" />
     <Compile Include="Models\GameRessource.cs" />
@@ -140,7 +152,7 @@
     <Compile Include="Models\Dance\SMParser.cs" />
     <Compile Include="Models\Dance\Song.cs" />
     <Compile Include="Models\Dance\SongLibrary.cs" />
-    <Compile Include="Models\Menu.cs" />
+    <Compile Include="Models\Interface\Menu.cs" />
     <Compile Include="Models\WindowConfiguration.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Views\Dance\NotesView.cs" />

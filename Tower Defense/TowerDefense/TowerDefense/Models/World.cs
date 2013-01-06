@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Input;
 
-namespace TowerDance
+namespace TowerDance.Models
 {
     public class World
     {

@@ -14,7 +14,7 @@ using System.Diagnostics;
 
 using Input;
 
-namespace TowerDance
+namespace TowerDance.Models
 {
     public enum UNIT
     {

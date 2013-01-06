@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace TowerDance
+namespace TowerDance.Models
 {
     public abstract class Entity : Positionnable
     {

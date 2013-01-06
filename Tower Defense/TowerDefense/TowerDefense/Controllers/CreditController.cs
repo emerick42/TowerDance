@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-using TowerDance.Models;
 using TowerDance.Views;
 using Input;
+using TowerDance.Models.Interface;
 
 namespace TowerDance.Controllers
 {

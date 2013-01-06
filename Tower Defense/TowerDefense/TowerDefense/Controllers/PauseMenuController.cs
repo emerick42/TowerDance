@@ -6,6 +6,7 @@ using TowerDance.Models;
 using Input;
 using Microsoft.Xna.Framework;
 using TowerDance.Views;
+using TowerDance.Models.Interface;
 
 namespace TowerDance.Controllers
 {

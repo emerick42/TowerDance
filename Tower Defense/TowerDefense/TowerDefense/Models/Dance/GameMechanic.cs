@@ -46,7 +46,7 @@ namespace TowerDance.Models.Dance
         {
             if (_notes.Count <= 0)
                 return true;
-            if (_timePlayed.TotalSeconds >= _notes[_notes.Count - 1].getPosition() + 2.0f)
+            if (_timePlayed >= _musicSheet.getDuration())
                 return true;
             return false;
         }
