@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ControllerManager.cs" />
     <Compile Include="Controllers\ControlSelectController.cs" />
     <Compile Include="Controllers\CreditController.cs" />
     <Compile Include="Controllers\PauseMenuController.cs" />
@@ -121,28 +122,13 @@
     <Compile Include="Models\TowerDefense\GameMechanic.cs" />
     <Compile Include="Models\TowerDefense\Move.cs" />
     <Compile Include="Models\TowerDefense\Warrior.cs" />
-    <Compile Include="Views\ArcherView.cs" />
-    <Compile Include="Views\ConfViewArcher.cs" />
-    <Compile Include="Views\AConfView.cs" />
-    <Compile Include="Models\Archer.cs" />
-    <Compile Include="Models\CollideSphere.cs" />
-    <Compile Include="Models\CollisionAction.cs" />
-    <Compile Include="Views\ConfViewWarrior.cs" />
-    <Compile Include="ControllerManager.cs" />
     <Compile Include="Controllers\AController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\MainMenuController.cs" />
     <Compile Include="Views\ControlSelectView.cs" />
-    <Compile Include="Views\CastleView.cs" />
-    <Compile Include="Views\ConfViewCastle.cs" />
-    <Compile Include="Views\ConfViewBackground.cs" />
-    <Compile Include="Views\BackgroundView.cs" />
     <Compile Include="Views\CreditView.cs" />
     <Compile Include="Views\PauseMenuView.cs" />
     <Compile Include="Views\TowerDefense\BoardView.cs" />
-    <Compile Include="Views\WarriorView.cs" />
-    <Compile Include="Models\DrawPrimitive.cs" />
-    <Compile Include="Models\GameRessource.cs" />
     <Compile Include="Models\Dance\BeatValue.cs" />
     <Compile Include="Models\Dance\DWIParser.cs" />
     <Compile Include="Models\Dance\GameMechanic.cs" />
@@ -154,23 +140,11 @@
     <Compile Include="Models\Dance\SongLibrary.cs" />
     <Compile Include="Models\Interface\Menu.cs" />
     <Compile Include="Models\WindowConfiguration.cs" />
-    <Compile Include="Models\Player.cs" />
     <Compile Include="Views\Dance\NotesView.cs" />
     <Compile Include="Views\IView.cs" />
     <Compile Include="Views\MainMenuView.cs" />
-    <Compile Include="Models\Background.cs" />
-    <Compile Include="Models\Castle.cs" />
-    <Compile Include="Views\ConfSprite.cs" />
-    <Compile Include="Models\Entity.cs" />
-    <Compile Include="Models\EntityUnit.cs" />
-    <Compile Include="Positionnable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Models\World.cs" />
-    <Compile Include="SpriteObject.cs" />
-    <Compile Include="Models\Unit.cs" />
-    <Compile Include="View.cs" />
-    <Compile Include="Models\Warrior.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
