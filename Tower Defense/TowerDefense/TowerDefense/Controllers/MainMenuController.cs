@@ -16,7 +16,6 @@ namespace TowerDance.Controllers
 {
     class MainMenuController : AController
     {
-        SongLibrary _songLibrary;
         MainMenuView _mainMenuView;
         Menu _menu;
         ControlInput _controlInput;
@@ -25,8 +24,6 @@ namespace TowerDance.Controllers
         {
             _controlInput = new ControlInput();
             _menu = new Menu(new List<string>() {"Campaign", "Credits", "Exit"});
-            _songLibrary = new SongLibrary();
-            _songLibrary.initialize();
             _mainMenuView = new MainMenuView(_menu);
             addView(_mainMenuView);
         }
@@ -59,7 +56,7 @@ namespace TowerDance.Controllers
         private void menuSelectExecute(int defaultPlayerID)
         {
             if (_menu.getSelectedTitleIndex() == 0)
-                addChild(new ControlSelectController(_songLibrary.songs[0].musicSheets[0], defaultPlayerID));
+                addChild(new CampaignController(defaultPlayerID));
             if (_menu.getSelectedTitleIndex() == 1)
                 addChild(new CreditController());
             if (_menu.getSelectedTitleIndex() == 2)

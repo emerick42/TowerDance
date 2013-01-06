@@ -60,8 +60,10 @@ namespace TowerDance
             else
             {
                 controller.updateBackgrounded(gameTime);
-                foreach (AController c in controller.getChildren())
-                    updateController(gameTime, c);
+                if (controller.getChildren().Count > 0)
+                    updateController(gameTime, controller.getChildren()[0]);
+//                foreach (AController c in controller.getChildren())
+//                    updateController(gameTime, c);
             }
         }
 
@@ -79,8 +81,10 @@ namespace TowerDance
             else
             {
                 controller.drawBackgrounded(gameTime);
-                foreach (AController c in controller.getChildren())
-                    drawController(gameTime, c);
+                if (controller.getChildren().Count > 0)
+                    drawController(gameTime, controller.getChildren()[0]);
+//                foreach (AController c in controller.getChildren())
+//                    drawController(gameTime, c);
             }
         }
 
@@ -111,29 +115,5 @@ namespace TowerDance
             }
             return false;
         }
-
-/*        private void cleanControllerTree(AController controller)
-        {
-            int i = 0;
-
-            if (controller == _controller && controller.isStopped())
-                Exit();
-            List<AController> children = controller.getChildren();
-            if (children.Count > 0)
-            {
-                while (i < children.Count)
-                {
-                    if (children[i].isStopped())
-                        children.RemoveAt(i);
-                    else
-                    {
-                        cleanControllerTree(children[i]);
-                        i++;
-                    }
-                }
-                if (controller.getChildren().Count <= 0)
-                    controller.switchState();
-            }
-        }*/
     }
 }

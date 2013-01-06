@@ -16,6 +16,7 @@ namespace TowerDance.Models.Dance
         bool _hasMusicStarted;
         bool _needToPlaySong;
         bool _hasNewFlashMessage;
+        bool _needSync;
         string _flashMessage;
         int _combo;
         int _lastValidatedNoteId;
@@ -30,8 +31,9 @@ namespace TowerDance.Models.Dance
             _needToPlaySong = true;
             _notes = _musicSheet.getNotes();
             _song = _musicSheet.getSong();
-            _timePlayed = new TimeSpan(0, 0, 0, 0, (int)(_song.offset * 1000) - 500);
+            _timePlayed = new TimeSpan(0, 0, 0, 0, (int)(_song.offset * 1000) - 400);
             _lastValidatedNoteId = -1;
+            _needSync = true;
         }
 
         public void update(GameTime gameTime)
@@ -114,7 +116,11 @@ namespace TowerDance.Models.Dance
 
         public void syncWithSong(TimeSpan songPosition)
         {
-            _timePlayed += songPosition;
+            if (_needSync)
+            {
+                _timePlayed += songPosition;
+                _needSync = false;
+            }
             _hasMusicStarted = true;
         }
 

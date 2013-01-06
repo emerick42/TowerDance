@@ -85,13 +85,23 @@ namespace TowerDance.Controllers
         {
         }
 
+        public override void signal(string signal)
+        {
+            _parent.signal(signal);
+        }
+
         private bool everyoneIsReady()
         {
+            int nbReady = 0;
             foreach (PlayerSelectState pState in _pState)
             {
                 if (pState != PlayerSelectState.NonExisting && pState != PlayerSelectState.Ready)
                     return false;
+                if (pState == PlayerSelectState.Ready)
+                    nbReady++;
             }
+            if (nbReady <= 0)
+                return false;
             return true;
         }
 

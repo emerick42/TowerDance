@@ -137,6 +137,18 @@ namespace TowerDance.Models.TowerDefense
             return _entities;
         }
 
+        public int getExpGained()
+        {
+            int result = 0;
+            if (_currentState == State.Won)
+            {
+                foreach (Entity e in _enemies)
+                    result += 3;
+                result *= (int)((float)_castle.getHP() / (float)_castle.getMaxHP());
+            }
+            return result;
+        }
+
         private bool shouldSpawnWave()
         {
             float musicDuration = (float)_musicSheet.getDuration().TotalSeconds;

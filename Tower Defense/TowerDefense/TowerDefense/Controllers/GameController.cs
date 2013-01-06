@@ -41,13 +41,21 @@ namespace TowerDance.Controllers
             _controlInput.update();
             /* We check global inputs */
             if (_controlInput.isPushed(ListKey.PAUSE))
+            {
                 menuPause();
+                return;
+            }
             updateDance(gameTime);
             updateTowerDefense(gameTime);
             if ((_danceGameMechanic.isFinished() && _towerDefenseGameMechanic.getCurrentState() != Models.TowerDefense.State.InProgress)
                 || _towerDefenseGameMechanic.getCurrentState() == Models.TowerDefense.State.Lost)
             {
                 _notesView.stopSong();
+                addChild(new EndGameController(_towerDefenseGameMechanic.getCurrentState(), _towerDefenseGameMechanic.getExpGained()));
+                if (_towerDefenseGameMechanic.getCurrentState() == Models.TowerDefense.State.Won)
+                    _parent.signal("won");
+                else
+                    _parent.signal("lost");
                 stop();
             }
         }
@@ -62,10 +70,12 @@ namespace TowerDance.Controllers
                 stop();
         }
 
-        public override void stop()
+        public override bool isReady()
         {
-            _notesView.stopSong();
-            base.stop();
+            if (_frame > 80)
+                return true;
+            _frame++;
+            return false;
         }
 
         private void updateDance(GameTime gameTime)

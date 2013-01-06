@@ -22,7 +22,7 @@ namespace TowerDance.Controllers
         protected List<IView> _backgroundedViews = new List<IView>();
         protected bool _contentIsLoaded = false;
         protected AController _parent = null;
-        private int _frame = 0;
+        protected int _frame = 0;
 
         public bool isContentLoaded()
         {
@@ -107,7 +107,7 @@ namespace TowerDance.Controllers
             return _parent;
         }
 
-        public bool isReady()
+        public virtual bool isReady()
         {
             if (_frame > 40)
                 return true;

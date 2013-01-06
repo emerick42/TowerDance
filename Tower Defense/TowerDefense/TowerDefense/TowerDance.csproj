@@ -107,10 +107,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CampaignController.cs" />
+    <Compile Include="Controllers\CampaignErrorController.cs" />
     <Compile Include="Controllers\ControllerManager.cs" />
     <Compile Include="Controllers\ControlSelectController.cs" />
     <Compile Include="Controllers\CreditController.cs" />
+    <Compile Include="Controllers\EndGameController.cs" />
     <Compile Include="Controllers\PauseMenuController.cs" />
+    <Compile Include="Controllers\TextController.cs" />
     <Compile Include="Models\Saves\Save.cs" />
     <Compile Include="Models\Skills\Skill.cs" />
     <Compile Include="Models\Saves\Upgrade.cs" />
@@ -125,9 +129,12 @@
     <Compile Include="Controllers\AController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\MainMenuController.cs" />
+    <Compile Include="Views\CampaignErrorView.cs" />
     <Compile Include="Views\ControlSelectView.cs" />
     <Compile Include="Views\CreditView.cs" />
+    <Compile Include="Views\EndGameView.cs" />
     <Compile Include="Views\PauseMenuView.cs" />
+    <Compile Include="Views\TextView.cs" />
     <Compile Include="Views\TowerDefense\BoardView.cs" />
     <Compile Include="Models\Dance\BeatValue.cs" />
     <Compile Include="Models\Dance\DWIParser.cs" />
