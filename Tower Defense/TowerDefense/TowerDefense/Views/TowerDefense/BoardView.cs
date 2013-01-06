@@ -44,6 +44,8 @@ namespace TowerDance.Views.TowerDefense
             drawBackground();
             foreach (Entity e in _entities)
             {
+                if (!e.isAlive())
+                    continue;
                 if (e.getType().Equals("castle"))
                     drawCastle(e);
                 else

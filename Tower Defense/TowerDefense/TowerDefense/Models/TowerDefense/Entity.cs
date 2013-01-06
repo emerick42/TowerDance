@@ -155,5 +155,12 @@ namespace TowerDance.Models.TowerDefense
                 return true;
             return false;
         }
+
+        public bool isAlive()
+        {
+            if (getHP() <= 0)
+                return false;
+            return true;
+        }
     }
 }

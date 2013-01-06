@@ -15,12 +15,6 @@ namespace TowerDance.Controllers
         NotesView _notesView;
         BoardView _boardView;
         ControlInput _controlInput;
-        /* Useless
-        World _world;
-        WarriorView _warriorView;
-        ArcherView _archerView;
-        CastleView _castleView;
-        BackgroundView _backView;*/
         int _dancePlayerID;
         int _towerDefensePlayerID;
 
@@ -40,21 +34,6 @@ namespace TowerDance.Controllers
             addBackgroundView(_boardView);
             addView(_notesView);
             addBackgroundView(_notesView);
-
-            /* Useless
-            _world = new World();
-            _archerView = new ArcherView();
-            _warriorView = new WarriorView();
-            _castleView = new CastleView();
-            _backView = new BackgroundView();
-            //addView(_backView);
-            //addBackgroundView(_backView);
-            addView(_castleView);
-            addBackgroundView(_castleView);
-            addView(_warriorView);
-            addBackgroundView(_warriorView);
-            addView(_archerView);
-            addBackgroundView(_archerView);*/
         }
 
         override public void update(GameTime gameTime)
@@ -66,46 +45,11 @@ namespace TowerDance.Controllers
             updateDance(gameTime);
             updateTowerDefense(gameTime);
             if ((_danceGameMechanic.isFinished() && _towerDefenseGameMechanic.getCurrentState() != Models.TowerDefense.State.InProgress)
-                || _towerDefenseGameMechanic.getCurrentState() != Models.TowerDefense.State.InProgress)
+                || _towerDefenseGameMechanic.getCurrentState() == Models.TowerDefense.State.Lost)
             {
                 _notesView.stopSong();
                 stop();
             }
-            /* Useless
-            _world.Update(gameTime);
-
-            // A Rajouter apres le travail sur le view
-//            if (!_backView.SetBack)
-//            {
-//                _backView.setBackround();
-//                _backView.loadSprite();
-//            }
-
-//            if (_castleView.isNewCastle())
-//            {
-////                _castleView.setCastle(_world.getCastle());
-//                _castleView.loadSprite();
-//            }
-            _castleView.setRefreshList(_world.getCastle());
-
-            if (_world.isNewWarrior())
-            {
-                _warriorView.setWarrior(_world.getWarrior());
-                _warriorView.loadSprite();
-            }
-            if (_world.isNewArcher())
-            {
-                _archerView.setArcher(_world.getArcher());
-                _archerView.loadSprite();
-            }
-
-            _warriorView.setRefreshList(_world.getAllWarrior());
-            _archerView.setRefreshList(_world.getAllArcher());
-
-            //_backView.update(gameTime);
-            _castleView.update(gameTime);
-            _warriorView.update(gameTime);
-            _archerView.update(gameTime);*/
         }
 
         override public void updateBackgrounded(GameTime gameTime)

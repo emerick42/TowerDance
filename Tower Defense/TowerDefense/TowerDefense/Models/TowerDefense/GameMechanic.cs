@@ -72,8 +72,9 @@ namespace TowerDance.Models.TowerDefense
             {
                 if (upgrade.getScript().Equals("create warrior"))
                 {
-                    _allies.Add(new Warrior());
-                    _entities.Add(new Warrior());
+                    Warrior w = new Warrior();
+                    _allies.Add(w);
+                    _entities.Add(w);
                 }
             }
         }
@@ -81,7 +82,7 @@ namespace TowerDance.Models.TowerDefense
         public void execute(Entity e, string action)
         {
             /* Check movement */
-            Regex moveRegex = new Regex(@"move (?<x>[0-9]*\.?[0-9]*) (?<y>[0-9]*\.?[0-9]*)");
+            Regex moveRegex = new Regex(@"move (?<x>[-+]?[0-9]*\.?[0-9]*) (?<y>[-+]?[0-9]*\.?[0-9]*)");
             Match match = moveRegex.Match(action);
             if (match.Success)
             {
@@ -171,22 +172,43 @@ namespace TowerDance.Models.TowerDefense
 
         private void updateState()
         {
-            if (_currentWave >= _maxWave && _enemies.Count <= 0)
+            int countAlive = 0;
+            foreach (Entity e in _enemies)
+            {
+                if (e.isAlive())
+                    countAlive++;
+            }
+            if (_currentWave >= _maxWave && countAlive <= 0)
                 _currentState = State.Won;
-            if (_castle.getHP() <= 0)
+            if (!_castle.isAlive())
                 _currentState = State.Lost;
         }
 
         private void letThemDoSomething()
         {
+            foreach (Entity e in _allies)
+            {
+                if (!e.isAlive() || e.getNbActions() > 1)
+                    continue;
+                Entity enemy = findNearestEnemy(e);
+                if (enemy == null)
+                    e.addAction(new Move(_castle.getPosition()));
+                else if (e.canReach(enemy))
+                    e.addAction(new Attack(enemy));
+                else
+                    e.addAction(new Move(enemy.getPosition()));
+            }
             foreach (Entity e in _enemies)
             {
-                if (e.getNbActions() > 5)
+                if (!e.isAlive() || e.getNbActions() > 1)
                     continue;
-                if (e.canReach(_castle))
-                    e.addAction(new Attack(_castle));
+                Entity enemy = findNearestEnemy(e);
+                if (enemy == null)
+                    continue;
+                if (e.canReach(enemy))
+                    e.addAction(new Attack(enemy));
                 else if (e.getNbActions() < 1)
-                    e.addAction(new Move(new Vector2(0, 0)));
+                    e.addAction(new Move(enemy.getPosition()));
             }
         }
 
@@ -197,6 +219,29 @@ namespace TowerDance.Models.TowerDefense
                 if (e.getId() == id)
                     return e;
             }
+            return null;
+        }
+
+        private Entity findNearestEnemy(Entity entity)
+        {
+            float nearestDistance = -1;
+            int _nearestId = -1;
+            int i = 0;
+            foreach (Entity e in _entities)
+            {
+                if (e.isAlive() && e.getTeam() != entity.getTeam())
+                {
+                    float distance = Vector2.Distance(e.getPosition(), entity.getPosition());
+                    if (nearestDistance < 0 || distance < nearestDistance)
+                    {
+                        nearestDistance = distance;
+                        _nearestId = i;
+                    }
+                }
+                i++;
+            }
+            if (_nearestId >= 0 && _nearestId < _entities.Count)
+                return _entities[_nearestId];
             return null;
         }
     }

@@ -97,8 +97,7 @@ namespace TowerDance.Views.Dance
             Microsoft.Xna.Framework.Media.Song song = Microsoft.Xna.Framework.Media.Song.FromUri("song", songPath);
             MediaPlayer.IsRepeating = false;
             MediaPlayer.Play(song);
-            /* Temporary */
-            MediaPlayer.IsMuted = true;
+            MediaPlayer.Volume /= 2;
         }
 
         public void resumeSong()
@@ -162,7 +161,7 @@ namespace TowerDance.Views.Dance
             {
                 Vector2 _msgSize = _flashMessageFont.MeasureString(_combo.ToString() + " combos");
                 int gapX = (_windowConfiguration.width - (int)_msgSize.X) / 2;
-                int gapY = 300;
+                int gapY = 200;
                 _spriteBatch.DrawString(_flashMessageFont, _combo.ToString() + " combos", new Vector2(gapX + 2, gapY + 2), Color.DarkRed);
                 _spriteBatch.DrawString(_flashMessageFont, _combo.ToString() + " combos", new Vector2(gapX, gapY), Color.Red);
             }
