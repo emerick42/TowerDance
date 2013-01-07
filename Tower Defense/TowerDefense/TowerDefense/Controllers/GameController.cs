@@ -54,6 +54,7 @@ namespace TowerDance.Controllers
             if ((_danceGameMechanic.isFinished() && _towerDefenseGameMechanic.getCurrentState() != Models.TowerDefense.State.InProgress)
                 || _towerDefenseGameMechanic.getCurrentState() == Models.TowerDefense.State.Lost)
             {
+                _notesView.stopSong();
                 addChild(new EndGameController(_towerDefenseGameMechanic.getCurrentState(), _towerDefenseGameMechanic.getExpGained()));
                 if (_towerDefenseGameMechanic.getCurrentState() == Models.TowerDefense.State.Won)
                     _parent.signal("won");
