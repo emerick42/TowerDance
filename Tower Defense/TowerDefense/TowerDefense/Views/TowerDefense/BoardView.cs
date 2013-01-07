@@ -17,6 +17,8 @@ namespace TowerDance.Views.TowerDefense
         int _gapX = 0;
         int _gapY = 0;
         float _multiplicator = 1.0f;
+        float _maxMana;
+        float _currentMana;
 
         public BoardView(Rectangle map, List<Entity> entities)
         {
@@ -52,13 +54,20 @@ namespace TowerDance.Views.TowerDefense
                     drawEntity(e);
             }
             drawBlackBorder();
+            drawMana();
             _spriteBatch.End();
         }
 
-        public void refresh(Rectangle map, List<Entity> entities)
+        public void refresh(Rectangle map, List<Entity> entities, float currentMana)
         {
             _map = map;
             _entities = entities;
+            _currentMana = currentMana;
+        }
+
+        public void setMaxMana(float maxMana)
+        {
+            _maxMana = maxMana;
         }
 
         private void drawBackground()
@@ -134,6 +143,15 @@ namespace TowerDance.Views.TowerDefense
             position.X += _gapX;
             position.Y += _gapY;
             return new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
+        }
+
+        private void drawMana()
+        {
+            float ratio = _currentMana / _maxMana;
+            int gapX = 10;
+            int gapY = (int)((_windowConfiguration.height - 9 * (_windowConfiguration.height / 10)) / 2.0f);
+            _spriteBatch.Draw(_spriteTextures[0], new Rectangle(gapX - 2, gapY - 2, 34, _windowConfiguration.height - 2 * gapY + 4), Color.Blue);
+            _spriteBatch.Draw(_spriteTextures[0], new Rectangle(gapX, gapY, 30, (int)(ratio * (_windowConfiguration.height - 2 * gapY))), Color.Aquamarine);
         }
     }
 }

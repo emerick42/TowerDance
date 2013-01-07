@@ -62,8 +62,6 @@ namespace TowerDance
                 controller.updateBackgrounded(gameTime);
                 if (controller.getChildren().Count > 0)
                     updateController(gameTime, controller.getChildren()[0]);
-//                foreach (AController c in controller.getChildren())
-//                    updateController(gameTime, c);
             }
         }
 
@@ -83,8 +81,6 @@ namespace TowerDance
                 controller.drawBackgrounded(gameTime);
                 if (controller.getChildren().Count > 0)
                     drawController(gameTime, controller.getChildren()[0]);
-//                foreach (AController c in controller.getChildren())
-//                    drawController(gameTime, c);
             }
         }
 

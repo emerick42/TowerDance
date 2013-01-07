@@ -47,10 +47,13 @@ namespace TowerDance.Controllers
             }
             updateDance(gameTime);
             updateTowerDefense(gameTime);
+            if (_danceGameMechanic.isFinished())
+            {
+                _notesView.stopSong();
+            }
             if ((_danceGameMechanic.isFinished() && _towerDefenseGameMechanic.getCurrentState() != Models.TowerDefense.State.InProgress)
                 || _towerDefenseGameMechanic.getCurrentState() == Models.TowerDefense.State.Lost)
             {
-                _notesView.stopSong();
                 addChild(new EndGameController(_towerDefenseGameMechanic.getCurrentState(), _towerDefenseGameMechanic.getExpGained()));
                 if (_towerDefenseGameMechanic.getCurrentState() == Models.TowerDefense.State.Won)
                     _parent.signal("won");
@@ -112,6 +115,7 @@ namespace TowerDance.Controllers
 
         private void updateTowerDefense(GameTime gameTime)
         {
+            _towerDefenseGameMechanic.setCurrentCombo(_danceGameMechanic.getCombo());
             _towerDefenseGameMechanic.update(gameTime, _danceGameMechanic.getTimePlayed());
             if (_towerDefensePlayerID >= 0)
             {
@@ -121,7 +125,8 @@ namespace TowerDance.Controllers
             else
                 _towerDefenseGameMechanic.autoPlay();
             /* Manage interaction with TowerDefenseView */
-            _boardView.refresh(_towerDefenseGameMechanic.getMap(), _towerDefenseGameMechanic.getEntities());
+            _boardView.refresh(_towerDefenseGameMechanic.getMap(), _towerDefenseGameMechanic.getEntities(), _towerDefenseGameMechanic.getCurrentMana());
+            _boardView.setMaxMana(_towerDefenseGameMechanic.getMaxMana());
         }
 
         private void menuPause()

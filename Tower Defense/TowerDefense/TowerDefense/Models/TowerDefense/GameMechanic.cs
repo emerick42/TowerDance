@@ -6,6 +6,7 @@ using TowerDance.Models.Dance;
 using Microsoft.Xna.Framework;
 using TowerDance.Models.Saves;
 using System.Text.RegularExpressions;
+using TowerDance.Models.Skills;
 
 namespace TowerDance.Models.TowerDefense
 {
@@ -27,7 +28,9 @@ namespace TowerDance.Models.TowerDefense
         List<Entity> _entities;
         int _currentWave;
         int _maxWave;
-        int _currentMana;
+        float _currentMana;
+        float _maxMana;
+        int _currentCombo = 0;
         TimeSpan _currentFrameTime;
 
         public GameMechanic(MusicSheet musicSheet)
@@ -44,6 +47,8 @@ namespace TowerDance.Models.TowerDefense
             _allies.Add(_castle);
             _entities.Add(_castle);
             _map = new Rectangle(-200, -150, 400, 300);
+            _maxMana = 200;
+            _currentMana = _maxMana;
         }
 
         public void update(GameTime gameTime, TimeSpan songTimePlayed)
@@ -52,9 +57,12 @@ namespace TowerDance.Models.TowerDefense
             _songTimePlayed = songTimePlayed;
             if (_currentState == State.InProgress)
             {
+                updateMana();
                 /* We spawn a wave */
                 if (shouldSpawnWave())
                     spawnWave();
+                if (shouldSpawnEndGameWaves())
+                    spawnEndGameWaves();
                 updateState();
                 letThemDoSomething();
                 foreach (Entity e in _entities)
@@ -72,9 +80,13 @@ namespace TowerDance.Models.TowerDefense
             {
                 if (upgrade.getScript().Equals("create warrior"))
                 {
-                    Warrior w = new Warrior();
-                    _allies.Add(w);
-                    _entities.Add(w);
+                    if (_currentMana > 50)
+                    {
+                        _currentMana -= 50;
+                        Warrior w = new Warrior();
+                        _allies.Add(w);
+                        _entities.Add(w);
+                    }
                 }
             }
         }
@@ -119,7 +131,7 @@ namespace TowerDance.Models.TowerDefense
 
         public void autoPlay()
         {
-
+            execute(new Upgrade(new InvokeWarrior()));
         }
 
         public State getCurrentState()
@@ -149,6 +161,29 @@ namespace TowerDance.Models.TowerDefense
             return result;
         }
 
+        public void setCurrentCombo(int currentCombo)
+        {
+            _currentCombo = currentCombo;
+        }
+
+        public float getCurrentMana()
+        {
+            return _currentMana;
+        }
+
+        public float getMaxMana()
+        {
+            return _maxMana;
+        }
+
+        private void updateMana()
+        {
+            /* regen mana = combo per second */
+            _currentMana += (float)_currentFrameTime.TotalSeconds * (4 + (float)Math.Sqrt(_currentCombo));
+            if (_currentMana > _maxMana)
+                _currentMana = _maxMana;
+        }
+
         private bool shouldSpawnWave()
         {
             float musicDuration = (float)_musicSheet.getDuration().TotalSeconds;
@@ -158,10 +193,25 @@ namespace TowerDance.Models.TowerDefense
             return false;
         }
 
+        private bool shouldSpawnEndGameWaves()
+        {
+            if (_songTimePlayed > _musicSheet.getDuration())
+                return false;
+            int countAlive = 0;
+            foreach (Entity e in _enemies)
+            {
+                if (e.isAlive())
+                    countAlive++;
+            }
+            if (_currentWave == _maxWave && countAlive == 0)
+                return true;
+            return false;
+        }
+
         private void spawnWave()
         {
             int i = 0;
-            while (i < 3)
+            while (i < (_currentWave + 1) * 3)
             {
                 Entity e = new Warrior();
                 e.setTeam(1);
@@ -180,6 +230,24 @@ namespace TowerDance.Models.TowerDefense
                 i++;
             }
             _currentWave++;
+        }
+
+        private void spawnEndGameWaves()
+        {
+            Entity e = new Warrior();
+            e.setTeam(1);
+            if (_entities.Count % 2 == 0)
+            {
+                e.setPosition(new Vector2(_map.X, e.getSize().Y / 2));
+                e.setDirection(3);
+            }
+            else
+            {
+                e.setPosition(new Vector2(_map.X + _map.Width, e.getSize().Y / 2));
+                e.setDirection(0);
+            }
+            _enemies.Add(e);
+            _entities.Add(e);
         }
 
         private void updateState()
